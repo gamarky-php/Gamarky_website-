@@ -1,0 +1,61 @@
+# Gamarky Compute Service Requirements
+# متطلبات خدمة الحسابات لمنصة جمارك
+
+# Django and DRF
+Django==4.2.7
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+
+# Celery for async tasks
+celery==5.3.4
+redis==5.0.1
+django-celery-beat==2.5.0
+django-celery-results==2.4.0
+
+# Database
+psycopg2-binary==2.9.9  # PostgreSQL adapter
+
+# Environment and Configuration
+python-decouple==3.8
+django-environ==0.11.2
+
+# Validation and Serialization
+pydantic==2.5.0
+marshmallow==3.20.1
+
+# HTTP Client
+requests==2.31.0
+httpx==0.25.2
+
+# Logging and Monitoring
+structlog==23.2.0
+django-extensions==3.2.3
+
+# Testing
+pytest==7.4.3
+pytest-django==4.7.0
+pytest-cov==4.1.0
+factory-boy==3.3.0
+freezegun==1.2.2
+
+# Documentation
+drf-spectacular==0.26.5
+django-silk==5.0.4  # Performance profiling
+
+# Utilities
+python-dateutil==2.8.2
+pytz==2023.3
+uuid==1.30
+
+# Security
+django-ratelimit==4.1.0
+cryptography==41.0.7
+
+# Development tools
+black==23.11.0
+flake8==6.1.0
+isort==5.12.0
+pre-commit==3.5.0
+
+# Local compute_core package (development)
+-e /app/py

@@ -1,0 +1,714 @@
+<?php
+
+namespace App\Livewire\Dashboard;
+
+use Livewire\Component;
+use App\Services\AnalyticsService;
+use App\Services\ChartConfigService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+use Carbon\Carbon;
+
+/**
+ * Dashboard Home - لوحة التحكم الرئيسية
+ * 
+ * عرض KPIs رئيسية + 3 رسوم بيانية أساسية
+ */
+class DashboardHome extends Component
+{
+    // KPI Cards Data
+    public $totalBookings = 0;
+    public $avgClearanceTime = 0;
+    public $onTimeRate = 0;
+    public $subscriptionRevenue = 0;
+    public $adsCtr = 0;
+    
+    // Charts Data
+    public $funnelChart = [];
+    public $portsChart = [];
+    public $containersChart = [];
+    
+    // Filters
+    public $period = 'monthly'; // للـ KPIs
+    public $funnelPeriod = 'weekly';
+    public $funnelUnits = 4;
+    
+    // Refresh state
+    public $lastUpdate;
+    public $autoRefresh = false;
+
+    protected $analytics;
+    protected $chartConfig;
+
+    /**
+     * Boot services
+     */
+    public function boot(AnalyticsService $analytics, ChartConfigService $chartConfig)
+    {
+        $this->analytics = $analytics;
+        $this->chartConfig = $chartConfig;
+    }
+
+    /**
+     * Mount - تحميل البيانات الأولية
+     */
+    public function mount()
+    {
+        $this->loadAllData();
+    }
+
+    /**
+     * تحميل جميع البيانات (KPIs + Charts)
+     */
+    public function loadAllData()
+    {
+        $this->loadKpiCards();
+        $this->loadCharts();
+        $this->lastUpdate = now()->format('H:i:s');
+    }
+
+    /**
+     * تحميل بيانات كروت KPIs
+     */
+    protected function loadKpiCards()
+    {
+        $now = Carbon::now();
+        $startOfMonth = $now->copy()->startOfMonth();
+        
+        // 1. إجمالي الحجوزات هذا الشهر
+        $this->totalBookings = $this->getTotalBookingsThisMonth($startOfMonth, $now);
+        
+        // 2. متوسط زمن التخليص
+        $this->avgClearanceTime = $this->getAvgClearanceTime();
+        
+        // 3. نسبة الالتزام بالمواعيد
+        $this->onTimeRate = $this->getOnTimeRate($startOfMonth, $now);
+        
+        // 4. إيراد الاشتراكات
+        $this->subscriptionRevenue = $this->getSubscriptionRevenue($startOfMonth, $now);
+        
+        // 5. CTR للإعلانات
+        $this->adsCtr = $this->getAdsCtr();
+    }
+
+    /**
+     * تحميل الرسوم البيانية الثلاثة
+     */
+    protected function loadCharts()
+    {
+        // 1. Funnel أسبوعي
+        $this->loadFunnelChart();
+        
+        // 2. أداء الموانئ (Bar Chart)
+        $this->loadPortsChart();
+        
+        // 3. توزيع أنواع الحاويات (Doughnut Chart)
+        $this->loadContainersChart();
+    }
+
+    // ==================== KPI CARDS CALCULATIONS ====================
+
+    /**
+     * إجمالي الحجوزات هذا الشهر
+     */
+    protected function getTotalBookingsThisMonth($start, $end): array
+    {
+        $containers = $this->safeCount('container_bookings', $start, $end);
+        $trucks = $this->safeCount('truck_bookings', $start, $end);
+        $imports = $this->safeCount('import_requests', $start, $end);
+        $exports = $this->safeCount('export_shipments', $start, $end);
+        
+        $total = $containers + $trucks + $imports + $exports;
+        
+        // احسب الشهر السابق للمقارنة
+        $prevStart = $start->copy()->subMonth();
+        $prevEnd = $end->copy()->subMonth();
+        
+        $prevContainers = $this->safeCount('container_bookings', $prevStart, $prevEnd);
+        $prevTrucks = $this->safeCount('truck_bookings', $prevStart, $prevEnd);
+        $prevImports = $this->safeCount('import_requests', $prevStart, $prevEnd);
+        $prevExports = $this->safeCount('export_shipments', $prevStart, $prevEnd);
+        
+        $prevTotal = $prevContainers + $prevTrucks + $prevImports + $prevExports;
+        
+        $trend = $this->calculateTrend($total, $prevTotal);
+        
+        return [
+            'value' => $total,
+            'trend' => $trend,
+            'breakdown' => [
+                'حاويات' => $containers,
+                'شاحنات' => $trucks,
+                'استيراد' => $imports,
+                'تصدير' => $exports,
+            ],
+        ];
+    }
+
+    /**
+     * متوسط زمن التخليص (بالأيام)
+     */
+    protected function getAvgClearanceTime(): array
+    {
+        // Check if table exists
+        if (!$this->tableExists('clearance_requests')) {
+            return [
+                'value' => 0,
+                'unit' => 'يوم',
+                'trend' => ['direction' => 'neutral', 'percentage' => 0, 'color' => 'gray'],
+                'color' => 'gray',
+                'target' => 5,
+            ];
+        }
+
+        // آخر 30 يوم
+        $startDate = Carbon::now()->subDays(30);
+        
+        $avgDays = DB::table('clearance_requests')
+            ->whereNotNull('actual_clearance_date')
+            ->where('status', 'cleared')
+            ->where('created_at', '>=', $startDate)
+            ->selectRaw('AVG(DATEDIFF(actual_clearance_date, started_at)) as avg')
+            ->value('avg');
+        
+        $avgDays = round($avgDays ?? 0, 1);
+        
+        // السابق للمقارنة (30-60 يوم مضت)
+        $prevStart = Carbon::now()->subDays(60);
+        $prevEnd = Carbon::now()->subDays(30);
+        
+        $prevAvgDays = DB::table('clearance_requests')
+            ->whereNotNull('actual_clearance_date')
+            ->where('status', 'cleared')
+            ->whereBetween('created_at', [$prevStart, $prevEnd])
+            ->selectRaw('AVG(DATEDIFF(actual_clearance_date, started_at)) as avg')
+            ->value('avg');
+        
+        $prevAvgDays = round($prevAvgDays ?? 0, 1);
+        
+        $trend = $this->calculateTrend($avgDays, $prevAvgDays, true); // true = lower is better
+        
+        // تحديد اللون بناءً على الأداء
+        $color = 'green';
+        if ($avgDays > 10) {
+            $color = 'red';
+        } elseif ($avgDays > 7) {
+            $color = 'amber';
+        }
+        
+        return [
+            'value' => $avgDays,
+            'unit' => 'يوم',
+            'trend' => $trend,
+            'color' => $color,
+            'target' => 5, // الهدف: 5 أيام
+        ];
+    }
+
+    /**
+     * نسبة الالتزام بالمواعيد
+     */
+    protected function getOnTimeRate($start, $end): array
+    {
+        // احسب من جميع الشحنات (containers + trucks) with safe column checks
+        $containerStats = $this->safeFirstStats(
+            'container_bookings',
+            $start,
+            $end,
+            'COUNT(*) as total, SUM(CASE WHEN status = "delivered" AND delivery_date <= expected_delivery THEN 1 ELSE 0 END) as on_time',
+            ['created_at', 'status', 'delivery_date', 'expected_delivery'],
+            ['total' => 0, 'on_time' => 0]
+        );
+        
+        $truckStats = $this->safeFirstStats(
+            'truck_bookings',
+            $start,
+            $end,
+            'COUNT(*) as total, SUM(CASE WHEN status = "delivered" AND delivery_date <= expected_delivery THEN 1 ELSE 0 END) as on_time',
+            ['created_at', 'status', 'delivery_date', 'expected_delivery'],
+            ['total' => 0, 'on_time' => 0]
+        );
+        
+        $totalShipments = ($containerStats->total ?? 0) + ($truckStats->total ?? 0);
+        $onTimeShipments = ($containerStats->on_time ?? 0) + ($truckStats->on_time ?? 0);
+        
+        $rate = $totalShipments > 0 ? round(($onTimeShipments / $totalShipments) * 100, 1) : 0;
+        
+        // الشهر السابق للمقارنة
+        $prevStart = $start->copy()->subMonth();
+        $prevEnd = $end->copy()->subMonth();
+        
+        $prevContainerStats = $this->safeFirstStats(
+            'container_bookings',
+            $prevStart,
+            $prevEnd,
+            'COUNT(*) as total, SUM(CASE WHEN status = "delivered" AND delivery_date <= expected_delivery THEN 1 ELSE 0 END) as on_time',
+            ['created_at', 'status', 'delivery_date', 'expected_delivery'],
+            ['total' => 0, 'on_time' => 0]
+        );
+        
+        $prevTruckStats = $this->safeFirstStats(
+            'truck_bookings',
+            $prevStart,
+            $prevEnd,
+            'COUNT(*) as total, SUM(CASE WHEN status = "delivered" AND delivery_date <= expected_delivery THEN 1 ELSE 0 END) as on_time',
+            ['created_at', 'status', 'delivery_date', 'expected_delivery'],
+            ['total' => 0, 'on_time' => 0]
+        );
+        
+        $prevTotal = ($prevContainerStats->total ?? 0) + ($prevTruckStats->total ?? 0);
+        $prevOnTime = ($prevContainerStats->on_time ?? 0) + ($prevTruckStats->on_time ?? 0);
+        $prevRate = $prevTotal > 0 ? round(($prevOnTime / $prevTotal) * 100, 1) : 0;
+        
+        $trend = $this->calculateTrend($rate, $prevRate);
+        
+        // تحديد اللون
+        $color = 'green';
+        if ($rate < 75) {
+            $color = 'red';
+        } elseif ($rate < 90) {
+            $color = 'amber';
+        }
+        
+        return [
+            'value' => $rate,
+            'unit' => '%',
+            'trend' => $trend,
+            'color' => $color,
+            'on_time' => $onTimeShipments,
+            'total' => $totalShipments,
+            'target' => 95, // الهدف: 95%
+        ];
+    }
+
+    /**
+     * إيراد الاشتراكات (هذا الشهر)
+     */
+    protected function getSubscriptionRevenue($start, $end): array
+    {
+        $revenue = $this->safeSum('subscriptions', $start, $end, 'amount', ['status' => 'active']);
+        
+        // الشهر السابق
+        $prevStart = $start->copy()->subMonth();
+        $prevEnd = $end->copy()->subMonth();
+        
+        $prevRevenue = $this->safeSum('subscriptions', $prevStart, $prevEnd, 'amount', ['status' => 'active']);
+        
+        $trend = $this->calculateTrend($revenue, $prevRevenue);
+        
+        // عدد الاشتراكات الجديدة
+        $newSubscriptions = $this->safeCount('subscriptions', $start, $end);
+        
+        return [
+            'value' => $revenue,
+            'formatted' => number_format($revenue, 0) . ' ريال',
+            'trend' => $trend,
+            'color' => 'green',
+            'new_subscriptions' => $newSubscriptions,
+        ];
+    }
+
+    /**
+     * CTR للإعلانات (آخر 30 يوم)
+     */
+    protected function getAdsCtr(): array
+    {
+        if (!$this->tableExists('ads_analytics')) {
+            return [
+                'value' => 0,
+                'unit' => '%',
+                'trend' => ['direction' => 'neutral', 'percentage' => 0, 'color' => 'gray'],
+                'color' => 'purple',
+                'impressions' => 0,
+                'clicks' => 0,
+                'ctr_trend_data' => [],
+            ];
+        }
+
+        $days = 30;
+        $startDate = Carbon::now()->subDays($days);
+        
+        $stats = DB::table('ads_analytics')
+            ->where('date', '>=', $startDate)
+            ->selectRaw('
+                SUM(impressions) as total_impressions,
+                SUM(clicks) as total_clicks,
+                AVG(ctr) as avg_ctr
+            ')
+            ->first();
+        
+        $totalImpressions = $stats->total_impressions ?? 0;
+        $totalClicks = $stats->total_clicks ?? 0;
+        $ctr = $totalImpressions > 0 
+            ? round(($totalClicks / $totalImpressions) * 100, 2)
+            : ($stats->avg_ctr ?? 0);
+        
+        // الفترة السابقة للمقارنة
+        $prevStart = Carbon::now()->subDays($days * 2);
+        $prevEnd = Carbon::now()->subDays($days);
+        
+        $prevStats = DB::table('ads_analytics')
+            ->whereBetween('date', [$prevStart, $prevEnd])
+            ->selectRaw('
+                SUM(impressions) as total_impressions,
+                SUM(clicks) as total_clicks,
+                AVG(ctr) as avg_ctr
+            ')
+            ->first();
+        
+        $prevImpressions = $prevStats->total_impressions ?? 0;
+        $prevClicks = $prevStats->total_clicks ?? 0;
+        $prevCtr = $prevImpressions > 0 
+            ? round(($prevClicks / $prevImpressions) * 100, 2)
+            : ($prevStats->avg_ctr ?? 0);
+        
+        $trend = $this->calculateTrend($ctr, $prevCtr);
+        
+        // تحديد اللون (CTR جيد إذا > 3%)
+        $color = 'green';
+        if ($ctr < 2) {
+            $color = 'red';
+        } elseif ($ctr < 3) {
+            $color = 'amber';
+        }
+        
+        return [
+            'value' => $ctr,
+            'unit' => '%',
+            'trend' => $trend,
+            'color' => $color,
+            'impressions' => $totalImpressions,
+            'clicks' => $totalClicks,
+            'target' => 3.5, // الهدف: 3.5%
+        ];
+    }
+
+    // ==================== CHARTS LOADING ====================
+
+    /**
+     * تحميل Funnel Chart (أسبوعي)
+     */
+    protected function loadFunnelChart()
+    {
+        $data = $this->analytics->getFunnelData($this->funnelPeriod, $this->funnelUnits, 'container');
+        
+        // استخدم ChartConfigService لتنسيق أفضل
+        $this->funnelChart = $this->chartConfig->lineChart(
+            $data['chart']['labels'],
+            [
+                [
+                    'label' => 'بحث',
+                    'data' => $data['chart']['datasets'][0]['data'],
+                ],
+                [
+                    'label' => 'عروض أسعار',
+                    'data' => $data['chart']['datasets'][1]['data'],
+                ],
+                [
+                    'label' => 'حجوزات',
+                    'data' => $data['chart']['datasets'][2]['data'],
+                ],
+            ],
+            [
+                'title' => 'قمع التحويل - أسبوعي',
+                'yAxisLabel' => 'عدد العمليات',
+            ]
+        );
+        
+        // أضف معلومات الملخص
+        $this->funnelChart['summary'] = $data['summary'];
+    }
+
+    /**
+     * تحميل أداء الموانئ (Bar Chart)
+     */
+    protected function loadPortsChart()
+    {
+        $clearanceData = $this->analytics->getClearanceTimeByPort(6); // أفضل 6 موانئ
+        
+        // حضّر البيانات للـ Bar Chart
+        $labels = $clearanceData['chart']['labels'];
+        $data = $clearanceData['chart']['datasets'][0]['data'];
+        
+        // حدد الألوان بناءً على الأداء
+        $colors = [];
+        foreach ($data as $days) {
+            if ($days <= 5) {
+                $colors[] = $this->chartConfig->getColor('success');
+            } elseif ($days <= 8) {
+                $colors[] = $this->chartConfig->getColor('warning');
+            } else {
+                $colors[] = $this->chartConfig->getColor('danger');
+            }
+        }
+        
+        $this->portsChart = $this->chartConfig->barChart(
+            $labels,
+            [
+                [
+                    'label' => 'متوسط أيام التخليص',
+                    'data' => $data,
+                    'backgroundColor' => $colors,
+                ],
+            ],
+            [
+                'title' => 'أداء الموانئ - متوسط زمن التخليص',
+                'yAxisLabel' => 'أيام',
+                'indexAxis' => 'y', // Horizontal bar
+            ]
+        );
+        
+        $this->portsChart['details'] = $clearanceData['details'];
+        $this->portsChart['average'] = $clearanceData['average'];
+    }
+
+    /**
+     * تحميل توزيع أنواع الحاويات (Doughnut Chart)
+     */
+    protected function loadContainersChart()
+    {
+        if (!$this->tableExists('container_bookings')) {
+            $this->containersChart = $this->chartConfig->doughnutChart(
+                ['لا توجد بيانات'],
+                [
+                    [
+                        'label' => 'أنواع الحاويات',
+                        'data' => [0],
+                        'backgroundColor' => [$this->chartConfig->getColor('gray')],
+                    ],
+                ],
+                ['title' => 'توزيع أنواع الحاويات (آخر 30 يوم)']
+            );
+            return;
+        }
+
+        // احصل على توزيع أنواع الحاويات من آخر 30 يوم
+        $containerTypes = DB::table('container_bookings')
+            ->select('container_type', DB::raw('COUNT(*) as count'))
+            ->where('created_at', '>=', Carbon::now()->subDays(30))
+            ->groupBy('container_type')
+            ->orderBy('count', 'desc')
+            ->get();
+        
+        $labels = [];
+        $data = [];
+        $total = 0;
+        
+        // ترجمة أسماء الحاويات
+        $typeNames = [
+            '20ft' => 'حاوية 20 قدم',
+            '40ft' => 'حاوية 40 قدم',
+            '40hc' => 'حاوية 40 HC',
+            'reefer_20' => 'مبردة 20 قدم',
+            'reefer_40' => 'مبردة 40 قدم',
+            'open_top' => 'مفتوحة السقف',
+            'flat_rack' => 'مسطحة',
+        ];
+        
+        foreach ($containerTypes as $type) {
+            $labels[] = $typeNames[$type->container_type] ?? $type->container_type;
+            $data[] = $type->count;
+            $total += $type->count;
+        }
+        
+        $this->containersChart = $this->chartConfig->doughnutChart(
+            $labels,
+            $data,
+            [
+                'title' => 'توزيع أنواع الحاويات',
+                'cutout' => '65%', // Thinner ring
+            ]
+        );
+        
+        // أضف معلومات إضافية
+        $this->containersChart['total'] = $total;
+        $this->containersChart['percentages'] = array_map(
+            fn($val) => round(($val / $total) * 100, 1),
+            $data
+        );
+    }
+
+    // ==================== HELPER METHODS ====================
+
+    /**
+     * حساب الاتجاه trend
+     * 
+     * @param float $current القيمة الحالية
+     * @param float $previous القيمة السابقة
+     * @param bool $lowerIsBetter هل القيمة الأقل أفضل؟
+     * @return array
+     */
+    protected function calculateTrend($current, $previous, $lowerIsBetter = false): array
+    {
+        if ($previous == 0) {
+            return [
+                'direction' => 'neutral',
+                'percentage' => 0,
+                'color' => 'gray',
+            ];
+        }
+        
+        $change = $current - $previous;
+        $percentage = abs(round(($change / $previous) * 100, 1));
+        
+        if ($change > 0) {
+            $direction = 'up';
+            $color = $lowerIsBetter ? 'red' : 'green';
+        } elseif ($change < 0) {
+            $direction = 'down';
+            $color = $lowerIsBetter ? 'green' : 'red';
+        } else {
+            $direction = 'neutral';
+            $color = 'gray';
+        }
+        
+        return [
+            'direction' => $direction,
+            'percentage' => $percentage,
+            'color' => $color,
+        ];
+    }
+
+    /**
+     * Safe count helper - returns 0 if table doesn't exist
+     * 
+     * @param string $table Table name
+     * @param mixed $start Start date
+     * @param mixed $end End date
+     * @return int
+     */
+    private function safeCount(string $table, $start, $end): int
+    {
+        if (!Schema::hasTable($table)) {
+            return 0;
+        }
+        
+        return (int) DB::table($table)
+            ->whereBetween('created_at', [$start, $end])
+            ->count();
+    }
+
+    /**
+     * Safe table check - returns true if table exists
+     * 
+     * @param string $table Table name
+     * @return bool
+     */
+    private function tableExists(string $table): bool
+    {
+        return Schema::hasTable($table);
+    }
+
+    /**
+     * Check if table exists and has required columns
+     * 
+     * @param string $table Table name
+     * @param array $cols Required columns
+     * @return bool
+     */
+    private function hasCols(string $table, array $cols): bool
+    {
+        if (!Schema::hasTable($table)) return false;
+        foreach ($cols as $c) {
+            if (!Schema::hasColumn($table, $c)) return false;
+        }
+        return true;
+    }
+
+    /**
+     * Safe query with column checks - returns fallback if table/columns missing
+     * 
+     * @param string $table Table name
+     * @param mixed $start Start date
+     * @param mixed $end End date
+     * @param string $selectRaw Raw select query
+     * @param array $requiredCols Required columns
+     * @param array $fallback Fallback values
+     * @return object
+     */
+    private function safeFirstStats(string $table, $start, $end, string $selectRaw, array $requiredCols, array $fallback): object
+    {
+        if (!$this->hasCols($table, $requiredCols)) return (object)$fallback;
+
+        try {
+            return DB::table($table)
+                ->whereBetween('created_at', [$start, $end])
+                ->selectRaw($selectRaw)
+                ->first() ?? (object)$fallback;
+        } catch (\Throwable $e) {
+            return (object)$fallback;
+        }
+    }
+
+    /**
+     * Safe SUM query with column checks - returns 0 if table/columns missing
+     * 
+     * @param string $table Table name
+     * @param mixed $start Start date
+     * @param mixed $end End date
+     * @param string $sumColumn Column to sum
+     * @param array $whereEquals Where conditions [column => value]
+     * @return float|int
+     */
+    private function safeSum(string $table, $start, $end, string $sumColumn, array $whereEquals = []): float|int
+    {
+        $required = array_merge(['created_at'], array_keys($whereEquals), [$sumColumn]);
+        if (!$this->hasCols($table, $required)) return 0;
+
+        try {
+            $q = DB::table($table)->whereBetween('created_at', [$start, $end]);
+            foreach ($whereEquals as $col => $val) {
+                $q->where($col, $val);
+            }
+            return $q->sum($sumColumn) ?? 0;
+        } catch (\Throwable $e) {
+            return 0;
+        }
+    }
+
+    // ==================== LIVEWIRE ACTIONS ====================
+
+    /**
+     * تحديث البيانات يدوياً
+     */
+    public function refresh()
+    {
+        $this->loadAllData();
+        $this->dispatch('dashboard-refreshed');
+    }
+
+    /**
+     * تبديل التحديث التلقائي
+     */
+    public function toggleAutoRefresh()
+    {
+        $this->autoRefresh = !$this->autoRefresh;
+    }
+
+    /**
+     * تغيير فترة Funnel
+     */
+    public function updateFunnelPeriod($period)
+    {
+        $this->funnelPeriod = $period;
+        $this->loadFunnelChart();
+    }
+
+    /**
+     * تغيير عدد وحدات Funnel
+     */
+    public function updateFunnelUnits($units)
+    {
+        $this->funnelUnits = $units;
+        $this->loadFunnelChart();
+    }
+
+    /**
+     * Render
+     */
+    public function render()
+    {
+        return view('livewire.dashboard.dashboard-home')
+            ->layout('layouts.dashboard');
+    }
+}

@@ -1,0 +1,5 @@
+{{-- أيقونة الوكيل (Agent) --}}
+<svg {{ $attributes->merge(['class'=>'w-6 h-6']) }} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <circle cx="12" cy="7.5" r="3.5"/>
+  <path d="M5 20a7 7 0 0 1 14 0"/>
+</svg>

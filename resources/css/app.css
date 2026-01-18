@@ -1,0 +1,91 @@
+@import './components.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+[x-cloak] {
+    display: none;
+}
+
+/* keep navbar dark everywhere - prevent any override */
+.navbar-dark {
+    background-color: #153E7E !important;
+    color: #fff !important;
+}
+
+/* روابط النافبار الرئيسية بيضاء */
+.navbar-dark > nav a,
+.navbar-dark > div > nav a,
+.navbar-dark > div > div > ul > li > a {
+    color: #fff !important;
+}
+
+.navbar-dark > nav a:hover,
+.navbar-dark > div > nav a:hover,
+.navbar-dark > div > div > ul > li > a:hover {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* روابط القوائم المنسدلة سوداء */
+.navbar-dark .bg-white a {
+    color: #000 !important;
+}
+
+.navbar-dark .bg-white a:hover {
+    color: #000 !important;
+}
+
+@layer utilities {
+  /* لوحة ألوان ناعمة */
+  :root{
+    --ink:#0f172a; --muted:#64748b; --line:#e2e8f0;
+    --brand-1:#6E7CF2; --brand-2:#6A42C1; /* بنفسجي */
+    --mint:#10b981; --cyan:#06b6d4; --amber:#f59e0b; --rose:#f43f5e;
+  }
+
+  /* بطاقات جداول */
+  .table-card{ @apply rounded-2xl bg-white shadow-[0_10px_35px_rgba(2,8,23,.06)] border border-slate-100; }
+  .table-header{
+    background-image: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+    @apply text-white;
+  }
+  .table-th{ @apply text-xs font-semibold tracking-wide text-white/95 py-3 px-3; }
+  .table-td{ @apply text-sm text-slate-700 py-2.5 px-3 border-t border-slate-100; }
+  .table-row{ @apply hover:bg-indigo-50/40 transition-colors; }
+  .table-row-zebra:nth-child(even){ @apply bg-slate-50/40; }
+
+  /* عمود البيان (الأرجواني) ثابت + حواف */
+  .sticky-col {
+    position: sticky; inset-inline-end: 0; /* RTL */
+    background: linear-gradient(90deg, #6b21a8, #7c3aed);
+    @apply text-white font-semibold border-none text-right;
+    direction: rtl;
+  }
+  .cell-rounded{ @apply rounded-lg border border-slate-200; }
+
+  /* حقول الإدخال داخل الجداول */
+  .cell-input{
+    @apply w-full rounded-lg border border-slate-300 px-2.5 py-1.5 text-sm focus:outline-none
+           focus:ring-2 focus:ring-indigo-500/70 focus:border-indigo-500 bg-white;
+  }
+  .no-spinners::-webkit-outer-spin-button,
+  .no-spinners::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+  .no-spinners{ -moz-appearance: textfield; appearance: textfield; }
+
+  /* شريط الأزرار */
+  .toolbar-btn{ @apply rounded-lg px-4 py-2 text-sm font-medium text-white shadow-sm hover:opacity-95 transition; }
+  .btn-brand { background-image: linear-gradient(90deg,var(--brand-1),var(--brand-2)); }
+  .btn-green { @apply bg-emerald-600; }
+  .btn-red   { @apply bg-rose-600; }
+  .btn-blue  { @apply bg-blue-600; }
+
+  /* أنيميشن دخول بسيط للجداول */
+  @keyframes fadeSlideUp{ from{opacity:.0; transform:translateY(6px)} to{opacity:1; transform:none} }
+  .reveal{ animation: fadeSlideUp .45s ease-out both; }
+
+  /* Active Menu Link Highlight */
+  .menu-link-active {
+    @apply text-yellow-400;
+  }
+}

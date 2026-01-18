@@ -1,0 +1,142 @@
+/*
+|--------------------------------------------------------------------------
+| Login Page Enhancement Styles 
+|--------------------------------------------------------------------------
+| Additional styles for OEC-like professional login page
+*/
+
+/* Enhanced social button animations */
+@keyframes buttonPulse {
+  0%, 100% { 
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+  }
+  50% { 
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+}
+
+.social-btn:focus {
+  animation: buttonPulse 1.5s infinite;
+}
+
+/* Custom scrollbar for better aesthetics */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Enhanced form validation styles */
+.input-field.error {
+  @apply border-red-500 bg-red-50;
+  animation: shake 0.5s ease-in-out;
+}
+
+.input-field.success {
+  @apply border-green-500 bg-green-50;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Loading spinner enhancement */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* RTL-specific enhancements */
+[dir="rtl"] .social-btn svg {
+  margin-right: 0.75rem;
+  margin-left: 0;
+}
+
+[dir="rtl"] .input-field {
+  padding-right: 2.5rem;
+  padding-left: 1rem;
+}
+
+/* Dark mode support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+  .login-container {
+    @apply bg-gray-900;
+  }
+  
+  .login-card {
+    @apply bg-gray-800 border-gray-700;
+  }
+  
+  .social-btn {
+    @apply bg-gray-700 text-gray-200 border-gray-600;
+  }
+  
+  .input-field {
+    @apply bg-gray-700 border-gray-600 text-gray-200;
+  }
+}
+
+/* Accessibility improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus indicators for accessibility */
+.social-btn:focus-visible,
+.input-field:focus-visible,
+.btn-primary:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .social-btn,
+  .input-field,
+  .btn-primary {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .social-btn,
+  .input-field,
+  .btn-primary {
+    transition: none;
+  }
+  
+  .social-btn:hover {
+    transform: none;
+  }
+  
+  .btn-primary:hover {
+    transform: none;
+  }
+}

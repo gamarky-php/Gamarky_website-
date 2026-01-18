@@ -1,0 +1,1004 @@
+openapi: 3.0.3
+info:
+  title: Gamarky Compute Service API
+  version: "1.0.0"
+  description: |
+    خدمة حسابية لمنصة Gamarky - حساب تكاليف الاستيراد والتصدير والتصنيع
+    مع دعم للعمليات الثقيلة عبر Celery وإرجاع بيانات جاهزة للرسوم البيانية
+  contact:
+    name: Gamarky Team
+    url: https://gamarky.com
+
+servers:
+  - url: http://localhost:8000/v1
+    description: Development server
+  - url: https://api.gamarky.com/v1
+    description: Production server
+
+paths:
+  # Health & Metrics
+  /healthz:
+    get:
+      tags:
+        - Health
+      summary: Health check endpoint (readiness & liveness)
+      operationId: health_check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+              examples:
+                healthy:
+                  value:
+                    status: "healthy"
+                    timestamp: "2025-09-29T10:30:00Z"
+                    services:
+                      database: "up"
+                      redis: "up"
+                      celery: "up"
+        '503':
+          description: Service is unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /metrics:
+    get:
+      tags:
+        - Health
+      summary: Service metrics and statistics
+      operationId: get_metrics
+      responses:
+        '200':
+          description: Service metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsResponse'
+              examples:
+                sample:
+                  value:
+                    avg_response_time_ms: 125
+                    error_rate_percent: 2.5
+                    total_requests: 15420
+                    active_jobs: 3
+                    cache_hit_rate_percent: 87.2
+
+  # Synchronous Calculations
+  /calc/import-cost:
+    post:
+      tags:
+        - Calculations
+      summary: Calculate import cost synchronously
+      operationId: calculate_import_cost
+      parameters:
+        - name: idempotency-key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+          description: Optional idempotency key to prevent duplicate processing
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportCostRequest'
+            examples:
+              basic_import:
+                value:
+                  country_from: "CN"
+                  port_from: "Shanghai"
+                  country_to: "SA"
+                  weight_tons: 25.5
+                  volume_m3: 40.0
+                  container_type: "20ft"
+                  incoterm: "CIF"
+                  currency: "SAR"
+                  fees:
+                    - name: "handling"
+                      amount: "500.00"
+                    - name: "documentation"
+                      amount: "250.00"
+      responses:
+        '200':
+          description: Import cost calculated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostResponse'
+              examples:
+                success:
+                  value:
+                    total: "45750.25"
+                    currency: "SAR"
+                    breakdown:
+                      - category: "shipping"
+                        amount: "25000.00"
+                      - category: "customs_duties"
+                        amount: "12500.00"
+                      - category: "taxes"
+                        amount: "6875.25"
+                      - category: "fees"
+                        amount: "1375.00"
+                    meta:
+                      algo_version: "1.0.0"
+                      elapsed_ms: 156
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Idempotency conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Domain validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /calc/export-cost:
+    post:
+      tags:
+        - Calculations
+      summary: Calculate export cost synchronously
+      operationId: calculate_export_cost
+      parameters:
+        - name: idempotency-key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportCostRequest'
+            examples:
+              basic_export:
+                value:
+                  country_from: "SA"
+                  port_from: "Jeddah"
+                  country_to: "AE"
+                  weight_tons: 15.0
+                  volume_m3: 30.0
+                  container_type: "20ft"
+                  incoterm: "FOB"
+                  currency: "SAR"
+                  fees:
+                    - name: "export_license"
+                      amount: "1500.00"
+      responses:
+        '200':
+          description: Export cost calculated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/IdempotencyConflict'
+        '422':
+          $ref: '#/components/responses/DomainError'
+
+  /calc/manufacturing-cost:
+    post:
+      tags:
+        - Calculations
+      summary: Calculate manufacturing cost synchronously
+      operationId: calculate_manufacturing_cost
+      parameters:
+        - name: idempotency-key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ManufacturingCostRequest'
+            examples:
+              basic_manufacturing:
+                value:
+                  country_from: "SA"
+                  facility_type: "medium"
+                  raw_materials:
+                    - name: "Steel"
+                      weight_tons: 10.0
+                      unit_cost: "2500.00"
+                    - name: "Aluminum"
+                      weight_tons: 5.0
+                      unit_cost: "4500.00"
+                  labor_hours: 240
+                  currency: "SAR"
+                  fees:
+                    - name: "quality_control"
+                      amount: "1200.00"
+      responses:
+        '200':
+          description: Manufacturing cost calculated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CostResponse'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+        '409':
+          $ref: '#/components/responses/IdempotencyConflict'
+        '422':
+          $ref: '#/components/responses/DomainError'
+
+  # Asynchronous Heavy Calculations
+  /calc/jobs/import-cost:
+    post:
+      tags:
+        - Heavy Jobs
+      summary: Submit heavy import cost calculation job
+      operationId: submit_import_job
+      parameters:
+        - name: idempotency-key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeavyImportJobRequest'
+      responses:
+        '202':
+          description: Job submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+              examples:
+                submitted:
+                  value:
+                    job_id: "550e8400-e29b-41d4-a716-446655440000"
+                    status: "pending"
+                    estimated_completion_seconds: 300
+
+  /calc/jobs/export-cost:
+    post:
+      tags:
+        - Heavy Jobs
+      summary: Submit heavy export cost calculation job
+      operationId: submit_export_job
+      parameters:
+        - name: idempotency-key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeavyExportJobRequest'
+      responses:
+        '202':
+          description: Job submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+
+  /calc/jobs/manufacturing-cost:
+    post:
+      tags:
+        - Heavy Jobs
+      summary: Submit heavy manufacturing cost calculation job
+      operationId: submit_manufacturing_job
+      parameters:
+        - name: idempotency-key
+          in: header
+          required: false
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeavyManufacturingJobRequest'
+      responses:
+        '202':
+          description: Job submitted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobResponse'
+
+  /calc/jobs/{job_id}:
+    get:
+      tags:
+        - Heavy Jobs
+      summary: Get job status and result
+      operationId: get_job_status
+      parameters:
+        - name: job_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Job status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatusResponse'
+              examples:
+                completed:
+                  value:
+                    job_id: "550e8400-e29b-41d4-a716-446655440000"
+                    status: "completed"
+                    progress_percent: 100
+                    result:
+                      total: "125750.50"
+                      currency: "SAR"
+                      breakdown:
+                        - category: "materials"
+                          amount: "85000.00"
+                        - category: "labor"
+                          amount: "35000.00"
+                        - category: "overhead"
+                          amount: "5750.50"
+                      meta:
+                        algo_version: "1.0.0"
+                        elapsed_ms: 45230
+                pending:
+                  value:
+                    job_id: "550e8400-e29b-41d4-a716-446655440000"
+                    status: "processing"
+                    progress_percent: 65
+                    estimated_remaining_seconds: 120
+        '404':
+          description: Job not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Charts & Analytics
+  /charts/invoices/overview:
+    get:
+      tags:
+        - Charts
+      summary: Get invoice overview chart data
+      operationId: get_invoice_overview
+      parameters:
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2025-01-01"
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date
+            example: "2025-12-31"
+        - name: group_by
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [day, week, month, quarter, year]
+            default: month
+      responses:
+        '200':
+          description: Chart data generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceOverviewChart'
+              examples:
+                monthly_overview:
+                  value:
+                    labels: ["Jan 2025", "Feb 2025", "Mar 2025"]
+                    series:
+                      - name: "Import Costs"
+                        data: ["125000.00", "143500.00", "167230.00"]
+                      - name: "Export Costs"
+                        data: ["85000.00", "92150.00", "105670.00"]
+                    totals:
+                      import_total: "435730.00"
+                      export_total: "282820.00"
+                      grand_total: "718550.00"
+                      currency: "SAR"
+
+components:
+  # Reusable Response Templates
+  responses:
+    ValidationError:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            validation_failed:
+              value:
+                error_code: "VALIDATION_ERROR"
+                message: "Request validation failed"
+                details:
+                  field_errors:
+                    weight_tons: ["Must be a positive number"]
+                    country_from: ["Invalid country code"]
+                timestamp: "2025-09-29T10:30:00Z"
+
+    IdempotencyConflict:
+      description: Idempotency key conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            conflict:
+              value:
+                error_code: "IDEMPOTENCY_CONFLICT"
+                message: "Request with this idempotency key already processed"
+                existing_result_id: "550e8400-e29b-41d4-a716-446655440000"
+                timestamp: "2025-09-29T10:30:00Z"
+
+    DomainError:
+      description: Domain validation error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            unsupported_route:
+              value:
+                error_code: "UNSUPPORTED_SHIPPING_ROUTE"
+                message: "Shipping route from CN to SA via selected ports is not available"
+                details:
+                  available_ports: ["Dammam", "Jeddah"]
+                timestamp: "2025-09-29T10:30:00Z"
+
+  schemas:
+    # Health & Metrics
+    HealthResponse:
+      type: object
+      required:
+        - status
+        - timestamp
+        - services
+      properties:
+        status:
+          type: string
+          enum: [healthy, degraded, unhealthy]
+        timestamp:
+          type: string
+          format: date-time
+        services:
+          type: object
+          properties:
+            database:
+              type: string
+              enum: [up, down]
+            redis:
+              type: string
+              enum: [up, down]
+            celery:
+              type: string
+              enum: [up, down]
+
+    MetricsResponse:
+      type: object
+      required:
+        - avg_response_time_ms
+        - error_rate_percent
+        - total_requests
+        - active_jobs
+      properties:
+        avg_response_time_ms:
+          type: number
+          format: float
+          example: 125.5
+        error_rate_percent:
+          type: number
+          format: float
+          example: 2.5
+        total_requests:
+          type: integer
+          example: 15420
+        active_jobs:
+          type: integer
+          example: 3
+        cache_hit_rate_percent:
+          type: number
+          format: float
+          example: 87.2
+
+    # Fee Structure
+    Fee:
+      type: object
+      required:
+        - name
+        - amount
+      properties:
+        name:
+          type: string
+          example: "handling"
+        amount:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "500.00"
+        description:
+          type: string
+          example: "Port handling charges"
+
+    # Cost Breakdown
+    CostBreakdownItem:
+      type: object
+      required:
+        - category
+        - amount
+      properties:
+        category:
+          type: string
+          example: "shipping"
+        amount:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "25000.00"
+        description:
+          type: string
+          example: "Ocean freight charges"
+
+    # Meta Information
+    ResponseMeta:
+      type: object
+      required:
+        - algo_version
+        - elapsed_ms
+      properties:
+        algo_version:
+          type: string
+          example: "1.0.0"
+        elapsed_ms:
+          type: integer
+          example: 156
+          description: Processing time in milliseconds
+
+    # Raw Material for Manufacturing
+    RawMaterial:
+      type: object
+      required:
+        - name
+        - weight_tons
+        - unit_cost
+      properties:
+        name:
+          type: string
+          example: "Steel"
+        weight_tons:
+          type: number
+          format: float
+          minimum: 0.001
+          example: 10.5
+        unit_cost:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "2500.00"
+        supplier:
+          type: string
+          example: "SABIC"
+
+    # Request Schemas
+    ImportCostRequest:
+      type: object
+      required:
+        - country_from
+        - country_to
+        - weight_tons
+        - volume_m3
+        - container_type
+        - incoterm
+        - currency
+      properties:
+        country_from:
+          type: string
+          minLength: 2
+          maxLength: 3
+          example: "CN"
+          description: ISO country code of origin
+        port_from:
+          type: string
+          example: "Shanghai"
+          description: Port of origin
+        country_to:
+          type: string
+          minLength: 2
+          maxLength: 3
+          example: "SA"
+          description: ISO country code of destination
+        port_to:
+          type: string
+          example: "Jeddah"
+          description: Port of destination
+        weight_tons:
+          type: number
+          format: float
+          minimum: 0.001
+          example: 25.5
+        volume_m3:
+          type: number
+          format: float
+          minimum: 0.001
+          example: 40.0
+        container_type:
+          type: string
+          enum: ["20ft", "40ft", "40ft_hc", "45ft"]
+          example: "20ft"
+        incoterm:
+          type: string
+          enum: ["EXW", "FCA", "CPT", "CIP", "DAT", "DAP", "DDP", "FAS", "FOB", "CFR", "CIF"]
+          example: "CIF"
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          example: "SAR"
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fee'
+          description: Additional fees and charges
+
+    ExportCostRequest:
+      type: object
+      required:
+        - country_from
+        - country_to
+        - weight_tons
+        - volume_m3
+        - container_type
+        - incoterm
+        - currency
+      properties:
+        country_from:
+          type: string
+          minLength: 2
+          maxLength: 3
+          example: "SA"
+        port_from:
+          type: string
+          example: "Jeddah"
+        country_to:
+          type: string
+          minLength: 2
+          maxLength: 3
+          example: "AE"
+        port_to:
+          type: string
+          example: "Dubai"
+        weight_tons:
+          type: number
+          format: float
+          minimum: 0.001
+          example: 15.0
+        volume_m3:
+          type: number
+          format: float
+          minimum: 0.001
+          example: 30.0
+        container_type:
+          type: string
+          enum: ["20ft", "40ft", "40ft_hc", "45ft"]
+          example: "20ft"
+        incoterm:
+          type: string
+          enum: ["EXW", "FCA", "CPT", "CIP", "DAT", "DAP", "DDP", "FAS", "FOB", "CFR", "CIF"]
+          example: "FOB"
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          example: "SAR"
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fee'
+
+    ManufacturingCostRequest:
+      type: object
+      required:
+        - country_from
+        - facility_type
+        - raw_materials
+        - labor_hours
+        - currency
+      properties:
+        country_from:
+          type: string
+          minLength: 2
+          maxLength: 3
+          example: "SA"
+        facility_type:
+          type: string
+          enum: [small, medium, large, industrial]
+          example: "medium"
+        raw_materials:
+          type: array
+          items:
+            $ref: '#/components/schemas/RawMaterial'
+          minItems: 1
+        labor_hours:
+          type: integer
+          minimum: 1
+          example: 240
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          example: "SAR"
+        fees:
+          type: array
+          items:
+            $ref: '#/components/schemas/Fee'
+
+    # Heavy Job Requests (for async processing)
+    HeavyImportJobRequest:
+      type: object
+      required:
+        - batch_requests
+      properties:
+        batch_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImportCostRequest'
+          minItems: 1
+          maxItems: 1000
+        priority:
+          type: string
+          enum: [low, normal, high]
+          default: normal
+
+    HeavyExportJobRequest:
+      type: object
+      required:
+        - batch_requests
+      properties:
+        batch_requests:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExportCostRequest'
+          minItems: 1
+          maxItems: 1000
+        priority:
+          type: string
+          enum: [low, normal, high]
+          default: normal
+
+    HeavyManufacturingJobRequest:
+      type: object
+      required:
+        - scenarios
+      properties:
+        scenarios:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManufacturingCostRequest'
+          minItems: 1
+          maxItems: 500
+        priority:
+          type: string
+          enum: [low, normal, high]
+          default: normal
+
+    # Response Schemas
+    CostResponse:
+      type: object
+      required:
+        - total
+        - currency
+        - breakdown
+        - meta
+      properties:
+        total:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "45750.25"
+          description: Total calculated cost
+        currency:
+          type: string
+          minLength: 3
+          maxLength: 3
+          example: "SAR"
+        breakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/CostBreakdownItem'
+        meta:
+          $ref: '#/components/schemas/ResponseMeta'
+
+    JobResponse:
+      type: object
+      required:
+        - job_id
+        - status
+      properties:
+        job_id:
+          type: string
+          format: uuid
+          example: "550e8400-e29b-41d4-a716-446655440000"
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+          example: "pending"
+        estimated_completion_seconds:
+          type: integer
+          example: 300
+          description: Estimated time to completion in seconds
+
+    JobStatusResponse:
+      type: object
+      required:
+        - job_id
+        - status
+      properties:
+        job_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+        progress_percent:
+          type: integer
+          minimum: 0
+          maximum: 100
+          example: 75
+        estimated_remaining_seconds:
+          type: integer
+          example: 120
+        result:
+          $ref: '#/components/schemas/CostResponse'
+        error_details:
+          type: object
+          properties:
+            error_code:
+              type: string
+              example: "CALCULATION_TIMEOUT"
+            message:
+              type: string
+              example: "Job exceeded maximum processing time"
+
+    # Chart Schemas
+    InvoiceOverviewChart:
+      type: object
+      required:
+        - labels
+        - series
+        - totals
+      properties:
+        labels:
+          type: array
+          items:
+            type: string
+          example: ["Jan 2025", "Feb 2025", "Mar 2025"]
+          description: Time period labels
+        series:
+          type: array
+          items:
+            $ref: '#/components/schemas/ChartSeries'
+        totals:
+          $ref: '#/components/schemas/ChartTotals'
+
+    ChartSeries:
+      type: object
+      required:
+        - name
+        - data
+      properties:
+        name:
+          type: string
+          example: "Import Costs"
+        data:
+          type: array
+          items:
+            type: string
+            pattern: '^\d+(\.\d{1,4})?$'
+          example: ["125000.00", "143500.00", "167230.00"]
+        color:
+          type: string
+          example: "#4ECDC4"
+          description: Hex color code for the series
+
+    ChartTotals:
+      type: object
+      required:
+        - currency
+      properties:
+        import_total:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "435730.00"
+        export_total:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "282820.00"
+        manufacturing_total:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "156420.00"
+        grand_total:
+          type: string
+          pattern: '^\d+(\.\d{1,4})?$'
+          example: "874970.00"
+        currency:
+          type: string
+          example: "SAR"
+
+    # Error Response
+    ErrorResponse:
+      type: object
+      required:
+        - error_code
+        - message
+        - timestamp
+      properties:
+        error_code:
+          type: string
+          enum: 
+            - VALIDATION_ERROR
+            - IDEMPOTENCY_CONFLICT
+            - UNSUPPORTED_SHIPPING_ROUTE
+            - INVALID_COUNTRY_COMBINATION
+            - CALCULATION_TIMEOUT
+            - INSUFFICIENT_DATA
+            - INTERNAL_ERROR
+          example: "VALIDATION_ERROR"
+        message:
+          type: string
+          example: "Request validation failed"
+        details:
+          type: object
+          description: Additional error context
+        existing_result_id:
+          type: string
+          format: uuid
+          description: ID of existing result (for idempotency conflicts)
+        timestamp:
+          type: string
+          format: date-time
+
+tags:
+  - name: Health
+    description: Health checks, metrics, and service monitoring
+  - name: Calculations
+    description: Synchronous cost calculation endpoints
+  - name: Heavy Jobs
+    description: Asynchronous heavy calculation job management
+  - name: Charts
+    description: Chart data generation for analytics and visualizations
