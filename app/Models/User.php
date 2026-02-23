@@ -174,11 +174,20 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get cost calculations
+     * Get cost calculations (camelCase)
      */
     public function costCalculations(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(CostCalculation::class);
+    }
+
+    /**
+     * Backward-compatible alias for old code that calls snake_case:
+     * AuthController is calling: $user->cost_calculations()
+     */
+    public function cost_calculations(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->costCalculations();
     }
 
     /**
@@ -203,12 +212,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function hasFeature(string $feature): bool
     {
         $subscription = $this->activeSubscription;
-        
+
         if (!$subscription) {
             return false;
         }
 
         return $subscription->hasFeature($feature);
     }
-}
 
+    /**
+     * Check if user profile is completed
+     */
+    public function isProfileCompleted(): bool
+    {
+        return !empty($this->name) 
+            && !empty($this->email) 
+            && !empty($this->phone);
+    }
+}
