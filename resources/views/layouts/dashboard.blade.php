@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="h-full">
+<html lang="@locale" dir="@dir" class="h-full">
 <!--
 ╔═══════════════════════════════════════════════════════════════════════╗
-║  Dashboard Layout - لوحة التحكم المتقدمة RTL                          ║
-║  Purpose: قالب موحد لجميع صفحات لوحة التحكم الجديدة                  ║
+║  Dashboard Layout - Multi-language i18n                               ║
+║  Purpose: Unified layout for dashboard with RTL/LTR support           ║
 ║  Features: Sidebar + Topbar + Breadcrumbs + Dark Mode + Notifications ║
 ║  Tech Stack: Tailwind CSS 3 + Alpine.js + Livewire 3                 ║
-║  Version: 1.0.0 | Date: 2025-11-09                                    ║
+║  Version: 2.0.0 | Date: 2026-03-02 (i18n refactor)                    ║
 ╚═══════════════════════════════════════════════════════════════════════╝
 -->
 <head>
@@ -14,12 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
-    <title>@yield('title', 'لوحة التحكم') - {{ config('app.name', 'Gamarky') }}</title>
+    <title>@yield('title', __('dashboard.dashboard')) - {{ __('nav.brand') }}</title>
     
-    {{-- Fonts: IBM Plex Sans Arabic --}}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    @include('layouts.partials.fonts')
     
     {{-- Vite Assets (تحميل Alpine مرة واحدة فقط) --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -29,14 +26,13 @@
     
     {{-- Custom Styles --}}
     <style>
-        [x-cloak] { display: none !important; }
-        body { font-family: 'IBM Plex Sans Arabic', sans-serif; }
+        /* Dashboard-specific styles can be added here if needed */
     </style>
     
     @stack('styles')
 </head>
 
-<body class="h-full bg-gray-50 dark:bg-gray-900 antialiased" 
+<body class="h-full bg-gray-50 dark:bg-gray-900 antialiased" dir="@dir" 
       x-data="dashboardApp()"
       x-init="init()"
       @keydown.escape="closeAllMenus()"
