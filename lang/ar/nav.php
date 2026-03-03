@@ -5,6 +5,9 @@ return [
     'tagline' => 'منصة رجال الأعمال',
     
     // Main Navigation
+    'home' => 'الرئيسية',
+    'invoice' => 'الفاتورة',
+    'notifications' => 'الإشعارات',
     'import' => 'الاستيراد',
     'import_calculator' => 'حاسبة تكلفة الاستيراد',
     'import_procedures' => 'إجراءات الاستيراد',
@@ -34,6 +37,7 @@ return [
     'track_truck' => 'تتبع شاحنة',
     
     'agent' => 'الوكيل',
+    'suppliers' => 'الموردون',
     'shipping_agent' => 'ابحث عن وكيل شحن',
     'brand_agents' => 'وكلاء العلامات التجارية',
     
@@ -49,4 +53,10 @@ return [
     'arabic' => 'العربية',
     'chinese' => 'الصينية',
     'english' => 'الإنجليزية',
+    'arabic_short' => 'ع',
+    'open_menu' => 'فتح القائمة',
+    'close_menu' => 'إغلاق القائمة',
+    'login_register' => 'الدخول / التسجيل',
+    'menu' => 'القائمة',
+    'avatar_alt' => 'الصورة الشخصية',
 ];

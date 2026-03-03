@@ -1,4 +1,5 @@
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     {{-- Header --}}
     <div class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -29,7 +30,7 @@
                     </div>
                     <button wire:click="$set('showContactModal', true)" 
                             class="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg">
-                        طلب عرض سعر
+                        {{ __('طلب عرض سعر') }}
                     </button>
                 </div>
             </div>
@@ -38,19 +39,19 @@
             <div class="flex gap-6 mt-6 border-b border-gray-200 dark:border-gray-700">
                 <button wire:click="$set('activeTab', 'overview')" 
                         class="pb-3 border-b-2 {{ $activeTab === 'overview' ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
-                    نظرة عامة
+                    {{ __('نظرة عامة') }}
                 </button>
                 <button wire:click="$set('activeTab', 'documents')" 
                         class="pb-3 border-b-2 {{ $activeTab === 'documents' ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
-                    الوثائق ({{ count($documents, COUNT_RECURSIVE) - count($documents) }})
+                    {{ __('الوثائق') }} ({{ count($documents, COUNT_RECURSIVE) - count($documents) }})
                 </button>
                 <button wire:click="$set('activeTab', 'reviews')" 
                         class="pb-3 border-b-2 {{ $activeTab === 'reviews' ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
-                    التقييمات ({{ count($reviews) }})
+                    {{ __('التقييمات') }} ({{ count($reviews) }})
                 </button>
                 <button wire:click="$set('activeTab', 'performance')" 
                         class="pb-3 border-b-2 {{ $activeTab === 'performance' ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' }}">
-                    الأداء
+                    {{ __('الأداء') }}
                 </button>
             </div>
         </div>
@@ -65,27 +66,27 @@
                     {{-- Stats Cards --}}
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                            <p class="text-sm text-gray-600 dark:text-gray-400">إجمالي الشحنات</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('إجمالي الشحنات') }}</p>
                             <p class="text-3xl font-bold text-emerald-600 dark:text-emerald-400 mt-2">{{ $stats['total_jobs'] }}</p>
                         </div>
                         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                            <p class="text-sm text-gray-600 dark:text-gray-400">معدل الإنجاز في الوقت</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('معدل الإنجاز في الوقت') }}</p>
                             <p class="text-3xl font-bold text-blue-600 dark:text-blue-400 mt-2">{{ $stats['on_time_rate'] }}%</p>
                         </div>
                         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                            <p class="text-sm text-gray-600 dark:text-gray-400">متوسط التخليص (أيام)</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('متوسط التخليص (أيام)') }}</p>
                             <p class="text-3xl font-bold text-purple-600 dark:text-purple-400 mt-2">{{ $stats['avg_clearance_days'] }}</p>
                         </div>
                     </div>
 
                     {{-- Composite Ratings --}}
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">التقييمات المركّبة</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">{{ __('التقييمات المركّبة') }}</h3>
                         <div class="space-y-4">
                             {{-- Speed --}}
                             <div>
                                 <div class="flex justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">السرعة</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('السرعة') }}</span>
                                     <span class="text-sm font-bold text-emerald-600 dark:text-emerald-400">{{ $compositeRatings['speed'] ?? 0 }}/5</span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -96,7 +97,7 @@
                             {{-- Accuracy --}}
                             <div>
                                 <div class="flex justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">الدقة</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('الدقة') }}</span>
                                     <span class="text-sm font-bold text-blue-600 dark:text-blue-400">{{ $compositeRatings['accuracy'] ?? 0 }}/5</span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -107,7 +108,7 @@
                             {{-- Communication --}}
                             <div>
                                 <div class="flex justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">التواصل</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('التواصل') }}</span>
                                     <span class="text-sm font-bold text-purple-600 dark:text-purple-400">{{ $compositeRatings['communication'] ?? 0 }}/5</span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -118,7 +119,7 @@
                             {{-- Cost --}}
                             <div>
                                 <div class="flex justify-between mb-2">
-                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">التكلفة</span>
+                                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ __('التكلفة') }}</span>
                                     <span class="text-sm font-bold text-orange-600 dark:text-orange-400">{{ $compositeRatings['cost'] ?? 0 }}/5</span>
                                 </div>
                                 <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
@@ -131,10 +132,10 @@
                     {{-- Recent Reviews --}}
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                         <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">آخر التقييمات</h3>
+                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('آخر التقييمات') }}</h3>
                             <button wire:click="$set('showReviewModal', true)" 
                                     class="text-sm px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg">
-                                إضافة تقييم
+                                {{ __('إضافة تقييم') }}
                             </button>
                         </div>
                         <div class="space-y-4">
@@ -142,7 +143,7 @@
                                 <div class="pb-4 border-b border-gray-200 dark:border-gray-700 last:border-0">
                                     <div class="flex items-start justify-between mb-2">
                                         <div>
-                                            <p class="font-medium text-gray-900 dark:text-white">{{ $review->reviewer_name ?? 'مستخدم مجهول' }}</p>
+                                            <p class="font-medium text-gray-900 dark:text-white">{{ $review->reviewer_name ?? __('مستخدم مجهول') }}</p>
                                             @if($review->reviewer_company)
                                                 <p class="text-sm text-gray-600 dark:text-gray-400">{{ $review->reviewer_company }}</p>
                                             @endif
@@ -164,7 +165,7 @@
                                     <p class="text-xs text-gray-500 dark:text-gray-500 mt-2">{{ \Carbon\Carbon::parse($review->created_at)->diffForHumans() }}</p>
                                 </div>
                             @empty
-                                <p class="text-center text-gray-500 dark:text-gray-500 py-8">لا توجد تقييمات بعد</p>
+                                <p class="text-center text-gray-500 dark:text-gray-500 py-8">{{ __('لا توجد تقييمات بعد') }}</p>
                             @endforelse
                         </div>
                     </div>
@@ -174,7 +175,7 @@
                 <div class="space-y-6">
                     {{-- Contact Info --}}
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">معلومات الاتصال</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('معلومات الاتصال') }}</h3>
                         <div class="space-y-3">
                             @if($broker->email)
                                 <div class="flex items-center gap-3 text-sm">
@@ -197,7 +198,7 @@
                                     <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
                                     </svg>
-                                    <a href="{{ $broker->website }}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:underline">الموقع الإلكتروني</a>
+                                    <a href="{{ $broker->website }}" target="_blank" class="text-emerald-600 dark:text-emerald-400 hover:underline">{{ __('الموقع الإلكتروني') }}</a>
                                 </div>
                             @endif
                         </div>
@@ -205,7 +206,7 @@
 
                     {{-- Experience --}}
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">الخبرة والشهادات</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('الخبرة والشهادات') }}</h3>
                         <div class="space-y-4">
                             <div class="flex items-center gap-3">
                                 <div class="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg">
@@ -215,7 +216,7 @@
                                 </div>
                                 <div>
                                     <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $broker->experience_years }}</p>
-                                    <p class="text-sm text-gray-600 dark:text-gray-400">سنة خبرة</p>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ __('سنة خبرة') }}</p>
                                 </div>
                             </div>
 
@@ -225,7 +226,7 @@
                                 @endphp
                                 @if(count($certs) > 0)
                                     <div>
-                                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الشهادات:</p>
+                                        <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الشهادات:') }}</p>
                                         <div class="flex flex-wrap gap-2">
                                             @foreach($certs as $cert)
                                                 <span class="inline-flex items-center px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-sm text-purple-700 dark:text-purple-400">
@@ -241,14 +242,14 @@
 
                     {{-- Activities & Ports --}}
                     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">الأنشطة والموانئ</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('الأنشطة والموانئ') }}</h3>
                         <div class="space-y-4">
                             @if($broker->activities)
                                 @php
                                     $activities = json_decode($broker->activities, true) ?? [];
                                 @endphp
                                 <div>
-                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الأنشطة:</p>
+                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الأنشطة:') }}</p>
                                     <div class="flex flex-wrap gap-2">
                                         @foreach($activities as $activity)
                                             <span class="inline-flex items-center px-3 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-sm text-blue-700 dark:text-blue-400">
@@ -264,7 +265,7 @@
                                     $ports = json_decode($broker->ports, true) ?? [];
                                 @endphp
                                 <div>
-                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الموانئ المغطاة:</p>
+                                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الموانئ المغطاة:') }}</p>
                                     <div class="flex flex-wrap gap-2">
                                         @foreach($ports as $port)
                                             <span class="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/30 text-sm text-emerald-700 dark:text-emerald-400">
@@ -283,7 +284,7 @@
         {{-- Documents Tab --}}
         @if($activeTab === 'documents')
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">الوثائق والمستندات</h3>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">{{ __('الوثائق والمستندات') }}</h3>
                 @forelse($documents as $type => $docs)
                     <div class="mb-6">
                         <h4 class="font-medium text-gray-900 dark:text-white mb-3">{{ ucfirst($type) }}</h4>
@@ -308,7 +309,7 @@
                         </div>
                     </div>
                 @empty
-                    <p class="text-center text-gray-500 dark:text-gray-500 py-12">لا توجد مستندات</p>
+                    <p class="text-center text-gray-500 dark:text-gray-500 py-12">{{ __('لا توجد مستندات') }}</p>
                 @endforelse
             </div>
         @endif
@@ -317,10 +318,10 @@
         @if($activeTab === 'reviews')
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">جميع التقييمات ({{ count($reviews) }})</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('جميع التقييمات') }} ({{ count($reviews) }})</h3>
                     <button wire:click="$set('showReviewModal', true)" 
                             class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg">
-                        إضافة تقييم
+                        {{ __('إضافة تقييم') }}
                     </button>
                 </div>
                 <div class="space-y-6">
@@ -328,7 +329,7 @@
                         <div class="pb-6 border-b border-gray-200 dark:border-gray-700 last:border-0">
                             <div class="flex items-start justify-between mb-3">
                                 <div>
-                                    <p class="font-medium text-gray-900 dark:text-white">{{ $review->reviewer_name ?? 'مستخدم مجهول' }}</p>
+                                    <p class="font-medium text-gray-900 dark:text-white">{{ $review->reviewer_name ?? __('مستخدم مجهول') }}</p>
                                     @if($review->reviewer_company)
                                         <p class="text-sm text-gray-600 dark:text-gray-400">{{ $review->reviewer_company }}</p>
                                     @endif
@@ -350,7 +351,7 @@
                             <p class="text-gray-700 dark:text-gray-300">{{ $review->comments }}</p>
                         </div>
                     @empty
-                        <p class="text-center text-gray-500 dark:text-gray-500 py-12">لا توجد تقييمات بعد</p>
+                        <p class="text-center text-gray-500 dark:text-gray-500 py-12">{{ __('لا توجد تقييمات بعد') }}</p>
                     @endforelse
                 </div>
             </div>
@@ -360,16 +361,16 @@
         @if($activeTab === 'performance')
             <div class="space-y-6">
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">آخر الشحنات</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-6">{{ __('آخر الشحنات') }}</h3>
                     <div class="overflow-x-auto">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead>
                                 <tr class="bg-gray-50 dark:bg-gray-900">
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">رقم الشحنة</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">العميل</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">الحالة</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">التاريخ المتوقع</th>
-                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">التاريخ الفعلي</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('رقم الشحنة') }}</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('العميل') }}</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('الحالة') }}</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('التاريخ المتوقع') }}</th>
+                                    <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('التاريخ الفعلي') }}</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -387,7 +388,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="px-6 py-12 text-center text-gray-500 dark:text-gray-500">لا توجد شحنات</td>
+                                        <td colspan="5" class="px-6 py-12 text-center text-gray-500 dark:text-gray-500">{{ __('لا توجد شحنات') }}</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -402,12 +403,12 @@
     @if($showReviewModal)
         <div class="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50" wire:click.self="$set('showReviewModal', false)">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full mx-4 p-6">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">إضافة تقييم</h3>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-6">{{ __('إضافة تقييم') }}</h3>
                 
                 <div class="space-y-6">
                     {{-- Overall Rating --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">التقييم العام</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('التقييم العام') }}</label>
                         <div class="flex gap-2">
                             @for($i = 1; $i <= 5; $i++)
                                 <button wire:click="$set('reviewRating', {{ $i }})" type="button">
@@ -421,7 +422,7 @@
 
                     {{-- Criteria Scores --}}
                     <div class="grid grid-cols-2 gap-4">
-                        @foreach(['speed' => 'السرعة', 'accuracy' => 'الدقة', 'communication' => 'التواصل', 'cost' => 'التكلفة'] as $key => $label)
+                        @foreach(['speed' => __('السرعة'), 'accuracy' => __('الدقة'), 'communication' => __('التواصل'), 'cost' => __('التكلفة')] as $key => $label)
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $label }}</label>
                                 <input type="range" wire:model="criteriaScores.{{ $key }}" min="1" max="5" step="1"
@@ -433,9 +434,9 @@
 
                     {{-- Comment --}}
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">التعليق</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('التعليق') }}</label>
                         <textarea wire:model="reviewComment" rows="4"
-                                  placeholder="شارك تجربتك مع هذا المستخلص..."
+                                  placeholder="{{ __('شارك تجربتك مع هذا المستخلص...') }}"
                                   class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-emerald-500 focus:ring-emerald-500"></textarea>
                         @error('reviewComment') <span class="text-xs text-red-500 mt-1">{{ $message }}</span> @enderror
                     </div>
@@ -444,11 +445,11 @@
                 <div class="flex gap-3 mt-6">
                     <button wire:click="submitReview" 
                             class="flex-1 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg">
-                        إرسال التقييم
+                        {{ __('إرسال التقييم') }}
                     </button>
                     <button wire:click="$set('showReviewModal', false)" 
                             class="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg">
-                        إلغاء
+                        {{ __('إلغاء') }}
                     </button>
                 </div>
             </div>
@@ -459,8 +460,8 @@
     @if($showContactModal)
         <div class="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50" wire:click.self="$set('showContactModal', false)">
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-md w-full mx-4 p-6">
-                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">طلب عرض سعر</h3>
-                <p class="text-gray-600 dark:text-gray-400 mb-6">يمكنك التواصل مع المستخلص مباشرة:</p>
+                <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-4">{{ __('طلب عرض سعر') }}</h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">{{ __('يمكنك التواصل مع المستخلص مباشرة:') }}</p>
                 
                 <div class="space-y-3">
                     @if($broker->email)
@@ -485,7 +486,7 @@
 
                 <button wire:click="$set('showContactModal', false)" 
                         class="w-full mt-6 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg">
-                    إغلاق
+                    {{ __('إغلاق') }}
                 </button>
             </div>
         </div>

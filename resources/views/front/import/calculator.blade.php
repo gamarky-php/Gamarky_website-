@@ -1,89 +1,89 @@
-@extends('layouts.front')
+﻿@extends('layouts.front')
 
-@section('title', 'حاسبة تكلفة الاستيراد – جمركي')
+@section('title', __('front.import.calculator.title'))
 
 @push('styles')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
 @endpush
 
 @section('content')
-<main class="page-wrapper mx-auto px-3 md:px-6 min-h-screen bg-gray-50 text-slate-800" dir="rtl">
+<main class="page-wrapper mx-auto px-3 md:px-6 min-h-screen bg-gray-50 text-slate-800">
   {{-- أي هيدر/بِنَر/CTA علوي يبقى كما هو --}}
     {{-- Header --}}
     <div class="bg-gradient-to-r from-purple-600 via-blue-600 to-blue-700 text-white rounded-2xl shadow-xl p-8 mb-8">
-      <h1 class="text-4xl font-bold mb-2 text-center">حاسبة تكلفة الاستيراد</h1>
-      <p class="text-white/90 text-lg text-center">" ما لا يمكن قياسه لا يمكن إدارته " بيتر دراكر</p>
+      <h1 class="text-4xl font-bold mb-2 text-center">{{ __('front.import.calculator.heading') }}</h1>
+      <p class="text-white/90 text-lg text-center">{{ __('front.import.calculator.quote') }}</p>
     </div>
 
 
 
   {{-- تخطيط الشبكة الرئيسي: سايدبار 15% + محتوى 85% --}}
-  <div class="grid grid-cols-1 md:grid-cols-[15%_85%] md:gap-4" dir="rtl">
+  <div class="grid grid-cols-1 md:grid-cols-[15%_85%] md:gap-4">
 
       {{-- العمود 1: السايدبار (15%) --}}
   <aside class="md:col-start-1 md:sticky md:top-24 md:self-start">
         {{-- كارت 1: مدخلات الشحن --}}
         <div class="sidebar-card reveal">
-          <div class="card-title-gradient">مدخلات الشحن</div>
+          <div class="card-title-gradient">{{ __('front.import.calculator.shipping_inputs') }}</div>
           <div class="space-y-3">
             <div>
-              <label class="block text-xs text-slate-600 mb-1">بلد المنشأ</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.origin_country') }}</label>
               <select id="country_id" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                <option value="">اختر بلد المنشأ</option>
+                <option value="">{{ __('front.import.calculator.select_origin_country') }}</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">نوع الشحن</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.shipping_mode') }}</label>
               <select id="mode" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                <option value="">اختر نوع الشحن</option>
-                <option value="sea">بحري</option>
-                <option value="air">جوي</option>
-                <option value="land">بري</option>
+                <option value="">{{ __('front.import.calculator.select_shipping_mode') }}</option>
+                <option value="sea">{{ __('front.import.calculator.sea') }}</option>
+                <option value="air">{{ __('front.import.calculator.air') }}</option>
+                <option value="land">{{ __('front.import.calculator.land') }}</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">ميناء المنشأ</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.origin_port') }}</label>
               <select id="port_id" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                <option value="">اختر ميناء المنشأ</option>
+                <option value="">{{ __('front.import.calculator.select_origin_port') }}</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">نوع الشحنة (اختياري)</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.shipping_type_optional') }}</label>
               <select id="shipping_type_id" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                <option value="">اختر نوع الشحنة</option>
+                <option value="">{{ __('front.import.calculator.select_shipping_type') }}</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">نوع الحاوية</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.container_type') }}</label>
               <select class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                <option value="">اختر نوع الحاوية</option>
-                <option value="20ft">20 قدم (عادية)</option>
-                <option value="40ft">40 قدم (عادية)</option>
-                <option value="40ft-hc">40 قدم (عالية)</option>
-                <option value="20ft-ref">20 قدم (مبردة)</option>
-                <option value="40ft-ref">40 قدم (مبردة)</option>
+                <option value="">{{ __('front.import.calculator.select_container_type') }}</option>
+                <option value="20ft">{{ __('front.import.calculator.container_20ft_standard') }}</option>
+                <option value="40ft">{{ __('front.import.calculator.container_40ft_standard') }}</option>
+                <option value="40ft-hc">{{ __('front.import.calculator.container_40ft_high') }}</option>
+                <option value="20ft-ref">{{ __('front.import.calculator.container_20ft_reefer') }}</option>
+                <option value="40ft-ref">{{ __('front.import.calculator.container_40ft_reefer') }}</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">ميناء الوصول</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.destination_port') }}</label>
               <select class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500">
-                <option value="">اختر ميناء الوصول</option>
-                <option value="alexandria">الإسكندرية - مصر</option>
-                <option value="damietta">دمياط - مصر</option>
-                <option value="port_said">بورسعيد - مصر</option>
-                <option value="sokhna">السخنة - مصر</option>
+                <option value="">{{ __('front.import.calculator.select_destination_port') }}</option>
+                <option value="alexandria">{{ __('front.import.calculator.port_alexandria_eg') }}</option>
+                <option value="damietta">{{ __('front.import.calculator.port_damietta_eg') }}</option>
+                <option value="port_said">{{ __('front.import.calculator.port_port_said_eg') }}</option>
+                <option value="sokhna">{{ __('front.import.calculator.port_sokhna_eg') }}</option>
               </select>
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">وزن البضاعة (طن)</label>
-              <input type="number" step="0.01" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="أدخل الوزن" />
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.cargo_weight_ton') }}</label>
+              <input type="number" step="0.01" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="{{ __('front.import.calculator.enter_weight') }}" />
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">حجم البضاعة (م³)</label>
-              <input type="number" step="0.01" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="أدخل الحجم" />
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.cargo_volume_cbm') }}</label>
+              <input type="number" step="0.01" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" placeholder="{{ __('front.import.calculator.enter_volume') }}" />
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">تاريخ الشحن المتوقع</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.etd') }}</label>
               <input type="date" class="w-full rounded-lg border border-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" />
             </div>
           </div>
@@ -91,12 +91,12 @@
 
         {{-- كارت 2: اقتراحات الخدمات --}}
         <div class="sidebar-card reveal">
-          <div class="card-title-gradient">اقتراحات الخدمات</div>
+          <div class="card-title-gradient">{{ __('front.import.calculator.service_suggestions') }}</div>
           <div class="space-y-2">
-            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">وكيل شحن</a>
-            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">مستخلص جمركي</a>
-            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">بورصة حاويات</a>
-            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">نقل محلي</a>
+            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.import.calculator.shipping_agent') }}</a>
+            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.import.calculator.customs_broker') }}</a>
+            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.import.calculator.container_exchange') }}</a>
+            <a href="#" class="block w-full text-center rounded-lg border border-slate-200 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.import.calculator.local_transport') }}</a>
           </div>
         </div>
 
@@ -112,7 +112,7 @@
           @if(!empty($cards))
             @include('components.ads.panel', ['cards'=>$cards])
           @else
-            <div class="text-sm text-slate-500 text-center py-4">لا توجد إعلانات متاحة</div>
+            <div class="text-sm text-slate-500 text-center py-4">{{ __('front.import.calculator.no_ads') }}</div>
           @endif
         </div>
 
@@ -132,25 +132,25 @@
                 <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-6h6v6m-9 4h12M9 7V3h6v4" />
                 </svg>
-                التكاليف الثابتة للتوزيع
+                {{ __('front.import.calculator.fixed_distribution_costs') }}
               </h2>
-              <button type="button" id="distributeBtn" class="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-all">توزيع القيم</button>
+              <button type="button" id="distributeBtn" class="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition-all">{{ __('front.import.calculator.distribute_values') }}</button>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-4 gap-3 md:w-2/3">
               <div>
-                <label class="block text-xs text-slate-600 mb-1">نولون وتوثيق (EGP)</label>
+                <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.freight_docs_egp') }}</label>
                 <input type="number" id="fixed_shipping" inputmode="decimal" value="0" class="w-full rounded-lg border-slate-200 text-sm px-2 py-1.5" />
               </div>
               <div>
-                <label class="block text-xs text-slate-600 mb-1">مصروفات المستخلص (EGP)</label>
+                <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.broker_fees_egp') }}</label>
                 <input type="number" id="fixed_clearance" inputmode="decimal" value="0" class="w-full rounded-lg border-slate-200 text-sm px-2 py-1.5" />
               </div>
               <div>
-                <label class="block text-xs text-slate-600 mb-1">نقل محلي (EGP)</label>
+                <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.local_transport_egp') }}</label>
                 <input type="number" id="fixed_transport" inputmode="decimal" value="0" class="w-full rounded-lg border-slate-200 text-sm px-2 py-1.5" />
               </div>
               <div>
-                <label class="block text-xs text-slate-600 mb-1">مصروفات أخرى (EGP)</label>
+                <label class="block text-xs text-slate-600 mb-1">{{ __('front.import.calculator.other_expenses_egp') }}</label>
                 <input type="number" id="fixed_other" inputmode="decimal" value="0" class="w-full rounded-lg border-slate-200 text-sm px-2 py-1.5" />
               </div>
             </div>
@@ -159,19 +159,19 @@
 
         {{-- شريط الأدوات --}}
         <div class="flex flex-wrap items-center gap-3 justify-start mb-4 reveal" id="itemsToolbar">
-          <button type="button" id="addItemBtn" class="toolbar-btn btn-green">أضف بندًا +</button>
-          <button type="button" id="removeItemBtn" class="toolbar-btn btn-red">احذف بندًا –</button>
-          <button type="button" id="clearAllBtn" class="toolbar-btn btn-blue">مسح الكل</button>
-          <button type="button" id="calcAllBtn" class="toolbar-btn btn-brand">حساب الكل</button>
+          <button type="button" id="addItemBtn" class="toolbar-btn btn-green">{{ __('front.import.calculator.add_item') }}</button>
+          <button type="button" id="removeItemBtn" class="toolbar-btn btn-red">{{ __('front.import.calculator.remove_item') }}</button>
+          <button type="button" id="clearAllBtn" class="toolbar-btn btn-blue">{{ __('front.import.calculator.clear_all') }}</button>
+          <button type="button" id="calcAllBtn" class="toolbar-btn btn-brand">{{ __('front.import.calculator.calculate_all') }}</button>
           <button type="button" id="pdfBtn" class="toolbar-btn bg-rose-600">PDF</button>
           <button type="button" id="excelBtn" class="toolbar-btn bg-emerald-600">Excel</button>
-          <button type="button" id="printBtn" class="toolbar-btn bg-blue-600">طباعة</button>
+          <button type="button" id="printBtn" class="toolbar-btn bg-blue-600">{{ __('front.import.calculator.print') }}</button>
         </div>
 
         {{-- جدول الفاتورة --}}
         <div class="table-card reveal overflow-hidden">
           <div class="md:hidden text-center text-sm text-slate-500 mb-2">
-            ↔️ اسحب الجدول أفقياً لعرض جميع الأعمدة
+            {{ __('front.import.calculator.drag_table_hint') }}
           </div>
           <div class="overflow-x-auto md:overflow-visible">
             <table id="itemsTable" class="w-full border-separate border-spacing-y-1 min-w-[900px] md:min-w-0">
@@ -185,9 +185,9 @@
               </colgroup>
               <thead class="table-header">
                 <tr>
-                  <th class="table-th sticky-col rounded-r-xl px-4">البيان</th>
+                  <th class="table-th sticky-col rounded-r-xl px-4">{{ __('front.import.calculator.statement') }}</th>
                   @for ($i = 1; $i <= 5; $i++)
-                    <th class="table-th">بند {{ $i }}</th>
+                    <th class="table-th">{{ __('front.import.calculator.item') }} {{ $i }}</th>
                   @endfor
                 </tr>
               </thead>
@@ -204,25 +204,25 @@
                     }
                   @endphp
 
-                  {{-- 1) البند الجمركي --}}
+                  {{-- 1) Tariff code --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">البند الجمركي</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.tariff_code') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
-                      <td class="table-td"><input type="text" id="tariff_code_{{ $i }}" class="cell-input" placeholder="البند الجمركي" /></td>
+                      <td class="table-td"><input type="text" id="tariff_code_{{ $i }}" class="cell-input" placeholder="{{ __('front.import.calculator.tariff_code') }}" /></td>
                     @endfor
                   </tr>
 
-                  {{-- 2) اسم المنتج --}}
+                  {{-- 2) Product name --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">اسم المنتج</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.product_name') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
-                      <td class="table-td"><input type="text" id="name_{{ $i }}" class="cell-input" placeholder="اسم المنتج" /></td>
+                      <td class="table-td"><input type="text" id="name_{{ $i }}" class="cell-input" placeholder="{{ __('front.import.calculator.product_name') }}" /></td>
                     @endfor
                   </tr>
 
                   {{-- 3) الكمية --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">الكمية</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.quantity') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td"><input type="number" id="qty_{{ $i }}" class="cell-input no-spinners quantity-input" data-item="{{ $i }}" value="0" /></td>
                     @endfor
@@ -230,7 +230,7 @@
 
                   {{-- 4) السعر --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">السعر</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.price') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td"><input type="number" id="price_{{ $i }}" class="cell-input no-spinners price-input" data-item="{{ $i }}" value="0" /></td>
                     @endfor
@@ -238,7 +238,7 @@
 
                   {{-- 5) المجموع --}}
                   <tr class="table-row table-row-zebra bg-emerald-50 font-semibold text-emerald-800">
-                    <td class="table-td sticky-col px-4 font-semibold">المجموع</td>
+                    <td class="table-td sticky-col px-4 font-semibold">{{ __('front.import.calculator.total') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center font-semibold" id="total_{{ $i }}">0.00</td>
                     @endfor
@@ -246,7 +246,7 @@
 
                   {{-- 6) ضريبة الوارد --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">ضريبة الوارد</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.import_tax') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="customs_{{ $i }}">0.00</td>
                     @endfor
@@ -254,7 +254,7 @@
 
                   {{-- 7) ضريبة القيمة المضافة --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">ضريبة القيمة المضافة</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.vat') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="vat_{{ $i }}">0.00</td>
                     @endfor
@@ -262,7 +262,7 @@
 
                   {{-- 8) ا.ت.ص / CIP --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">ا.ت.ص</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.cip') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="cip_{{ $i }}">0.00</td>
                     @endfor
@@ -270,7 +270,7 @@
 
                   {{-- 9) إجمالي الجمارك --}}
                   <tr class="table-row table-row-zebra bg-emerald-50 font-semibold text-emerald-800">
-                    <td class="table-td sticky-col px-4 font-semibold">إجمالي الجمارك</td>
+                    <td class="table-td sticky-col px-4 font-semibold">{{ __('front.import.calculator.total_customs') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center font-semibold" id="total_customs_{{ $i }}">0.00</td>
                     @endfor
@@ -278,7 +278,7 @@
 
                   {{-- 10) تكلفة النولون والتوثيق --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">تكلفة النولون والتوثيق</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.freight_docs_cost') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="shipping_{{ $i }}">0.00</td>
                     @endfor
@@ -286,7 +286,7 @@
 
                   {{-- 11) تكلفة مصروفات المستخلص --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">تكلفة مصروفات المستخلص</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.broker_cost') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="clearance_{{ $i }}">0.00</td>
                     @endfor
@@ -294,7 +294,7 @@
 
                   {{-- 12) تكلفة النقل --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">تكلفة النقل</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.transport_cost') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="transport_{{ $i }}">0.00</td>
                     @endfor
@@ -302,7 +302,7 @@
 
                   {{-- 13) مصروفات أخرى --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">مصروفات أخرى</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.other_expenses') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="other_{{ $i }}">0.00</td>
                     @endfor
@@ -310,7 +310,7 @@
 
                   {{-- 14) إجمالي التكلفة --}}
                   <tr class="table-row table-row-zebra bg-emerald-50 font-semibold text-emerald-800">
-                    <td class="table-td sticky-col px-4 font-bold">إجمالي التكلفة</td>
+                    <td class="table-td sticky-col px-4 font-bold">{{ __('front.import.calculator.grand_total') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center font-bold" id="grand_total_{{ $i }}">0.00</td>
                     @endfor
@@ -318,7 +318,7 @@
 
                   {{-- 15) تكلفة الوحدة --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">تكلفة الوحدة</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.unit_cost') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="unit_cost_{{ $i }}">0.00</td>
                     @endfor
@@ -326,7 +326,7 @@
 
                   {{-- 16) سعر البيع المتوقع --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">سعر البيع المتوقع</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.expected_sale_price') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td"><input type="number" id="sale_price_{{ $i }}" class="cell-input no-spinners" data-item="{{ $i }}" value="0" /></td>
                     @endfor
@@ -334,7 +334,7 @@
 
                   {{-- 17) الربح المتوقع --}}
                   <tr class="table-row table-row-zebra">
-                    <td class="table-td sticky-col px-4">الربح المتوقع</td>
+                    <td class="table-td sticky-col px-4">{{ __('front.import.calculator.expected_profit') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td class="table-td text-center text-slate-800" id="profit_{{ $i }}">0.00</td>
                     @endfor
@@ -342,7 +342,7 @@
 
                   {{-- 18) معدل الربحية --}}
                   <tr class="table-row table-row-zebra bg-yellow-50/50">
-                    <td class="table-td sticky-col px-4 font-semibold">معدل الربحية</td>
+                    <td class="table-td sticky-col px-4 font-semibold">{{ __('front.import.calculator.profit_rate') }}</td>
                     @for ($i = 1; $i <= 5; $i++)
                       <td id="profit_rate_{{ $i }}" class="table-td text-center font-semibold text-slate-800">0.00%</td>
                     @endfor
@@ -358,21 +358,21 @@
           @if(class_exists(\App\Livewire\RecommendedSuppliers::class) || class_exists(\App\Http\Livewire\RecommendedSuppliers::class))
             @livewire('recommended-suppliers', ['countryCode' => request('country') ?? null, 'limit' => 6])
           @else
-            <div class="rounded-xl bg-white shadow-sm p-4 md:p-5" dir="rtl">
-              <h3 class="text-lg font-semibold mb-3">الموردون الموصى بهم</h3>
+            <div class="rounded-xl bg-white shadow-sm p-4 md:p-5">
+              <h3 class="text-lg font-semibold mb-3">{{ __('front.import.calculator.recommended_suppliers') }}</h3>
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                 @for($i = 1; $i <= 6; $i++)
                   <div class="border rounded-lg p-3 flex flex-col justify-between h-full">
                     <div>
-                      <div class="font-medium text-slate-800">مورد {{ $i }}</div>
-                      <div class="text-sm text-slate-500 mt-1">المملكة العربية السعودية</div>
+                      <div class="font-medium text-slate-800">{{ __('front.import.calculator.supplier') }} {{ $i }}</div>
+                      <div class="text-sm text-slate-500 mt-1">{{ __('front.import.calculator.default_supplier_country') }}</div>
                     </div>
                     <div class="mt-3 flex items-center gap-2">
                       <span class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-1.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-100 text-sm">
-                        واتساب
+                        {{ __('front.import.calculator.whatsapp') }}
                       </span>
                       <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-slate-50 text-slate-700 border border-slate-100 text-sm">
-                        اتصال
+                        {{ __('front.import.calculator.call') }}
                       </span>
                     </div>
                   </div>
@@ -390,7 +390,7 @@
 
     {{-- Footer --}}
     <div class="mt-8 text-center text-gray-600">
-      <p>© 2025 جمركي — جميع الحقوق محفوظة</p>
+        <p>{{ __('front.import.calculator.copyright_2025') }}</p>
     </div>
 </main>
 @endsection
@@ -403,17 +403,17 @@
 <script>
   // ===== Dynamic Selects Integration with Select2 =====
   (function(){
-    const API = '{{ url("/api/v1") }}'; // مسار ديناميكي
+    const API = '{{ url("/api/v1") }}'; // dynamic API base
 
     // تهيئة select2 لنوع الشحن (قائمة ثابتة)
     $('#mode').select2({
-      placeholder: 'اختر نوع الشحن',
+      placeholder: @js(__('front.import.calculator.select_shipping_mode')),
       width: '100%'
     });
 
     // بلد المنشأ
     $('#country_id').select2({
-      placeholder: 'اختر بلد المنشأ',
+      placeholder: @js(__('front.import.calculator.select_origin_country')),
       ajax: {
         url: API + '/countries',
         dataType: 'json', delay: 250,
@@ -429,7 +429,7 @@
       const mode = $('#mode').val();
       if(!countryId || !mode){ $('#port_id').empty().trigger('change'); return; }
       $('#port_id').select2({
-        placeholder: 'اختر ميناء الشحن',
+        placeholder: @js(__('front.import.calculator.select_origin_port')),
         ajax: {
           url: API + '/ports',
           dataType: 'json', delay: 200,
@@ -446,7 +446,7 @@
       const mode = $('#mode').val();
       if(!mode){ $('#shipping_type_id').empty().trigger('change'); return; }
       $('#shipping_type_id').select2({
-        placeholder: 'اختر نوع الشحن',
+        placeholder: @js(__('front.import.calculator.select_shipping_type')),
         ajax: {
           url: API + '/shipping-types',
           dataType: 'json', delay: 200,
@@ -641,7 +641,7 @@
       }
 
       if (grandTotal === 0) {
-        alert('يجب إدخال قيم في الكمية والسعر أولاً');
+        alert(@js(__('front.import.calculator.alert_enter_qty_price_first')));
         return;
       }
 
@@ -683,7 +683,7 @@
     const clearAllBtn = document.getElementById('clearAllBtn');
     if (clearAllBtn) {
       clearAllBtn.addEventListener('click', function() {
-        if (confirm('هل أنت متأكد من مسح جميع البيانات؟')) {
+        if (confirm(@js(__('front.import.calculator.confirm_clear_all')))) {
           const count = Math.max(1, document.querySelectorAll('#itemsTable thead tr th').length - 1);
           for (let i = 1; i <= count; i++) {
             const nameInput = document.getElementById('name_' + i);
@@ -760,7 +760,7 @@
       const theadRow = table.querySelector('thead tr');
       const th = document.createElement('th');
       th.className = 'bill-th px-4 py-3';
-      th.textContent = 'بند ' + next;
+      th.textContent = @js(__('front.import.calculator.item')) + ' ' + next;
       theadRow.appendChild(th);
 
       // Build cells per fixed row index (there are 18 rows in tbody)
@@ -770,82 +770,82 @@
         td.className = 'px-4 py-2';
 
         switch (idx) {
-          case 0: // البند الجمركي - editable text
-            td.innerHTML = `<input type="text" id="tariff_code_${next}" class="w-full rounded-lg border-slate-200 text-sm" placeholder="البند الجمركي" />`;
+          case 0: // tariff code - editable text
+            td.innerHTML = `<input type="text" id="tariff_code_${next}" class="w-full rounded-lg border-slate-200 text-sm" placeholder="${@js(__('front.import.calculator.tariff_code'))}" />`;
             break;
-          case 1: // اسم المنتج
-            td.innerHTML = `<input type="text" id="name_${next}" class="w-full rounded-lg border-slate-200 text-sm" placeholder="اسم المنتج" />`;
+          case 1: // product name
+            td.innerHTML = `<input type="text" id="name_${next}" class="w-full rounded-lg border-slate-200 text-sm" placeholder="${@js(__('front.import.calculator.product_name'))}" />`;
             break;
-          case 2: // الكمية (number)
+          case 2: // quantity (number)
             td.innerHTML = `<input type="number" id="qty_${next}" class="quantity-input w-full rounded-lg border-slate-200 text-sm" data-item="${next}" value="0" min="0" />`;
             break;
-          case 3: // السعر (number)
+          case 3: // price (number)
             td.innerHTML = `<input type="number" id="price_${next}" class="price-input w-full rounded-lg border-slate-200 text-sm" data-item="${next}" value="0" min="0" step="0.01" />`;
             break;
-          case 4: // المجموع (computed)
+          case 4: // total (computed)
             td.className += ' text-center text-slate-800 font-semibold';
             td.id = 'total_' + next;
             td.textContent = '0.00';
             break;
-          case 5: // ضريبة الوارد
+          case 5: // import tax
             td.className += ' text-center text-slate-800';
             td.id = 'customs_' + next;
             td.textContent = '0.00';
             break;
-          case 6: // ضريبة القيمة المضافة
+          case 6: // VAT
             td.className += ' text-center text-slate-800';
             td.id = 'vat_' + next;
             td.textContent = '0.00';
             break;
-          case 7: // ا.ت.ص / CIP
+          case 7: // CIP
             td.className += ' text-center text-slate-800';
             td.id = 'cip_' + next;
             td.textContent = '0.00';
             break;
-          case 8: // إجمالي الجمارك
+          case 8: // total customs
             td.className += ' text-center text-slate-800 font-semibold';
             td.id = 'total_customs_' + next;
             td.textContent = '0.00';
             break;
-          case 9: // تكلفة النولون والتوثيق
+          case 9: // freight + docs cost
             td.className += ' text-center text-slate-800';
             td.id = 'shipping_' + next;
             td.textContent = '0.00';
             break;
-          case 10: // تكلفة مصروفات المستخلص
+          case 10: // broker cost
             td.className += ' text-center text-slate-800';
             td.id = 'clearance_' + next;
             td.textContent = '0.00';
             break;
-          case 11: // تكلفة النقل
+          case 11: // transport cost
             td.className += ' text-center text-slate-800';
             td.id = 'transport_' + next;
             td.textContent = '0.00';
             break;
-          case 12: // مصروفات أخرى
+          case 12: // other expenses
             td.className += ' text-center text-slate-800';
             td.id = 'other_' + next;
             td.textContent = '0.00';
             break;
-          case 13: // إجمالي التكلفة
+          case 13: // grand total
             td.className += ' text-center text-slate-800 font-bold';
             td.id = 'grand_total_' + next;
             td.textContent = '0.00';
             break;
-          case 14: // تكلفة الوحدة
+          case 14: // unit cost
             td.className += ' text-center text-slate-800';
             td.id = 'unit_cost_' + next;
             td.textContent = '0.00';
             break;
-          case 15: // سعر البيع المتوقع (input number)
+          case 15: // expected sale price (input number)
             td.innerHTML = `<input type="number" id="sale_price_${next}" class="sale-price-input w-full rounded-lg border-slate-200 text-sm" data-item="${next}" value="0" min="0" step="0.01" />`;
             break;
-          case 16: // الربح المتوقع
+          case 16: // expected profit
             td.className += ' text-center text-slate-800';
             td.id = 'profit_' + next;
             td.textContent = '0.00';
             break;
-          case 17: // معدل الربحية
+          case 17: // profit rate
             td.className += ' px-4 py-2 text-center font-semibold bg-slate-100 text-slate-800';
             td.id = 'profit_rate_' + next;
             td.textContent = '0.00%';
@@ -870,7 +870,7 @@
     function removeColumn() {
       const count = getItemCount();
       if (count <= 1) {
-        alert('لا يمكن حذف آخر بند');
+        alert(@js(__('front.import.calculator.alert_cannot_delete_last_item')));
         return;
       }
       // remove last header
@@ -950,11 +950,11 @@
 
   // Additional IIFE: row-based toolbar (add/remove rows, clear, calc, print, CSV, PDF)
   (function () {
-    // عناصر أساسية
+    // Base elements
     const table  = document.getElementById('itemsTable') || document.querySelector('table');
     if (!table) return;
     const tbody  = document.getElementById('itemsTbody') || table.querySelector('tbody');
-    const tfoot  = table.querySelector('tfoot'); // اختياري للتجميع
+    const tfoot  = table.querySelector('tfoot'); // optional totals section
     // look for row-specific buttons (avoid colliding with column buttons)
     const addRowBtn = document.getElementById('addRowBtn');
     const removeRowBtn = document.getElementById('removeRowBtn');
@@ -964,10 +964,10 @@
     const excelRowsBtn = document.getElementById('excelRowsBtn');
     const pdfRowsBtn = document.getElementById('pdfRowsBtn');
 
-    // ابحث عن قالب صف (أول صف بيانات أو صف مخفي معرف بـ rowTemplate)
+    // Locate row template (first data row or #rowTemplate)
     let templateRow = document.getElementById('rowTemplate');
     if (!templateRow) {
-      // إن لم يوجد قالب مخصص، استخدم آخر صف غير هيدر وغير فوتر كنموذج
+      // Fallback: use first tbody row as template
       templateRow = tbody ? tbody.querySelector('tr') : null;
     }
 
@@ -976,13 +976,13 @@
       const clone = templateRow.cloneNode(true);
       clone.removeAttribute('id');
       clone.classList.remove('hidden');
-      // صِفّر كل الحقول داخل الصف
+      // Reset all editable fields in cloned row
       clone.querySelectorAll('input,select,textarea').forEach(el => {
         if (el.type === 'checkbox' || el.type === 'radio') { el.checked = false; return; }
         if (el.tagName === 'SELECT') { el.selectedIndex = 0; return; }
         el.value = (el.type === 'number' || el.inputMode === 'decimal') ? 0 : '';
       });
-      // أزل أية قيم حسابية في خلايا TD
+      // Clear computed TD values
       clone.querySelectorAll('td').forEach(td => {
         if (td.dataset.calc === 'sumcell') td.textContent = '0';
       });
@@ -996,7 +996,7 @@
 
     function removeRow() {
       if (!tbody) return;
-      // لا تحذف آخر صف وحيد
+      // Keep at least one visible row
       const rows = Array.from(tbody.querySelectorAll('tr')).filter(r => !r.classList.contains('hidden'));
       if (rows.length > 1) rows[rows.length - 1].remove();
     }
@@ -1050,7 +1050,7 @@
     // bind only if row-specific buttons exist (prevents double-binding)
     if (addRowBtn) addRowBtn.addEventListener('click', addRow);
     if (removeRowBtn) removeRowBtn.addEventListener('click', removeRow);
-    if (clearRowsBtn) clearRowsBtn.addEventListener('click', function(){ if(confirm('هل أنت متأكد؟')) clearAllRows(); });
+    if (clearRowsBtn) clearRowsBtn.addEventListener('click', function(){ if(confirm(@js(__('front.import.calculator.confirm_are_you_sure')))) clearAllRows(); });
     if (calcRowsBtn) calcRowsBtn.addEventListener('click', calcAllRows);
     if (printRowsBtn) printRowsBtn.addEventListener('click', printTable);
     if (excelRowsBtn) excelRowsBtn.addEventListener('click', function(){ exportToCSVRows('table_rows.csv'); });

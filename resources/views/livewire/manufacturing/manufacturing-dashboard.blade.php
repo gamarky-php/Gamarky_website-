@@ -12,14 +12,15 @@
     $kpisLoading        = $kpisLoading        ?? false;
 @endphp
 
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     {{-- Header Section --}}
     <div class="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">لوحة التصنيع</h1>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">إدارة عمليات الإنتاج والتصنيع</p>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('لوحة التصنيع') }}</h1>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ __('إدارة عمليات الإنتاج والتصنيع') }}</p>
                 </div>
                 <div class="flex gap-3">
                     <button wire:click="navigateToCostCalculator" 
@@ -27,7 +28,7 @@
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                         </svg>
-                        حاسبة التكاليف
+                        {{ __('حاسبة التكاليف') }}
                     </button>
                 </div>
             </div>
@@ -41,7 +42,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">طلبات إنتاج جارية</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('طلبات إنتاج جارية') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if($kpisLoading)
                                 <span class="animate-pulse">--</span>
@@ -63,7 +64,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">متوسط تكلفة الإنتاج</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('متوسط تكلفة الإنتاج') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if($kpisLoading)
                                 <span class="animate-pulse">--</span>
@@ -84,7 +85,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">كفاءة الإنتاج</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('كفاءة الإنتاج') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if($kpisLoading)
                                 <span class="animate-pulse">--</span>
@@ -105,14 +106,14 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">إجمالي الإنتاج</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('إجمالي الإنتاج') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if($kpisLoading)
                                 <span class="animate-pulse">--</span>
                             @else
                                 {{ number_format($kpis['total_production'] ?? 0) }}
                             @endif
-                            <span class="text-lg text-gray-500">وحدة</span>
+                            <span class="text-lg text-gray-500">{{ __('وحدة') }}</span>
                         </p>
                     </div>
                     <div class="p-3 bg-purple-100 dark:bg-purple-900/30 rounded-lg">
@@ -129,32 +130,32 @@
             <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
                 {{-- Search --}}
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">بحث</label>
+                          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('بحث') }}</label>
                     <input type="text" wire:model.live.debounce.300ms="searchTerm" 
-                           placeholder="رقم الدفعة، اسم المنتج..."
+                              placeholder="{{ __('رقم الدفعة، اسم المنتج...') }}"
                            class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                 </div>
 
                 {{-- Status Filter --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الحالة</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الحالة') }}</label>
                     <select wire:model.live="statusFilter" 
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="all">الكل</option>
-                        <option value="pending">قيد الانتظار</option>
-                        <option value="in_production">قيد الإنتاج</option>
-                        <option value="quality_check">فحص الجودة</option>
-                        <option value="completed">مكتمل</option>
-                        <option value="cancelled">ملغي</option>
+                        <option value="all">{{ __('الكل') }}</option>
+                        <option value="pending">{{ __('قيد الانتظار') }}</option>
+                        <option value="in_production">{{ __('قيد الإنتاج') }}</option>
+                        <option value="quality_check">{{ __('فحص الجودة') }}</option>
+                        <option value="completed">{{ __('مكتمل') }}</option>
+                        <option value="cancelled">{{ __('ملغي') }}</option>
                     </select>
                 </div>
 
                 {{-- Product Type Filter --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">نوع المنتج</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('نوع المنتج') }}</label>
                     <select wire:model.live="productTypeFilter" 
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="all">الكل</option>
+                        <option value="all">{{ __('الكل') }}</option>
                         @foreach($productTypes as $type)
                             <option value="{{ $type }}">{{ $type }}</option>
                         @endforeach
@@ -163,14 +164,14 @@
 
                 {{-- Date Range Filter --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الفترة</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الفترة') }}</label>
                     <select wire:model.live="dateRange" 
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="today">اليوم</option>
-                        <option value="week">هذا الأسبوع</option>
-                        <option value="month">هذا الشهر</option>
-                        <option value="year">هذا العام</option>
-                        <option value="custom">مخصص</option>
+                        <option value="today">{{ __('اليوم') }}</option>
+                        <option value="week">{{ __('هذا الأسبوع') }}</option>
+                        <option value="month">{{ __('هذا الشهر') }}</option>
+                        <option value="year">{{ __('هذا العام') }}</option>
+                        <option value="custom">{{ __('مخصص') }}</option>
                     </select>
                 </div>
             </div>
@@ -182,7 +183,7 @@
             <div class="lg:col-span-2">
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                     <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">عمليات الإنتاج الأخيرة</h2>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('عمليات الإنتاج الأخيرة') }}</h2>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -192,17 +193,17 @@
                                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                                 </svg>
-                                <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">لا توجد عمليات إنتاج</h3>
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">ابدأ بإنشاء عملية إنتاج جديدة</p>
+                                <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('لا توجد عمليات إنتاج') }}</h3>
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('ابدأ بإنشاء عملية إنتاج جديدة') }}</p>
                             </div>
                         @else
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-50 dark:bg-gray-900">
                                     <tr>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">رقم الدفعة</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">المنتج</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">الحالة</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">التاريخ</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('رقم الدفعة') }}</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('المنتج') }}</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('الحالة') }}</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('التاريخ') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -245,16 +246,16 @@
             <div class="space-y-6">
                 {{-- Production by Type --}}
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">الإنتاج حسب النوع</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('الإنتاج حسب النوع') }}</h3>
                     @if($productionByType->isEmpty())
-                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">لا توجد بيانات</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">{{ __('لا توجد بيانات') }}</p>
                     @else
                         <div class="space-y-3">
                             @foreach($productionByType as $type)
                                 <div class="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-700">
                                     <div>
                                         <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $type->product_type }}</p>
-                                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ $type->batches_count }} دفعة</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ $type->batches_count }} {{ __('دفعة') }}</p>
                                     </div>
                                     <span class="text-sm font-bold text-indigo-600 dark:text-indigo-400">
                                         {{ number_format($type->total_quantity) }}
@@ -267,9 +268,9 @@
 
                 {{-- Recent Calculations --}}
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">حسابات حديثة</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('حسابات حديثة') }}</h3>
                     @if($recentCalculations->isEmpty())
-                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">لا توجد حسابات</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">{{ __('لا توجد حسابات') }}</p>
                     @else
                         <div class="space-y-3">
                             @foreach($recentCalculations as $calc)

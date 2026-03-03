@@ -1,20 +1,21 @@
 @extends('layouts.app')
 
-@section('title', 'استيراد الموردين من Excel')
+@section('title', __('dashboard.admin.suppliers.import_page.title'))
 
 @section('content')
-<div class="container mx-auto px-4 py-6" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="container mx-auto px-4 py-6">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-3xl font-bold text-gray-800">استيراد الموردين من Excel</h1>
+        <h1 class="text-3xl font-bold text-gray-800">{{ __('dashboard.admin.suppliers.import_page.heading') }}</h1>
         <a href="{{ route('admin.suppliers.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition">
             <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
             </svg>
-            العودة للموردين
+            {{ __('dashboard.admin.suppliers.import_page.back') }}
         </a>
     </div>
 
-    {{-- عرض الرسائل --}}
+    {{-- Flash messages --}}
     @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6" role="alert">
             <div class="flex">
@@ -24,7 +25,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="font-bold">تم بنجاح!</p>
+                    <p class="font-bold">{{ __('dashboard.admin.suppliers.pending.success_title') }}</p>
                     <p class="text-sm whitespace-pre-line">{{ session('success') }}</p>
                 </div>
             </div>
@@ -40,7 +41,7 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="font-bold">حدث خطأ!</p>
+                    <p class="font-bold">{{ __('dashboard.admin.suppliers.pending.error_title') }}</p>
                     <p class="text-sm">{{ session('error') }}</p>
                 </div>
             </div>
@@ -48,16 +49,16 @@
     @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {{-- قسم رفع الملف --}}
+        {{-- Upload section --}}
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800">رفع ملف Excel</h2>
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ __('dashboard.admin.suppliers.import_page.upload_section_title') }}</h2>
             
             <form action="{{ route('admin.suppliers.import.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 
                 <div>
                     <label for="excel_file" class="block text-sm font-medium text-gray-700 mb-2">
-                        اختر ملف Excel (.xlsx, .xls, .csv)
+                        {{ __('dashboard.admin.suppliers.import_page.choose_file') }}
                     </label>
                     <input type="file" 
                            name="excel_file" 
@@ -78,12 +79,12 @@
                             </svg>
                         </div>
                         <div class="mr-3">
-                            <h3 class="text-sm font-medium text-yellow-800">تنبيه هام:</h3>
+                            <h3 class="text-sm font-medium text-yellow-800">{{ __('dashboard.admin.suppliers.import_page.important_alert') }}</h3>
                             <div class="mt-2 text-sm text-yellow-700">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li>يجب أن يحتوي الملف على رؤوس الأعمدة المطلوبة بالضبط</li>
-                                    <li>الحد الأقصى لحجم الملف: 10 ميجابايت</li>
-                                    <li>سيتم تجاهل الموردين المكررين تلقائياً</li>
+                                    <li>{{ __('dashboard.admin.suppliers.import_page.alert_line_1') }}</li>
+                                    <li>{{ __('dashboard.admin.suppliers.import_page.alert_line_2') }}</li>
+                                    <li>{{ __('dashboard.admin.suppliers.import_page.alert_line_3') }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -95,18 +96,18 @@
                     <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
-                    رفع واستيراد البيانات
+                    {{ __('dashboard.admin.suppliers.import_page.upload_and_import') }}
                 </button>
             </form>
         </div>
 
-        {{-- قسم تحميل القالب والإرشادات --}}
+        {{-- Guide section --}}
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800">إرشادات الاستيراد</h2>
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ __('dashboard.admin.suppliers.import_page.guide_title') }}</h2>
             
             <div class="space-y-4">
                 <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h3 class="font-semibold text-blue-800 mb-2">رؤوس الأعمدة المطلوبة:</h3>
+                    <h3 class="font-semibold text-blue-800 mb-2">{{ __('dashboard.admin.suppliers.import_page.required_headers') }}</h3>
                     <div class="grid grid-cols-2 gap-2 text-sm text-blue-700">
                         <div>• Company Name</div>
                         <div>• Province</div>
@@ -130,16 +131,16 @@
                     <svg class="w-4 h-4 inline ml-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    مراجعة الموردين المستوردين
+                    {{ __('dashboard.admin.suppliers.import_page.review_imported') }}
                 </a>
 
                 <div class="text-sm text-gray-600 space-y-2">
-                    <p><strong>ملاحظات مهمة:</strong></p>
+                    <p><strong>{{ __('dashboard.admin.suppliers.import_page.notes_title') }}</strong></p>
                     <ul class="list-disc list-inside space-y-1">
-                        <li>يجب أن يكون الصف الأول يحتوي على رؤوس الأعمدة بالضبط</li>
-                        <li>عمود Company Name مطلوب ولا يمكن أن يكون فارغاً</li>
-                        <li>سيتم وضع جميع الموردين الجدد في حالة "قيد المراجعة"</li>
-                        <li>في حالة وجود أخطاء، ستحصل على تقرير مفصل</li>
+                        <li>{{ __('dashboard.admin.suppliers.import_page.note_1') }}</li>
+                        <li>{{ __('dashboard.admin.suppliers.import_page.note_2') }}</li>
+                        <li>{{ __('dashboard.admin.suppliers.import_page.note_3') }}</li>
+                        <li>{{ __('dashboard.admin.suppliers.import_page.note_4') }}</li>
                     </ul>
                 </div>
             </div>

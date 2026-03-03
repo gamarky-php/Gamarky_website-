@@ -1,5 +1,6 @@
 {{-- resources/views/livewire/front/customs/customs-role.blade.php --}}
-<div dir="rtl" class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+{{-- dir inherited from layout --}}
+<div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
   
   {{-- Hero Section --}}
   <section class="relative bg-gradient-to-l from-[#0F2E5D] via-[#1a3f6e] to-[#0F2E5D] text-white py-20 overflow-hidden">
@@ -13,23 +14,23 @@
         <i class="fas fa-user-tie text-4xl text-yellow-400"></i>
       </div>
       <h1 class="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-lg">
-        دور المستخلص الجمركي
+        {{ __('front.clearance.role.hero_title') }}
       </h1>
       <p class="text-xl text-blue-100 max-w-3xl mx-auto mb-8">
-        فهم شامل للخدمات التي يقدمها المستخلص الجمركي وكيفية تسهيل عملية التخليص
+        {{ __('front.clearance.role.hero_subtitle') }}
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4 text-sm">
         <span class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
           <i class="fas fa-shield-check text-green-400"></i>
-          <span>معتمد رسمياً</span>
+          <span>{{ __('front.clearance.role.badges.officially_certified') }}</span>
         </span>
         <span class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
           <i class="fas fa-bolt text-yellow-400"></i>
-          <span>إجراءات سريعة</span>
+          <span>{{ __('front.clearance.role.badges.fast_procedures') }}</span>
         </span>
         <span class="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
           <i class="fas fa-headset text-blue-400"></i>
-          <span>دعم متواصل</span>
+          <span>{{ __('front.clearance.role.badges.continuous_support') }}</span>
         </span>
       </div>
     </div>
@@ -40,10 +41,10 @@
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
         <i class="fas fa-briefcase text-blue-600 ml-3"></i>
-        الخدمات التي يقدمها المستخلص
+        {{ __('front.clearance.role.services_title') }}
       </h2>
       <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        يقوم المستخلص الجمركي بمجموعة شاملة من الخدمات لضمان سلاسة عملية التخليص
+        {{ __('front.clearance.role.services_subtitle') }}
       </p>
     </div>
 
@@ -83,10 +84,10 @@
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           <i class="fas fa-route text-purple-600 ml-3"></i>
-          مراحل التخليص الجمركي
+          {{ __('front.clearance.role.timeline_title') }}
         </h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          رحلة كاملة من استلام المستندات حتى خروج البضائع من الميناء
+          {{ __('front.clearance.role.timeline_subtitle') }}
         </p>
       </div>
 
@@ -130,7 +131,7 @@
                       </div>
                       <div class="flex-1">
                         <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-xs font-bold mb-2">
-                          المرحلة {{ $stage['id'] }} من 6
+                          {{ __('front.clearance.role.stage_of', ['current' => $stage['id'], 'total' => 6]) }}
                         </span>
                         <h3 class="text-2xl font-bold">{{ $stage['title'] }}</h3>
                       </div>
@@ -146,7 +147,7 @@
                         <i class="fas fa-clock text-xl"></i>
                       </div>
                       <div class="flex-1">
-                        <div class="text-xs text-gray-600 font-medium">الزمن القياسي</div>
+                        <div class="text-xs text-gray-600 font-medium">{{ __('front.clearance.role.standard_time') }}</div>
                         <div class="text-lg font-bold {{ $colors['text'] }}">{{ $stage['typical_time'] }}</div>
                       </div>
                     </div>
@@ -155,7 +156,7 @@
                     <div class="mb-4">
                       <h4 class="font-bold text-gray-900 mb-3 flex items-center gap-2">
                         <i class="fas fa-list-check {{ $colors['text'] }}"></i>
-                        <span>المتطلبات والمستندات:</span>
+                        <span>{{ __('front.clearance.role.requirements_documents') }}</span>
                       </h4>
                       <ul class="space-y-2">
                         @foreach($stage['documents'] as $doc)
@@ -171,11 +172,11 @@
                     <div class="pt-4 border-t border-gray-200 space-y-2">
                       <button class="w-full py-2 px-4 bg-gradient-to-l {{ $colors['gradient'] }} text-white rounded-lg font-semibold hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 text-sm">
                         <i class="fas fa-upload"></i>
-                        <span>رفع المرفقات (@todo)</span>
+                        <span>{{ __('front.clearance.role.upload_attachments_todo') }}</span>
                       </button>
                       <button class="w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-lg font-semibold hover:bg-gray-200 transition-all duration-200 flex items-center justify-center gap-2 text-sm">
                         <i class="fas fa-bell"></i>
-                        <span>تفعيل الإشعارات (@todo)</span>
+                        <span>{{ __('front.clearance.role.enable_notifications_todo') }}</span>
                       </button>
                     </div>
                   </div>
@@ -191,8 +192,8 @@
         <div class="inline-flex items-center gap-4 bg-gradient-to-l from-blue-600 to-purple-600 text-white rounded-2xl px-8 py-4 shadow-xl">
           <i class="fas fa-hourglass-half text-3xl"></i>
           <div class="text-right">
-            <div class="text-sm font-medium opacity-90">إجمالي الزمن التقديري</div>
-            <div class="text-2xl font-bold">4-7 أيام عمل</div>
+            <div class="text-sm font-medium opacity-90">{{ __('front.clearance.role.total_estimated_time') }}</div>
+            <div class="text-2xl font-bold">{{ __('front.clearance.role.total_estimated_time_value') }}</div>
           </div>
         </div>
       </div>
@@ -205,10 +206,10 @@
       <div class="text-center mb-12">
         <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           <i class="fas fa-star text-yellow-500 ml-3"></i>
-          لماذا تحتاج إلى مستخلص جمركي؟
+          {{ __('front.clearance.role.benefits_title') }}
         </h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          فوائد الاستعانة بمستخلص جمركي محترف
+          {{ __('front.clearance.role.benefits_subtitle') }}
         </p>
       </div>
 
@@ -238,20 +239,20 @@
   {{-- CTA Section --}}
   <section class="bg-gradient-to-l from-blue-600 to-purple-600 text-white py-16">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">هل تحتاج إلى مستخلص جمركي؟</h2>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">{{ __('front.clearance.role.cta_title') }}</h2>
       <p class="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
-        ابحث عن أفضل المستخلصين المعتمدين في منطقتك وابدأ عملية التخليص الآن
+        {{ __('front.clearance.role.cta_subtitle') }}
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4">
         <a href="{{ route('front.customs.index') }}" 
            class="inline-flex items-center gap-2 px-8 py-4 bg-white text-blue-600 rounded-xl font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200">
           <i class="fas fa-search"></i>
-          <span>ابحث عن مستخلص</span>
+          <span>{{ __('front.clearance.role.cta_find_broker') }}</span>
         </a>
         <a href="{{ route('front.customs.register') }}" 
            class="inline-flex items-center gap-2 px-8 py-4 bg-transparent border-2 border-white text-white rounded-xl font-bold hover:bg-white hover:text-blue-600 transition-all duration-200">
           <i class="fas fa-user-plus"></i>
-          <span>سجّل كمستخلص</span>
+          <span>{{ __('front.clearance.role.cta_register_broker') }}</span>
         </a>
       </div>
     </div>

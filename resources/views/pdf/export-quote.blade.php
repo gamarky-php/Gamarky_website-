@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html dir="rtl" lang="ar">
+{{-- PDF: lang/dir dynamically set for multi-language support --}}
+<html lang="@locale" dir="@dir">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض سعر - {{ $quote->quote_no }}</title>
+    <title>{{ __('pdf.export_quote_title') }} - {{ $quote->quote_no }}</title>
     <style>
         * {
             margin: 0;
@@ -13,8 +14,8 @@
         
         body {
             font-family: 'DejaVu Sans', Arial, sans-serif;
-            direction: rtl;
-            text-align: right;
+            direction: {{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }};
+            text-align: {{ app()->getLocale() === 'ar' ? 'right' : 'left' }};
             font-size: 12px;
             line-height: 1.6;
             color: #333;
@@ -57,7 +58,7 @@
             background: #f8f9fa;
             padding: 15px;
             border-radius: 6px;
-            border-right: 3px solid #667eea;
+            border-{{ app()->getLocale() === 'ar' ? 'right' : 'left' }}: 3px solid #667eea;
         }
         
         .info-card .label {
@@ -91,7 +92,7 @@
         table th {
             background: #f3f4f6;
             padding: 10px;
-            text-align: right;
+            text-align: {{ app()->getLocale() === 'ar' ? 'right' : 'left' }};
             font-weight: bold;
             border: 1px solid #e5e7eb;
             font-size: 11px;
@@ -172,48 +173,48 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <h1>عرض سعر تصدير</h1>
+            <h1>{{ __('pdf.export_quote_title') }}</h1>
             <div class="meta">
-                <div>رقم العرض: <strong>{{ $quote->quote_no }}</strong></div>
-                <div>التاريخ: <strong>{{ $generatedAt }}</strong></div>
+                <div>{{ __('pdf.quote_no') }}: <strong>{{ $quote->quote_no }}</strong></div>
+                <div>{{ __('pdf.date') }}: <strong>{{ $generatedAt }}</strong></div>
             </div>
         </div>
 
-        <!-- معلومات العرض -->
+        <!-- Quote information -->
         <div class="info-grid">
             <div class="info-card">
-                <div class="label">العميل</div>
-                <div class="value">{{ $shipment->client->name ?? 'غير محدد' }}</div>
+                <div class="label">{{ __('pdf.client') }}</div>
+                <div class="value">{{ $shipment->client->name ?? __('pdf.not_specified') }}</div>
             </div>
             
             <div class="info-card">
-                <div class="label">الشرط التجاري</div>
+                <div class="label">{{ __('pdf.incoterm') }}</div>
                 <div class="value">{{ $quote->incoterm_final }}</div>
             </div>
             
             <div class="info-card">
-                <div class="label">ميناء التحميل</div>
+                <div class="label">{{ __('pdf.loading_port') }}</div>
                 <div class="value">{{ $shipment->pol }}</div>
             </div>
             
             <div class="info-card">
-                <div class="label">ميناء الوصول</div>
+                <div class="label">{{ __('pdf.discharge_port') }}</div>
                 <div class="value">{{ $shipment->pod }}</div>
             </div>
             
             <div class="info-card">
-                <div class="label">طريقة الشحن</div>
+                <div class="label">{{ __('pdf.shipping_method') }}</div>
                 <div class="value">{{ strtoupper($shipment->method) }}</div>
             </div>
             
             <div class="info-card">
-                <div class="label">العملة</div>
+                <div class="label">{{ __('pdf.currency') }}</div>
                 <div class="value">{{ $quote->currency }}</div>
             </div>
         </div>
 
-        <!-- تفاصيل التكاليف -->
-        <div class="section-title">تفاصيل التكاليف</div>
+        <!-- Cost details -->
+        <div class="section-title">{{ __('pdf.cost_details') }}</div>
         
         @foreach($costsByColumn as $colIndex => $column)
             <table>
@@ -222,9 +223,9 @@
                         <th colspan="3">{{ $column['title'] }}</th>
                     </tr>
                     <tr>
-                        <th style="width: 50%;">البيان</th>
-                        <th style="width: 25%;">التصنيف</th>
-                        <th style="width: 25%;" class="text-left">المبلغ</th>
+                        <th style="width: 50%;">{{ __('pdf.item_description') }}</th>
+                        <th style="width: 25%;">{{ __('pdf.category') }}</th>
+                        <th style="width: 25%;" class="text-left">{{ __('pdf.amount') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -233,17 +234,17 @@
                         <td>{{ $cost->line_name }}</td>
                         <td>
                             @switch($cost->category)
-                                @case('manufacturing') تصنيع @break
-                                @case('packing') تعبئة @break
-                                @case('local_clearance') تخليص محلي @break
-                                @case('port_fees') رسوم ميناء @break
-                                @case('local_trucking') نقل محلي @break
-                                @case('freight') شحن @break
-                                @case('insurance') تأمين @break
-                                @case('bank') بنوك @break
-                                @case('docs') مستندات @break
-                                @case('extras') إضافات @break
-                                @case('profit') ربح @break
+                                @case('manufacturing') {{ __('pdf.category_manufacturing') }} @break
+                                @case('packing') {{ __('pdf.category_packing') }} @break
+                                @case('local_clearance') {{ __('pdf.category_local_clearance') }} @break
+                                @case('port_fees') {{ __('pdf.category_port_fees') }} @break
+                                @case('local_trucking') {{ __('pdf.category_local_trucking') }} @break
+                                @case('freight') {{ __('pdf.category_freight') }} @break
+                                @case('insurance') {{ __('pdf.category_insurance') }} @break
+                                @case('bank') {{ __('pdf.category_bank') }} @break
+                                @case('docs') {{ __('pdf.category_docs') }} @break
+                                @case('extras') {{ __('pdf.category_extras') }} @break
+                                @case('profit') {{ __('pdf.category_profit') }} @break
                                 @default {{ $cost->category }}
                             @endswitch
                         </td>
@@ -252,45 +253,45 @@
                     @endforeach
                     
                     <tr class="column-total">
-                        <td colspan="2">إجمالي {{ $column['title'] }}</td>
+                        <td colspan="2">{{ __('pdf.column_total') }} {{ $column['title'] }}</td>
                         <td class="text-left">{{ number_format($column['total'], 2) }} {{ $quote->currency }}</td>
                     </tr>
                 </tbody>
             </table>
         @endforeach
 
-        <!-- الإجمالي النهائي -->
-        <div class="section-title">الإجمالي النهائي</div>
+        <!-- Final total -->
+        <div class="section-title">{{ __('pdf.final_total') }}</div>
         
         <table>
             <tbody>
                 <tr class="total-row">
-                    <td style="width: 75%;">التكلفة الإجمالية</td>
+                    <td style="width: 75%;">{{ __('pdf.total_cost') }}</td>
                     <td class="text-left">{{ number_format($quote->total_cost, 2) }} {{ $quote->currency }}</td>
                 </tr>
                 
                 <tr class="total-row">
-                    <td>هامش الربح ({{ $quote->margin_pct }}%)</td>
+                    <td>{{ __('pdf.profit_margin') }} ({{ $quote->margin_pct }}%)</td>
                     <td class="text-left">{{ number_format($quote->sell_price - $quote->total_cost, 2) }} {{ $quote->currency }}</td>
                 </tr>
                 
                 <tr class="final-price">
-                    <td>سعر البيع النهائي</td>
+                    <td>{{ __('pdf.final_sell_price') }}</td>
                     <td class="text-left">{{ number_format($quote->sell_price, 2) }} {{ $quote->currency }}</td>
                 </tr>
                 
                 @if($shipment->weight_ton > 0)
                 <tr>
-                    <td>سعر الطن</td>
+                    <td>{{ __('pdf.price_per_ton') }}</td>
                     <td class="text-left">{{ number_format($quote->sell_price / $shipment->weight_ton, 2) }} {{ $quote->currency }}</td>
                 </tr>
                 @endif
             </tbody>
         </table>
 
-        <!-- ملاحظات -->
+        <!-- Notes -->
         @if($shipment->notes)
-        <div class="section-title">ملاحظات</div>
+        <div class="section-title">{{ __('pdf.notes') }}</div>
         <div style="padding: 15px; background: #f9fafb; border-radius: 6px; margin-bottom: 20px;">
             {{ $shipment->notes }}
         </div>
@@ -298,8 +299,8 @@
 
         <!-- Footer -->
         <div class="footer">
-            <p>هذا العرض صالح لمدة 30 يومًا من تاريخ الإصدار</p>
-            <p style="margin-top: 10px;">تم الإنشاء بواسطة: {{ $shipment->creator->name ?? 'النظام' }}</p>
+            <p>{{ __('pdf.validity_notice') }}</p>
+            <p style="margin-top: 10px;">{{ __('pdf.created_by') }}: {{ $shipment->creator->name ?? __('pdf.system') }}</p>
         </div>
     </div>
 </body>

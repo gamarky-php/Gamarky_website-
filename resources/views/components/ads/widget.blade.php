@@ -1,7 +1,7 @@
 @props(['ads' => collect()])
 
 <div class="rounded-lg shadow-md p-4 bg-white">
-    <h3 class="font-semibold text-lg mb-4 text-gray-800">إعلانات الخدمات</h3>
+    <h3 class="font-semibold text-lg mb-4 text-gray-800">{{ __('إعلانات الخدمات') }}</h3>
 
     @forelse($ads as $ad)
         <div class="mb-4 last:mb-0">
@@ -31,7 +31,7 @@
         </div>
     @empty
         <div class="text-center py-8 text-gray-500">
-            <p class="text-sm">لا توجد إعلانات متاحة حالياً</p>
+            <p class="text-sm">{{ __('لا توجد إعلانات متاحة حالياً') }}</p>
         </div>
     @endforelse
 </div>

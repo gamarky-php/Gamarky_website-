@@ -129,4 +129,26 @@ return [
         ],
     ],
 
+    // === Paymob Payment Gateway (Egypt - EGP Only) ===
+    'paymob' => [
+        'enabled' => env('PAYMOB_ENABLED', false),
+        'api_key' => env('PAYMOB_API_KEY'),
+        'api_url' => env('PAYMOB_API_URL', 'https://accept.paymob.com/api'),
+        
+        // Integration IDs for different payment methods
+        'integration_id_card' => env('PAYMOB_INTEGRATION_ID_CARD'), // Card payments
+        'integration_id_wallet' => env('PAYMOB_INTEGRATION_ID_WALLET'), // Mobile wallets
+        'integration_id_kiosk' => env('PAYMOB_INTEGRATION_ID_KIOSK'), // Kiosk/Aman/Masary
+        'integration_id_bank' => env('PAYMOB_INTEGRATION_ID_BANK'), // Bank transfer
+        
+        // iFrame ID (if using hosted payment page)
+        'iframe_id' => env('PAYMOB_IFRAME_ID'),
+        
+        // HMAC Secret for webhook verification
+        'hmac_secret' => env('PAYMOB_HMAC_SECRET'),
+        
+        // Currency (always EGP for Paymob)
+        'currency' => 'EGP',
+    ],
+
 ];

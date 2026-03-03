@@ -1,10 +1,11 @@
 @extends('layouts.front')
 
-@section('title','الموردون')
+@section('title', __('front.suppliers.title'))
 
 @section('content')
-<div class="container mx-auto px-4 py-8" dir="rtl">
-  <h1 class="text-2xl font-bold mb-4">الموردون</h1>
+{{-- dir inherited from layout --}}
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-4">{{ __('front.suppliers.heading') }}</h1>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     @forelse($suppliers as $supplier)
@@ -18,13 +19,13 @@
             <div class="text-sm text-gray-600">{{ $supplier->city }} - {{ $supplier->country_code }}</div>
             <p class="text-sm text-gray-700 mt-2">{{ Str::limit($supplier->description, 120) }}</p>
             <div class="mt-3">
-              <a href="#" class="text-blue-600 hover:underline text-sm">عرض التفاصيل</a>
+              <a href="#" class="text-blue-600 hover:underline text-sm">{{ __('front.suppliers.view_details') }}</a>
             </div>
           </div>
         </div>
       </div>
     @empty
-      <p class="text-gray-600">لا توجد موردون معتمدون حالياً.</p>
+      <p class="text-gray-600">{{ __('front.suppliers.empty') }}</p>
     @endforelse
   </div>
 

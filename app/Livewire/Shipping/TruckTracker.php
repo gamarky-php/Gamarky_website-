@@ -21,20 +21,20 @@ class TruckTracker extends Component
         // TODO: Integrate GPS tracking API
         $this->trackingData = [
             'tracking_number' => $this->tracking_number,
-            'status' => 'في الطريق',
-            'current_location' => 'الرياض - طريق الدمام السريع',
+            'status' => __('shipping.truck_tracker.demo.status_in_transit'),
+            'current_location' => __('shipping.truck_tracker.demo.current_location'),
             'progress_percentage' => 45,
             'estimated_arrival' => now()->addHours(6)->format('Y-m-d H:i'),
-            'driver_name' => 'أحمد محمد',
+            'driver_name' => __('shipping.truck_tracker.demo.driver_name'),
             'driver_phone' => '+966501234567',
-            'truck_plate' => 'ر ب ج 1234',
+            'truck_plate' => __('shipping.truck_tracker.demo.truck_plate'),
             'speed_kmh' => 85,
             'lat' => 24.7136,
             'lng' => 46.6753,
             'events' => [
-                ['time' => '08:00', 'location' => 'الرياض - نقطة انطلاق', 'status' => 'بدء الرحلة'],
-                ['time' => '10:30', 'location' => 'محطة وقود - الخرج', 'status' => 'توقف قصير'],
-                ['time' => '12:00', 'location' => 'على الطريق', 'status' => 'في الطريق'],
+                ['time' => '08:00', 'location' => __('shipping.truck_tracker.demo.events.start_location'), 'status' => __('shipping.truck_tracker.demo.events.started')],
+                ['time' => '10:30', 'location' => __('shipping.truck_tracker.demo.events.station_location'), 'status' => __('shipping.truck_tracker.demo.events.short_stop')],
+                ['time' => '12:00', 'location' => __('shipping.truck_tracker.demo.events.on_road_location'), 'status' => __('shipping.truck_tracker.demo.events.in_transit')],
             ],
         ];
 

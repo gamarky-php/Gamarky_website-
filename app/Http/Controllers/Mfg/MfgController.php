@@ -156,7 +156,7 @@ class MfgController extends Controller
             if ($request->expectsJson() || $request->is('api/*')) {
                 return response()->json([
                     'success' => true,
-                    'message' => 'تم حفظ التكلفة بنجاح',
+                    'message' => __('messages.cost_saved_successfully'),
                     'run_id' => $run->id,
                     'redirect' => route('mfg.runs.show', $run->id),
                 ], 201);
@@ -164,7 +164,7 @@ class MfgController extends Controller
 
             return redirect()
                 ->route('mfg.runs.show', $run->id)
-                ->with('status', 'تم حفظ التكلفة بنجاح');
+                ->with('status', __('messages.cost_saved_successfully'));
 
         } catch (\Exception $e) {
             DB::rollBack();

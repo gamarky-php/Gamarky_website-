@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'العروض')
+@section('title', __('العروض'))
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="mb-6">
-    <h1 class="text-3xl font-bold text-gray-900">العروض</h1>
+    <h1 class="text-3xl font-bold text-gray-900">{{ __('العروض') }}</h1>
   </div>
 
   <div class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -12,10 +12,10 @@
       <thead class="bg-gray-50">
         <tr>
           <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">#</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">الشحنة</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">الحالة</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">التاريخ</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">إجراءات</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('الشحنة') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('الحالة') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('التاريخ') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('إجراءات') }}</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-200">
@@ -26,12 +26,12 @@
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $quote->status }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $quote->created_at->format('Y-m-d') }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2 space-x-reverse">
-            <a href="{{ route('export.quotes.show', $quote->id) }}" class="text-blue-600 hover:underline">عرض</a>
+            <a href="{{ route('export.quotes.show', $quote->id) }}" class="text-blue-600 hover:underline">{{ __('عرض') }}</a>
           </td>
         </tr>
         @empty
         <tr>
-          <td colspan="5" class="px-6 py-4 text-center text-gray-500">لا توجد عروض</td>
+          <td colspan="5" class="px-6 py-4 text-center text-gray-500">{{ __('لا توجد عروض') }}</td>
         </tr>
         @endforelse
       </tbody>

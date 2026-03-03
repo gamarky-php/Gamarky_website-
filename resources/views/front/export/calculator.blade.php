@@ -1,6 +1,6 @@
-@extends('layouts.front')
+﻿@extends('layouts.front')
 
-@section('title', 'حاسبة تكلفة التصدير')
+@section('title', __('front.export.calculator.title'))
 
 @push('styles')
 <style>
@@ -30,90 +30,90 @@
 @section('content')
 <main x-data="ExportCalc()" class="relative z-0">
   <section class="bg-gradient-to-r from-purple-600 to-blue-700 text-white rounded-2xl shadow-xl p-8 mb-6 mt-16 md:mt-20">
-    <h1 class="text-3xl md:text-4xl font-extrabold text-center">حاسبة تكلفة التصدير</h1>
-    <p class="text-center opacity-90 mt-2">"ما لا يمكن قياسه لا يمكن إدارته" — بيتر دراكر</p>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-center">{{ __('front.export.calculator.heading') }}</h1>
+    <p class="text-center opacity-90 mt-2">{{ __('front.export.calculator.quote') }}</p>
   </section>
 
   {{-- تخطيط 15% / 85% كما طلبت --}}
-  <div class="grid grid-cols-1 md:grid-cols-[15%_85%] md:gap-4" dir="rtl">
+  <div class="grid grid-cols-1 md:grid-cols-[15%_85%] md:gap-4">
     {{-- القائمة الجانبية (15%) --}}
     <aside class="md:col-start-1 md:sticky md:top-24 md:self-start space-y-4 order-1 md:order-none min-w-[220px]">
       <div class="sidebar-card reveal">
-        <div class="card-title-gradient px-4 py-3 text-sm font-semibold">مدخلات التصدير</div>
+        <div class="card-title-gradient px-4 py-3 text-sm font-semibold">{{ __('front.export.calculator.inputs_title') }}</div>
         <div class="bg-white p-4 space-y-4">
           <div>
-            <label class="block text-xs text-slate-600 mb-1">بلد المقصد</label>
-            <input type="text" class="cell-input" placeholder="أدخل بلد المقصد" x-model="inputs.dest_country">
+            <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.destination_country') }}</label>
+            <input type="text" class="cell-input" placeholder="{{ __('front.export.calculator.enter_destination_country') }}" x-model="inputs.dest_country">
           </div>
 
           <div>
-            <label class="block text-xs text-slate-600 mb-1">نوع الشحن</label>
+            <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.shipping_type') }}</label>
             <select class="cell-input" x-model="inputs.ship_type">
-              <option value="">اختر نوع الشحن</option>
-              <option value="sea">بحري</option>
-              <option value="air">جوي</option>
-              <option value="land">بري</option>
+              <option value="">{{ __('front.export.calculator.select_shipping_type') }}</option>
+              <option value="sea">{{ __('front.export.calculator.sea') }}</option>
+              <option value="air">{{ __('front.export.calculator.air') }}</option>
+              <option value="land">{{ __('front.export.calculator.land') }}</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-xs text-slate-600 mb-1">نوع الحاوية</label>
+            <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.container_type') }}</label>
             <select class="cell-input" x-model="inputs.container_type">
-              <option value="">اختر نوع الحاوية</option>
-              <option>20 قدم</option>
-              <option>40 قدم</option>
+              <option value="">{{ __('front.export.calculator.select_container_type') }}</option>
+              <option>{{ __('front.export.calculator.container_20ft') }}</option>
+              <option>{{ __('front.export.calculator.container_40ft') }}</option>
               <option>40HC</option>
               <option>LCL</option>
             </select>
           </div>
 
           <div>
-            <label class="block text-xs text-slate-600 mb-1">منفذ التصدير (ميناء/مطار)</label>
-            <input type="text" class="cell-input" placeholder="اختر منفذ التصدير" x-model="inputs.port_loading">
+            <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.export_gateway') }}</label>
+            <input type="text" class="cell-input" placeholder="{{ __('front.export.calculator.select_export_gateway') }}" x-model="inputs.port_loading">
           </div>
           <div>
-            <label class="block text-xs text-slate-600 mb-1">منفذ الوصول</label>
-            <input type="text" class="cell-input" placeholder="اختر منفذ الوصول" x-model="inputs.port_discharge">
+            <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.arrival_gateway') }}</label>
+            <input type="text" class="cell-input" placeholder="{{ __('front.export.calculator.select_arrival_gateway') }}" x-model="inputs.port_discharge">
           </div>
 
           <div class="grid grid-cols-1 gap-4">
             <div>
-              <label class="block text-xs text-slate-600 mb-1">وزن البضاعة (طن)</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.weight_ton') }}</label>
               <input type="number" min="0" step="0.01" class="cell-input no-spinners" x-model.number="inputs.weight_ton" placeholder="0.00">
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">حجم البضاعة (م³)</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.volume_cbm') }}</label>
               <input type="number" min="0" step="0.01" class="cell-input no-spinners" x-model.number="inputs.volume_cbm" placeholder="0.00">
             </div>
           </div>
 
           <div>
-            <label class="block text-xs text-slate-600 mb-1">تاريخ الشحن المتوقع</label>
+            <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.etd') }}</label>
             <input type="date" class="cell-input" x-model="inputs.etd">
           </div>
         </div>
       </div>
 
       <div class="sidebar-card reveal">
-        <div class="card-title-gradient px-4 py-3 text-sm font-semibold">اقتراحات الخدمات</div>
+        <div class="card-title-gradient px-4 py-3 text-sm font-semibold">{{ __('front.export.calculator.service_suggestions') }}</div>
         <div class="bg-white p-3 space-y-3">
-          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">وكيل شحن</button>
-          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">مندوب تخليص</button>
-          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">تأمين شحن</button>
-          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">نقل محلي</button>
+          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.export.calculator.shipping_agent') }}</button>
+          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.export.calculator.clearance_rep') }}</button>
+          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.export.calculator.cargo_insurance') }}</button>
+          <button class="w-full rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 transition">{{ __('front.export.calculator.local_transport') }}</button>
         </div>
       </div>
 
       @php($cards = $cards ?? [
-        ['title' => 'إعلانات الخدمات', 'items' => [
-            ['text'=>'خدمة شحن جوي','href'=>'#'],
-            ['text'=>'خدمة شحن بحري','href'=>'#'],
+        ['title' => __('front.export.calculator.services_ads'), 'items' => [
+            ['text'=>__('front.export.calculator.air_shipping_service'),'href'=>'#'],
+            ['text'=>__('front.export.calculator.sea_shipping_service'),'href'=>'#'],
         ]],
       ])
 
       @if(!empty($cards))
         <div class="sidebar-card reveal">
-          <div class="card-title-gradient px-4 py-3 text-sm font-semibold">إعلانات الخدمات</div>
+          <div class="card-title-gradient px-4 py-3 text-sm font-semibold">{{ __('front.export.calculator.services_ads') }}</div>
           <div class="p-3 space-y-2">
             @foreach($cards as $card)
               @if(!empty($card['items']))
@@ -136,36 +136,36 @@
     <div class="w-full overflow-visible">
       <section class="table-card reveal mb-6">
         <div class="table-header px-4 py-3 rounded-t-2xl flex items-center gap-3">
-          <h2 class="font-semibold">التكاليف الثابتة للتوزيع</h2>
-          <button type="button" class="ms-auto text-white/90 hover:text-white" title="تعليمات"><span class="text-xl">ℹ️</span></button>
+          <h2 class="font-semibold">{{ __('front.export.calculator.fixed_distribution_costs') }}</h2>
+          <button type="button" class="ms-auto text-white/90 hover:text-white" title="{{ __('front.export.calculator.instructions') }}"><span class="text-xl">ℹ️</span></button>
         </div>
 
         <div class="p-4 bg-white rounded-b-2xl">
           <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
-              <label class="block text-xs text-slate-600 mb-1">نولون وتوثيق (EGP)</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.freight_docs_egp') }}</label>
               <input type="number" class="cell-input no-spinners" x-model.number="fixed.freight_docs" min="0" value="0">
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">مصروفات محلية (EGP)</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.local_expenses_egp') }}</label>
               <input type="number" class="cell-input no-spinners" x-model.number="fixed.local_cost" min="0" value="0">
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">مصاريف تأمين (EGP)</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.insurance_egp') }}</label>
               <input type="number" class="cell-input no-spinners" x-model.number="fixed.insurance" min="0" value="0">
             </div>
             <div>
-              <label class="block text-xs text-slate-600 mb-1">مصاريف أخرى (EGP)</label>
+              <label class="block text-xs text-slate-600 mb-1">{{ __('front.export.calculator.other_expenses_egp') }}</label>
               <input type="number" class="cell-input no-spinners" x-model.number="fixed.other" min="0" value="0">
             </div>
           </div>
 
           <div class="flex flex-wrap items-center gap-3 justify-start mt-4">
-            <button type="button" class="toolbar-btn btn-green"  @click="addRow()">أضف بندًا +</button>
-            <button type="button" class="toolbar-btn btn-red"    @click="removeRow()">احذف بندًا –</button>
-            <button type="button" class="toolbar-btn btn-blue"   @click="clearAll()">مسح الكل</button>
-            <button type="button" class="toolbar-btn btn-brand"  @click="calcAll()">حساب الكل</button>
-            <button type="button" class="toolbar-btn bg-blue-600"    @click="doPrint()">طباعة</button>
+            <button type="button" class="toolbar-btn btn-green"  @click="addRow()">{{ __('front.export.calculator.add_item') }}</button>
+            <button type="button" class="toolbar-btn btn-red"    @click="removeRow()">{{ __('front.export.calculator.remove_item') }}</button>
+            <button type="button" class="toolbar-btn btn-blue"   @click="clearAll()">{{ __('front.export.calculator.clear_all') }}</button>
+            <button type="button" class="toolbar-btn btn-brand"  @click="calcAll()">{{ __('front.export.calculator.calculate_all') }}</button>
+            <button type="button" class="toolbar-btn bg-blue-600"    @click="doPrint()">{{ __('front.export.calculator.print') }}</button>
             <button type="button" class="toolbar-btn bg-emerald-600" @click="exportCSV()">Excel</button>
             <button type="button" class="toolbar-btn bg-rose-600"    @click="doPrint()">PDF</button>
           </div>
@@ -173,12 +173,12 @@
       </section>
 
       <section class="table-card reveal overflow-hidden">
-        <table class="w-full border-separate border-spacing-y-1" dir="rtl">
+        <table class="w-full border-separate border-spacing-y-1">
   <thead class="table-header">
     <tr>
-      <th class="table-th sticky-col rounded-l-xl px-4">البيان</th>
+      <th class="table-th sticky-col rounded-l-xl px-4">{{ __('front.export.table.statement') }}</th>
       <template x-for="c in cols" :key="'h'+c">
-        <th class="table-th" x-text="'بند ' + c"></th>
+        <th class="table-th" x-text="'{{ __('front.export.quotes.show.item') }} ' + c"></th>
       </template>
     </tr>
   </thead>
@@ -217,38 +217,50 @@ return {
     cols: 3,
     // تسميات عمود البيان
     labels: [
-      'البند الجمركي','اسم المنتج','الكمية','السعر الأوليّ','التكلفة الأولية',
-      'تكلفة التعبئة والتغليف','تكلفة النقل الداخلي','رسوم الميناء والمناولة',
-      'النولون','التأمين','التوثيق والمستندات','رسوم بنكية',
-      'السعر النهائى للبند','سعر البيع المتوقع','الربح المتوقع','معدل الربحية'
+      @js(__('front.export.calculator.label_tariff_code')),
+      @js(__('front.export.calculator.label_product_name')),
+      @js(__('front.export.calculator.label_quantity')),
+      @js(__('front.export.calculator.label_initial_price')),
+      @js(__('front.export.calculator.label_initial_cost')),
+      @js(__('front.export.calculator.label_packaging_cost')),
+      @js(__('front.export.calculator.label_local_transport_cost')),
+      @js(__('front.export.calculator.label_port_handling_fees')),
+      @js(__('front.export.calculator.label_freight')),
+      @js(__('front.export.calculator.label_insurance')),
+      @js(__('front.export.calculator.label_docs_auth')),
+      @js(__('front.export.calculator.label_bank_fees')),
+      @js(__('front.export.calculator.label_final_item_price')),
+      @js(__('front.export.calculator.label_expected_sale_price')),
+      @js(__('front.export.calculator.label_expected_profit')),
+      @js(__('front.export.calculator.label_profit_rate'))
     ],
-    // بيانات الخلايا: [16 صفًا][cols أعمدة]
+    // Cell matrix: [16 rows][cols columns]
     data: Array.from({length:16}, ()=> Array.from({length:3}, ()=> '')),
 
-    // أزرار التحكم
-    addRow(){ // زيادة عمود "بند"
+    // Toolbar actions
+    addRow(){ // add one item column
       this.cols = Math.min(this.cols + 1, 8);
       this.data.forEach(r => r.push(''));
     },
-    removeRow(){ // حذف آخر عمود
+    removeRow(){ // remove last item column
       if(this.cols > 1){ this.cols -= 1; this.data.forEach(r => r.pop()); }
       this.calcAll();
     },
-    clearAll(){ // تفريغ كل القيم
+    clearAll(){ // clear all values
       this.data = Array.from({length:16}, ()=> Array.from({length:this.cols}, ()=> ''));
     },
-    calcAll(){ // مكان ربط المعادلات حسب ما تحدده لاحقًا
-      // مثال: يمكنك ملء الصف 12 (السعر النهائى للبند) = الكمية*i × السعر الأوليّ + ...
-      // نتركها لك لتحديد الصيغة المطلوبة.
+    calcAll(){ // hook point for formula rules
+      // Example: compute final item price from qty/price and extra costs.
+      // Keep business formula wiring here.
     },
 
-    // أدوات مساعدة موجودة مسبقًا
+    // Existing helpers
     doPrint(){ window.print(); },
     exportCSV(){
       const rows = [];
-      // رأس CSV
-      rows.push(['البيان', ...Array.from({length:this.cols}, (_,i)=>`بند ${i+1}`)].join(','));
-      // محتوى
+      // CSV header
+      rows.push(["{{ __('front.export.table.statement') }}", ...Array.from({length:this.cols}, (_,i)=>`{{ __('front.export.quotes.show.item') }} ${i+1}`)].join(','));
+      // CSV body
       this.labels.forEach((lab, i)=>{
         const line = [lab, ...this.data[i].slice(0,this.cols)].map(v=>(''+(v??'')).replace(/"/g,'""'));
         rows.push(line.map(x=>`"${x}"`).join(','));

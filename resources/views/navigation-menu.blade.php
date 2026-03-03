@@ -2,7 +2,7 @@
 @props(['primaryColor' => '#153E7E'])
 
 @php
-  // تحديد الصفحة الرئيسية حسب نوع المستخدم
+    // Determine home page based on user type
   $homeRoute = 'front.home';
   $isAdmin = Auth::check() && method_exists(Auth::user(), 'is_admin') && Auth::user()->is_admin;
   if ($isAdmin && Route::has('admin.dashboard')) {
@@ -11,11 +11,11 @@
 @endphp
 
 <nav x-data="{ open: false }" class="border-b border-gray-200" style="background-color: {{ $primaryColor }};">
-    {{-- شريط علوي لسطح المكتب --}}
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" dir="rtl">
+    {{-- Desktop top bar - dir inherited from layout --}}
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 justify-between">
 
-            {{-- يمين الشريط: شعار + اسم اللوحة --}}
+            {{-- Right side: logo + panel name --}}
             <div class="flex items-center gap-3">
                 <a href="{{ route($homeRoute) }}" class="flex items-center no-underline">
                     <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-white">
@@ -24,42 +24,42 @@
                             <path d="M9 21V9h6v12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </span>
-                    <span class="ms-2 text-white text-sm md:text-base font-semibold">
-                      {{ $isAdmin ? 'لوحة التحكم' : 'جماركي' }}
-                    </span>
+                                        <span class="ms-2 text-white text-sm md:text-base font-semibold">
+                                            {{ $isAdmin ? __('ui.nav.admin_panel') : __('ui.nav.brand_name') }}
+                                        </span>
                 </a>
 
-                {{-- روابط داخلية --}}
+                {{-- Internal links --}}
                 <div class="hidden space-x-8 rtl:space-x-reverse lg:-my-px lg:ms-8 lg:flex">
                     <x-nav-link :href="route($homeRoute)" :active="request()->routeIs($homeRoute)" class="text-white hover:text-white/90">
-                        الرئيسية
+                        {{ __('ui.nav.home') }}
                     </x-nav-link>
 
                     @if(Route::has('export.calculator'))
                       <x-nav-link :href="route('export.calculator')" :active="request()->routeIs('export.calculator')" class="text-white hover:text-white/90">
-                          حاسبة التصدير
+                          {{ __('ui.nav.export_calculator') }}
                       </x-nav-link>
                     @endif
 
                     @if(Route::has('export.quotes.index'))
                       <x-nav-link :href="route('export.quotes.index')" :active="request()->routeIs('export.quotes.*')" class="text-white hover:text-white/90">
-                          عروض التصدير
+                          {{ __('ui.nav.export_quotes') }}
                       </x-nav-link>
                     @endif
                 </div>
             </div>
 
-            {{-- يسار الشريط: قائمة المستخدم / الفريق --}}
+            {{-- Left side: user/team menu --}}
             <div class="hidden lg:flex lg:items-center lg:ms-6">
 
-                {{-- تبديل الفريق (إن كانت ميزة الفرق مفعّلة) --}}
+                {{-- Team switcher (if teams feature is enabled) --}}
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ms-3 relative">
                         <x-dropdown align="left" width="60">
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-md">
                                     <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-white/10 px-3 py-2 text-sm leading-4 text-white transition hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-white/70">
-                                        {{ Auth::user()->currentTeam->name ?? 'فريقي' }}
+                                        {{ Auth::user()->currentTeam->name ?? __('ui.nav.my_team') }}
                                         <svg class="ms-2 -me-0.5 h-4 w-4 text-white/90" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd" />
                                         </svg>
@@ -69,23 +69,23 @@
 
                             <x-slot name="content">
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    إدارة الفريق
+                                    {{ __('ui.nav.team_management') }}
                                 </div>
 
                                 <x-dropdown-link href="{{ route('teams.show', Auth::user()->currentTeam->id) }}">
-                                    إعدادات الفريق
+                                    {{ __('ui.nav.team_settings') }}
                                 </x-dropdown-link>
 
                                 @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                                     <x-dropdown-link href="{{ route('teams.create') }}">
-                                        فريق جديد
+                                        {{ __('ui.nav.new_team') }}
                                     </x-dropdown-link>
                                 @endcan
 
                                 <div class="border-t border-gray-200 my-2"></div>
 
                                 <div class="block px-4 py-2 text-xs text-gray-400">
-                                    تبديل الفريق
+                                    {{ __('ui.nav.switch_team') }}
                                 </div>
                                 @foreach (Auth::user()->allTeams() as $team)
                                     <x-switchable-team :team="$team" component="dropdown-link" />
@@ -95,7 +95,7 @@
                     </div>
                 @endif
 
-                {{-- قائمة الحساب --}}
+                {{-- Account menu --}}
                 <div class="ms-3 relative">
                     <x-dropdown align="left" width="48">
                         <x-slot name="trigger">
@@ -117,11 +117,11 @@
 
                         <x-slot name="content">
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                إدارة الحساب
+                                {{ __('ui.nav.account_management') }}
                             </div>
 
                             <x-dropdown-link href="{{ route('profile.show') }}">
-                                الملف الشخصي
+                                {{ __('ui.nav.profile') }}
                             </x-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -132,12 +132,12 @@
 
                             <div class="border-t border-gray-200 my-2"></div>
 
-                            {{-- تسجيل الخروج --}}
+                            {{-- Logout --}}
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link href="{{ route('logout') }}"
                                                  onclick="event.preventDefault(); this.closest('form').submit();">
-                                    تسجيل الخروج
+                                    {{ __('ui.nav.logout') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
@@ -145,11 +145,11 @@
                 </div>
             </div>
 
-            {{-- زر القائمة للجوال --}}
+            {{-- Mobile menu button --}}
             <div class="-me-2 flex items-center lg:hidden">
                 <button @click="open = ! open"
                         class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/70"
-                        aria-label="القائمة">
+                    aria-label="{{ __('ui.nav.menu') }}">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                               d="M4 6h16M4 12h16M4 18h16" />
@@ -161,27 +161,27 @@
         </div>
     </div>
 
-    {{-- قائمة الجوال القابلة للطي --}}
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden lg:hidden" dir="rtl" style="background-color: {{ $primaryColor }};">
+    {{-- Collapsible mobile menu - dir inherited from layout --}}
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden lg:hidden" style="background-color: {{ $primaryColor }};">
         <div class="pt-2 pb-3 space-y-1 border-t border-white/20">
             <x-responsive-nav-link :href="route($homeRoute)" :active="request()->routeIs($homeRoute)" class="text-white hover:bg-white/10">
-                الرئيسية
+                {{ __('ui.nav.home') }}
             </x-responsive-nav-link>
 
             @if(Route::has('export.calculator'))
               <x-responsive-nav-link :href="route('export.calculator')" :active="request()->routeIs('export.calculator')" class="text-white hover:bg-white/10">
-                  حاسبة التصدير
+                  {{ __('ui.nav.export_calculator') }}
               </x-responsive-nav-link>
             @endif
 
             @if(Route::has('export.quotes.index'))
               <x-responsive-nav-link :href="route('export.quotes.index')" :active="request()->routeIs('export.quotes.*')" class="text-white hover:bg-white/10">
-                  عروض التصدير
+                  {{ __('ui.nav.export_quotes') }}
               </x-responsive-nav-link>
             @endif
         </div>
 
-        {{-- قسم الحساب --}}
+        {{-- Account section --}}
         <div class="pt-4 pb-1 border-t border-white/20">
             <div class="px-4 flex items-center gap-3">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -195,7 +195,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.show')" class="text-white hover:bg-white/10">
-                    الملف الشخصي
+                    {{ __('ui.nav.profile') }}
                 </x-responsive-nav-link>
 
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -204,34 +204,34 @@
                     </x-responsive-nav-link>
                 @endif
 
-                {{-- فرق العمل على الجوال --}}
+                {{-- Teams on mobile --}}
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="border-t border-white/20 my-2"></div>
-                    <div class="px-4 text-xs text-white/80">الفرق</div>
+                    <div class="px-4 text-xs text-white/80">{{ __('ui.nav.teams') }}</div>
 
                     <x-responsive-nav-link :href="route('teams.show', Auth::user()->currentTeam->id)" class="text-white hover:bg-white/10">
-                        إعدادات الفريق
+                        {{ __('ui.nav.team_settings') }}
                     </x-responsive-nav-link>
 
                     @can('create', Laravel\Jetstream\Jetstream::newTeamModel())
                         <x-responsive-nav-link :href="route('teams.create')" class="text-white hover:bg-white/10">
-                            فريق جديد
+                            {{ __('ui.nav.new_team') }}
                         </x-responsive-nav-link>
                     @endcan
 
-                    <div class="px-4 text-xs text-white/80">تبديل الفريق</div>
+                    <div class="px-4 text-xs text-white/80">{{ __('ui.nav.switch_team') }}</div>
                     @foreach (Auth::user()->allTeams() as $team)
                         <x-switchable-team :team="$team" component="responsive-nav-link" />
                     @endforeach
                 @endif
 
-                {{-- تسجيل الخروج --}}
+                {{-- Logout --}}
                 <form method="POST" action="{{ route('logout') }}" class="border-t border-white/20 mt-2">
                     @csrf
                     <x-responsive-nav-link href="{{ route('logout') }}"
                                            onclick="event.preventDefault(); this.closest('form').submit();"
                                            class="text-white hover:bg-white/10">
-                        تسجيل الخروج
+                        {{ __('ui.nav.logout') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

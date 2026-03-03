@@ -1,28 +1,29 @@
 @extends('layouts.front')
 
-@section('title', 'وكلاء العلامات التجارية')
+@section('title', __('front.agent.brand.title'))
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
     {{-- Hero Section --}}
     <section class="bg-gradient-to-l from-purple-600 to-indigo-700 text-white py-16">
         <div class="container mx-auto px-4">
             <div class="max-w-4xl mx-auto text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-6">
-                    🏆 وكلاء العلامات التجارية
+                    {{ __('front.agent.brand.hero_title') }}
                 </h1>
                 <p class="text-xl md:text-2xl text-purple-100 mb-8">
-                    اربط علامتك بوكلاء محليين مؤهلين — تمثيل احترافي وتوسع مضمون
+                    {{ __('front.agent.brand.hero_subtitle') }}
                 </p>
                 <div class="flex flex-wrap justify-center gap-4 text-sm md:text-base">
                     <div class="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
-                        ✓ وكلاء متخصصون
+                        {{ __('front.agent.brand.hero_badge_1') }}
                     </div>
                     <div class="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
-                        ✓ تدقيق آلي
+                        {{ __('front.agent.brand.hero_badge_2') }}
                     </div>
                     <div class="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3">
-                        ✓ عقود موثقة
+                        {{ __('front.agent.brand.hero_badge_3') }}
                     </div>
                 </div>
             </div>
@@ -35,15 +36,15 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                 <div class="text-center">
                     <div class="text-4xl font-bold text-purple-600 mb-2">{{ \App\Models\BrandAgencyRequest::count() }}+</div>
-                    <div class="text-gray-600">طلب وكالة</div>
+                    <div class="text-gray-600">{{ __('front.agent.brand.kpi_requests') }}</div>
                 </div>
                 <div class="text-center">
                     <div class="text-4xl font-bold text-green-600 mb-2">{{ \App\Models\BrandAgencyRequest::where('decision', 'accepted')->count() }}</div>
-                    <div class="text-gray-600">وكالة مقبولة</div>
+                    <div class="text-gray-600">{{ __('front.agent.brand.kpi_accepted') }}</div>
                 </div>
                 <div class="text-center">
                     <div class="text-4xl font-bold text-blue-600 mb-2">{{ \App\Models\Brand::count() }}+</div>
-                    <div class="text-gray-600">علامة تجارية</div>
+                    <div class="text-gray-600">{{ __('front.agent.brand.kpi_brands') }}</div>
                 </div>
             </div>
         </div>
@@ -54,19 +55,19 @@
         <div class="container mx-auto px-4">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-                    🌟 علامات تجارية تبحث عن وكلاء
+                    {{ __('front.agent.brand.brands_section_title') }}
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
                     {{-- Sample Brand Cards --}}
                     @php
                         $sampleBrands = [
-                            ['name' => 'TechVision', 'sector' => 'إلكترونيات', 'countries' => ['السعودية', 'الإمارات'], 'color' => 'blue'],
-                            ['name' => 'FreshFood Co.', 'sector' => 'أغذية ومشروبات', 'countries' => ['مصر', 'الأردن'], 'color' => 'green'],
-                            ['name' => 'FashionStyle', 'sector' => 'أزياء', 'countries' => ['الكويت', 'قطر'], 'color' => 'pink'],
-                            ['name' => 'HomeComfort', 'sector' => 'أثاث', 'countries' => ['السعودية', 'البحرين'], 'color' => 'amber'],
-                            ['name' => 'BeautyGlow', 'sector' => 'مستحضرات تجميل', 'countries' => ['الإمارات', 'لبنان'], 'color' => 'purple'],
-                            ['name' => 'SportsPro', 'sector' => 'رياضة', 'countries' => ['عمان', 'السعودية'], 'color' => 'red'],
+                            ['name' => 'TechVision', 'sector' => __('front.agent.brand.sector_electronics'), 'countries' => [__('front.agent.brand.country_saudi'), __('front.agent.brand.country_uae')], 'color' => 'blue'],
+                            ['name' => 'FreshFood Co.', 'sector' => __('front.agent.brand.sector_food_beverage'), 'countries' => [__('front.agent.brand.country_egypt'), __('front.agent.brand.country_jordan')], 'color' => 'green'],
+                            ['name' => 'FashionStyle', 'sector' => __('front.agent.brand.sector_fashion'), 'countries' => [__('front.agent.brand.country_kuwait'), __('front.agent.brand.country_qatar')], 'color' => 'pink'],
+                            ['name' => 'HomeComfort', 'sector' => __('front.agent.brand.sector_furniture'), 'countries' => [__('front.agent.brand.country_saudi'), __('front.agent.brand.country_bahrain')], 'color' => 'amber'],
+                            ['name' => 'BeautyGlow', 'sector' => __('front.agent.brand.sector_cosmetics'), 'countries' => [__('front.agent.brand.country_uae'), __('front.agent.brand.country_lebanon')], 'color' => 'purple'],
+                            ['name' => 'SportsPro', 'sector' => __('front.agent.brand.sector_sports'), 'countries' => [__('front.agent.brand.country_oman'), __('front.agent.brand.country_saudi')], 'color' => 'red'],
                         ];
                     @endphp
 
@@ -84,7 +85,7 @@
 
                             <div class="space-y-2 mb-4">
                                 <div class="text-sm text-gray-600">
-                                    <span class="font-medium">الدول المطلوبة:</span>
+                                    <span class="font-medium">{{ __('front.agent.brand.required_countries') }}</span>
                                     <div class="flex flex-wrap gap-1 mt-1">
                                         @foreach($brand['countries'] as $country)
                                             <span class="px-2 py-1 bg-gray-100 rounded text-xs">{{ $country }}</span>
@@ -94,15 +95,15 @@
                             </div>
 
                             <button class="w-full bg-{{ $brand['color'] }}-600 text-white py-2 rounded-lg hover:bg-{{ $brand['color'] }}-700 transition text-sm font-medium">
-                                قدّم طلب وكالة
+                                {{ __('front.agent.brand.apply_agency') }}
                             </button>
                         </div>
                     @endforeach
                 </div>
 
                 <div class="bg-blue-50 border-2 border-blue-200 rounded-xl p-6 text-center">
-                    <p class="text-blue-800 font-medium mb-2">هل علامتك التجارية غير موجودة؟</p>
-                    <p class="text-blue-600 text-sm">قدّم طلباً عاماً وسنربطك بالعلامات المناسبة</p>
+                    <p class="text-blue-800 font-medium mb-2">{{ __('front.agent.brand.brand_not_listed_title') }}</p>
+                    <p class="text-blue-600 text-sm">{{ __('front.agent.brand.brand_not_listed_subtitle') }}</p>
                 </div>
             </div>
         </div>
@@ -114,10 +115,10 @@
             <div class="max-w-4xl mx-auto">
                 <div class="text-center mb-8">
                     <h2 class="text-3xl font-bold text-gray-800 mb-4">
-                        📝 قدّم طلب وكالة علامة تجارية
+                        {{ __('front.agent.brand.form_title') }}
                     </h2>
                     <p class="text-gray-600 text-lg">
-                        املأ النموذج وسنقوم بتقييم طلبك آلياً خلال دقائق
+                        {{ __('front.agent.brand.form_subtitle') }}
                     </p>
                 </div>
 
@@ -131,37 +132,37 @@
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
-                    كيف يعمل نظام التقييم؟
+                    {{ __('front.agent.brand.how_it_works_title') }}
                 </h2>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6">
                         <div class="text-4xl mb-4">📄</div>
-                        <h3 class="font-bold text-gray-800 mb-3">1. التدقيق الآلي</h3>
+                        <h3 class="font-bold text-gray-800 mb-3">{{ __('front.agent.brand.step1_title') }}</h3>
                         <ul class="text-sm text-gray-600 space-y-2">
-                            <li>✓ فحص الوثائق (20 نقطة)</li>
-                            <li>✓ تقييم الخبرة (20 نقطة)</li>
-                            <li>✓ القدرات التشغيلية (20 نقطة)</li>
+                            <li>{{ __('front.agent.brand.step1_item1') }}</li>
+                            <li>{{ __('front.agent.brand.step1_item2') }}</li>
+                            <li>{{ __('front.agent.brand.step1_item3') }}</li>
                         </ul>
                     </div>
 
                     <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6">
                         <div class="text-4xl mb-4">⚖️</div>
-                        <h3 class="font-bold text-gray-800 mb-3">2. التقييم الشامل</h3>
+                        <h3 class="font-bold text-gray-800 mb-3">{{ __('front.agent.brand.step2_title') }}</h3>
                         <ul class="text-sm text-gray-600 space-y-2">
-                            <li>✓ الأداء المتوقع (20 نقطة)</li>
-                            <li>✓ الجاهزية التقنية (10 نقاط)</li>
-                            <li>✓ المرفقات (10 نقاط)</li>
+                            <li>{{ __('front.agent.brand.step2_item1') }}</li>
+                            <li>{{ __('front.agent.brand.step2_item2') }}</li>
+                            <li>{{ __('front.agent.brand.step2_item3') }}</li>
                         </ul>
                     </div>
 
                     <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6">
                         <div class="text-4xl mb-4">✅</div>
-                        <h3 class="font-bold text-gray-800 mb-3">3. القرار الفوري</h3>
+                        <h3 class="font-bold text-gray-800 mb-3">{{ __('front.agent.brand.step3_title') }}</h3>
                         <ul class="text-sm text-gray-600 space-y-2">
-                            <li>✓ مقبول (85+ نقطة)</li>
-                            <li>✓ مشروط (70-84 نقطة)</li>
-                            <li>✓ مرفوض (&lt;70 نقطة)</li>
+                            <li>{{ __('front.agent.brand.step3_item1') }}</li>
+                            <li>{{ __('front.agent.brand.step3_item2') }}</li>
+                            <li>{{ __('front.agent.brand.step3_item3') }}</li>
                         </ul>
                     </div>
                 </div>
@@ -170,13 +171,13 @@
                     <div class="flex items-start">
                         <div class="text-4xl ml-4">💡</div>
                         <div>
-                            <h3 class="font-bold text-amber-800 mb-3">نصائح لزيادة فرص القبول</h3>
+                            <h3 class="font-bold text-amber-800 mb-3">{{ __('front.agent.brand.tips_title') }}</h3>
                             <ul class="text-amber-700 space-y-2">
-                                <li>✓ أرفق جميع الوثائق الرسمية (رخصة تجارية، شهادة ضريبية)</li>
-                                <li>✓ اكتب خطة توسع واضحة ومفصلة (أكثر من 50 كلمة)</li>
-                                <li>✓ أضف قنوات التوزيع الحالية</li>
-                                <li>✓ أرفق مراجع أو صور لأعمال سابقة</li>
-                                <li>✓ أضف رابط الموقع الإلكتروني إن وجد</li>
+                                <li>{{ __('front.agent.brand.tip1') }}</li>
+                                <li>{{ __('front.agent.brand.tip2') }}</li>
+                                <li>{{ __('front.agent.brand.tip3') }}</li>
+                                <li>{{ __('front.agent.brand.tip4') }}</li>
+                                <li>{{ __('front.agent.brand.tip5') }}</li>
                             </ul>
                         </div>
                     </div>
@@ -190,39 +191,39 @@
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">
-                    لماذا تصبح وكيلاً معتمداً؟
+                    {{ __('front.agent.brand.benefits_title') }}
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-white rounded-xl shadow-md p-6 flex items-start">
                         <div class="text-3xl ml-4">🌍</div>
                         <div>
-                            <h3 class="font-bold text-gray-800 mb-2">وصول لعلامات عالمية</h3>
-                            <p class="text-gray-600 text-sm">فرصة للتعاون مع علامات تجارية دولية مرموقة</p>
+                            <h3 class="font-bold text-gray-800 mb-2">{{ __('front.agent.brand.benefit1_title') }}</h3>
+                            <p class="text-gray-600 text-sm">{{ __('front.agent.brand.benefit1_desc') }}</p>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-md p-6 flex items-start">
                         <div class="text-3xl ml-4">📈</div>
                         <div>
-                            <h3 class="font-bold text-gray-800 mb-2">نمو مضمون</h3>
-                            <p class="text-gray-600 text-sm">عقود طويلة الأمد وحصرية في منطقتك</p>
+                            <h3 class="font-bold text-gray-800 mb-2">{{ __('front.agent.brand.benefit2_title') }}</h3>
+                            <p class="text-gray-600 text-sm">{{ __('front.agent.brand.benefit2_desc') }}</p>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-md p-6 flex items-start">
                         <div class="text-3xl ml-4">🤝</div>
                         <div>
-                            <h3 class="font-bold text-gray-800 mb-2">دعم كامل</h3>
-                            <p class="text-gray-600 text-sm">تدريب وتسويق ودعم فني من أصحاب العلامات</p>
+                            <h3 class="font-bold text-gray-800 mb-2">{{ __('front.agent.brand.benefit3_title') }}</h3>
+                            <p class="text-gray-600 text-sm">{{ __('front.agent.brand.benefit3_desc') }}</p>
                         </div>
                     </div>
 
                     <div class="bg-white rounded-xl shadow-md p-6 flex items-start">
                         <div class="text-3xl ml-4">⚡</div>
                         <div>
-                            <h3 class="font-bold text-gray-800 mb-2">عملية سريعة</h3>
-                            <p class="text-gray-600 text-sm">تقييم فوري وقرار خلال 48 ساعة</p>
+                            <h3 class="font-bold text-gray-800 mb-2">{{ __('front.agent.brand.benefit4_title') }}</h3>
+                            <p class="text-gray-600 text-sm">{{ __('front.agent.brand.benefit4_desc') }}</p>
                         </div>
                     </div>
                 </div>
@@ -235,26 +236,26 @@
         <div class="container mx-auto px-4">
             <div class="max-w-5xl mx-auto">
                 <h2 class="text-3xl font-bold text-center text-gray-800 mb-4">
-                    💼 خدمات مدفوعة للوكلاء
+                    {{ __('front.agent.brand.paid_services_title') }}
                 </h2>
-                <p class="text-center text-gray-600 mb-12">خدمات احترافية لتعزيز نجاحك كوكيل تجاري</p>
+                <p class="text-center text-gray-600 mb-12">{{ __('front.agent.brand.paid_services_subtitle') }}</p>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-8 hover:shadow-lg transition">
                         <div class="text-4xl mb-4">👨‍💼</div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">استشارة خبير تصدير</h3>
-                        <p class="text-gray-600 mb-4">جلسة استشارية مع خبراء التصدير والاستيراد لتطوير استراتيجيتك</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">{{ __('front.agent.brand.service1_title') }}</h3>
+                        <p class="text-gray-600 mb-4">{{ __('front.agent.brand.service1_desc') }}</p>
                         <a href="#" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-medium">
-                            احجز استشارة
+                            {{ __('front.agent.brand.service1_cta') }}
                         </a>
                     </div>
 
                     <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-8 hover:shadow-lg transition">
                         <div class="text-4xl mb-4">📚</div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3">برنامج تدريب الوكلاء</h3>
-                        <p class="text-gray-600 mb-4">دورة شاملة لتأهيل الوكلاء الجدد وتطوير مهارات البيع والتسويق</p>
+                        <h3 class="text-xl font-bold text-gray-800 mb-3">{{ __('front.agent.brand.service2_title') }}</h3>
+                        <p class="text-gray-600 mb-4">{{ __('front.agent.brand.service2_desc') }}</p>
                         <a href="#" class="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition text-sm font-medium">
-                            سجّل الآن
+                            {{ __('front.agent.brand.service2_cta') }}
                         </a>
                     </div>
                 </div>
@@ -265,10 +266,10 @@
     {{-- CTA Section --}}
     <section class="py-16 bg-gradient-to-l from-purple-600 to-indigo-700 text-white">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">هل أنت صاحب علامة تجارية؟</h2>
-            <p class="text-xl text-purple-100 mb-8">سجّل علامتك وابحث عن وكلاء محليين موثوقين</p>
+            <h2 class="text-3xl font-bold mb-4">{{ __('front.agent.brand.cta_title') }}</h2>
+            <p class="text-xl text-purple-100 mb-8">{{ __('front.agent.brand.cta_subtitle') }}</p>
             <a href="#" class="inline-block bg-white text-purple-600 px-8 py-3 rounded-lg font-bold hover:bg-purple-50 transition">
-                سجّل علامتك التجارية
+                {{ __('front.agent.brand.cta_button') }}
             </a>
         </div>
     </section>

@@ -1,5 +1,5 @@
 @extends('layouts.front')
-@section('title','التصنيع')
+@section('title', __('nav.manufacturing'))
 @section('content')
-    <div class="p-6"><h1 class="text-2xl font-bold">التصنيع (صفحة مؤقتة)</h1></div>
+    <div class="p-6"><h1 class="text-2xl font-bold">{{ __('shipping.manufacturing.placeholder_page') }}</h1></div>
 @endsection

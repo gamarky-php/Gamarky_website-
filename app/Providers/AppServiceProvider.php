@@ -61,6 +61,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(LoginResponse::class, CustomLoginResponse::class);
+        
+        // Register SMS Sender interface (Stub for now, replace with real implementation in production)
+        $this->app->bind(
+            \App\Contracts\SmsSenderInterface::class,
+            \App\Services\StubSmsSender::class
+        );
     }
 
     /**

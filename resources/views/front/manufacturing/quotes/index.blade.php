@@ -1,30 +1,31 @@
-@extends('layouts.app')
-@section('title', 'قائمة عروض الأسعار')
+﻿@extends('layouts.app')
+@section('title', __('front.manufacturing.quotes.index.title'))
 
 @section('content')
-<div class="page-wrapper mx-auto px-3 md:px-6 py-6" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="page-wrapper mx-auto px-3 md:px-6 py-6">
   <div class="mb-6 flex items-center justify-between">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 mb-2">عروض الأسعار التصنيعية</h1>
-      <p class="text-gray-600">جميع عروض الأسعار المحفوظة</p>
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('front.manufacturing.quotes.index.heading') }}</h1>
+      <p class="text-gray-600">{{ __('front.manufacturing.quotes.index.subtitle') }}</p>
     </div>
     <a href="{{ route('mfg.calculator') }}" class="rounded-lg px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-lg transition">
-      + عرض جديد
+      {{ __('front.manufacturing.quotes.index.new_quote') }}
     </a>
   </div>
 
   <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-    <table class="w-full text-sm" dir="rtl">
+    <table class="w-full text-sm">
       <thead class="bg-gray-50">
         <tr>
-          <th class="px-4 py-3 text-right font-semibold text-gray-700">رقم العرض</th>
-          <th class="px-4 py-3 text-right font-semibold text-gray-700">المنتج</th>
-          <th class="px-4 py-3 text-right font-semibold text-gray-700">العميل</th>
-          <th class="px-4 py-3 text-right font-semibold text-gray-700">الكمية</th>
-          <th class="px-4 py-3 text-right font-semibold text-gray-700">الهامش</th>
-          <th class="px-4 py-3 text-right font-semibold text-gray-700">الإجمالي</th>
-          <th class="px-4 py-3 text-right font-semibold text-gray-700">التاريخ</th>
-          <th class="px-4 py-3 text-center font-semibold text-gray-700">إجراءات</th>
+          <th class="px-4 py-3 text-right font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.quote_no') }}</th>
+          <th class="px-4 py-3 text-right font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.product') }}</th>
+          <th class="px-4 py-3 text-right font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.client') }}</th>
+          <th class="px-4 py-3 text-right font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.qty') }}</th>
+          <th class="px-4 py-3 text-right font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.margin') }}</th>
+          <th class="px-4 py-3 text-right font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.total') }}</th>
+          <th class="px-4 py-3 text-right font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.date') }}</th>
+          <th class="px-4 py-3 text-center font-semibold text-gray-700">{{ __('front.manufacturing.quotes.index.actions') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -38,7 +39,7 @@
           <td class="px-4 py-3 font-semibold text-green-700">{{ number_format($quote->total_amount, 2) }} {{ $quote->currency }}</td>
           <td class="px-4 py-3 text-gray-600">{{ $quote->created_at->format('Y-m-d') }}</td>
           <td class="px-4 py-3 text-center space-x-2 space-x-reverse">
-            <a href="{{ route('mfg.quotes.show', $quote->id) }}" class="text-blue-600 hover:text-blue-800 font-semibold text-sm">عرض</a>
+            <a href="{{ route('mfg.quotes.show', $quote->id) }}" class="text-blue-600 hover:text-blue-800 font-semibold text-sm">{{ __('front.manufacturing.common.view') }}</a>
             <a href="{{ route('mfg.quotes.pdf', $quote->id) }}" target="_blank" class="text-red-600 hover:text-red-800 font-semibold text-sm">PDF</a>
             <a href="{{ route('mfg.quotes.excel', $quote->id) }}" class="text-green-600 hover:text-green-800 font-semibold text-sm">Excel</a>
           </td>
@@ -46,7 +47,7 @@
         @empty
         <tr>
           <td colspan="8" class="px-4 py-8 text-center text-gray-500">
-            لا توجد عروض أسعار محفوظة
+            {{ __('front.manufacturing.quotes.index.empty') }}
           </td>
         </tr>
         @endforelse

@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'تتبع مسار حاوية - جماركي')
+@section('title', __('front.shipping.container_track.title'))
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -10,10 +10,10 @@
         <div class="container mx-auto max-w-7xl">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">
                 <i class="fas fa-map-marked-alt ml-3"></i>
-                تتبع مسار حاوية
+                {{ __('front.shipping.container_track.heading') }}
             </h1>
             <p class="text-xl text-blue-100 max-w-3xl">
-                تتبع حاويتك لحظة بلحظة من ميناء الشحن وحتى الوصول
+                {{ __('front.shipping.container_track.subtitle') }}
             </p>
         </div>
     </div>
@@ -30,32 +30,32 @@
                 <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-satellite text-3xl text-blue-600"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">تتبع GPS</h3>
-                <p class="text-sm text-gray-600">موقع دقيق لحظياً</p>
+                <h3 class="font-bold text-gray-800 mb-2">{{ __('front.shipping.container_track.gps_tracking') }}</h3>
+                <p class="text-sm text-gray-600">{{ __('front.shipping.container_track.gps_tracking_desc') }}</p>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6 text-center">
                 <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-bell text-3xl text-green-600"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">إشعارات فورية</h3>
-                <p class="text-sm text-gray-600">تنبيهات عند كل مرحلة</p>
+                <h3 class="font-bold text-gray-800 mb-2">{{ __('front.shipping.container_track.instant_alerts') }}</h3>
+                <p class="text-sm text-gray-600">{{ __('front.shipping.container_track.instant_alerts_desc') }}</p>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6 text-center">
                 <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-history text-3xl text-purple-600"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">سجل كامل</h3>
-                <p class="text-sm text-gray-600">تاريخ جميع المحطات</p>
+                <h3 class="font-bold text-gray-800 mb-2">{{ __('front.shipping.container_track.full_history') }}</h3>
+                <p class="text-sm text-gray-600">{{ __('front.shipping.container_track.full_history_desc') }}</p>
             </div>
 
             <div class="bg-white rounded-lg shadow-md p-6 text-center">
                 <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <i class="fas fa-file-pdf text-3xl text-orange-600"></i>
                 </div>
-                <h3 class="font-bold text-gray-800 mb-2">تقارير PDF</h3>
-                <p class="text-sm text-gray-600">تحميل التفاصيل</p>
+                <h3 class="font-bold text-gray-800 mb-2">{{ __('front.shipping.container_track.pdf_reports') }}</h3>
+                <p class="text-sm text-gray-600">{{ __('front.shipping.container_track.pdf_reports_desc') }}</p>
             </div>
         </div>
     </div>

@@ -1,12 +1,13 @@
-@extends('layouts.front')
-@section('title', 'حاسبة تكلفة التصنيع')
+﻿@extends('layouts.front')
+@section('title', __('front.manufacturing.calculator.title'))
 
 @section('content')
-<main x-data="ManuCalc()" class="page-wrapper mx-auto px-3 md:px-6 min-h-screen bg-gray-50 text-slate-800 relative z-0" dir="rtl">
+{{-- dir inherited from layout --}}
+<main x-data="ManuCalc()" class="page-wrapper mx-auto px-3 md:px-6 min-h-screen bg-gray-50 text-slate-800 relative z-0">
   <!-- Hero -->
   <section class="bg-gradient-to-r from-purple-600 to-blue-700 text-white rounded-2xl shadow-xl p-8 mb-6 mt-16 md:mt-20">
-    <h1 class="text-3xl md:text-4xl font-extrabold text-center">حاسبة تكلفة التصنيع</h1>
-    <p class="text-center opacity-90 mt-2">"ما لا يمكن قياسه لا يمكن إدارته" — بيتر دراكر</p>
+    <h1 class="text-3xl md:text-4xl font-extrabold text-center">{{ __('front.manufacturing.calculator.heading') }}</h1>
+    <p class="text-center opacity-90 mt-2">{{ __('front.manufacturing.calculator.quote') }}</p>
   </section>
 
   <!-- أدوات أعلى الجدول -->
@@ -16,52 +17,52 @@
 
     <span class="mx-2 h-6 w-px bg-slate-300"></span>
 
-    <button @click="addBand" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-green-600 text-white hover:opacity-90">أضف بندًا +</button>
-    <button @click="removeBand" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-red-600 text-white hover:opacity-90">احذف بندًا −</button>
+    <button @click="addBand" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-green-600 text-white hover:opacity-90">{{ __('front.manufacturing.calculator.add_item') }}</button>
+    <button @click="removeBand" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-red-600 text-white hover:opacity-90">{{ __('front.manufacturing.calculator.remove_item') }}</button>
 
     <span class="mx-2 h-6 w-px bg-slate-300"></span>
 
-    <button @click="clearAll" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-blue-500 text-white hover:opacity-90">مسح الكل</button>
-    <button @click="calcAll" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-indigo-600 text-white hover:opacity-90">حساب الكل</button>
-    <button @click="doPrint" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-slate-700 text-white">طباعة</button>
+    <button @click="clearAll" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-blue-500 text-white hover:opacity-90">{{ __('front.manufacturing.calculator.clear_all') }}</button>
+    <button @click="calcAll" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-indigo-600 text-white hover:opacity-90">{{ __('front.manufacturing.calculator.calculate_all') }}</button>
+    <button @click="doPrint" class="rounded-lg px-4 py-2 shadow-sm font-medium text-sm bg-slate-700 text-white">{{ __('front.manufacturing.calculator.print') }}</button>
   </div>
 
   <!-- جدول الفاتورة -->
   <div class="bg-white rounded-2xl shadow overflow-x-auto">
     
 <!-- === GAMARKY FINAL 15/85 WRAPPER START === -->
-<div dir="rtl" class="bg-white rounded-2xl shadow-xl p-4 w-full">
+<div class="bg-white rounded-2xl shadow-xl p-4 w-full">
   <div class="flex flex-row-reverse flex-nowrap items-start gap-2 w-full">
     <div class="basis-[15%] shrink-0">
       <aside class="sticky top-6">
         <div class="rounded-2xl shadow-xl overflow-hidden bg-white border border-slate-200">
           <div class="px-4 py-3 bg-gradient-to-r from-indigo-600 to-sky-600 text-white">
-            <h3 class="text-lg font-bold tracking-wide text-center">طلب خدمات التصنيع</h3>
+            <h3 class="text-lg font-bold tracking-wide text-center">{{ __('front.manufacturing.calculator.request_services') }}</h3>
           </div>
           <div class="p-3 space-y-3">
-            <button class="w-full rounded-xl px-4 py-3 bg-blue-600 text-white font-medium shadow hover:shadow-lg transition">🧱 مورد مواد خام</button>
-            <button class="w-full rounded-xl px-4 py-3 bg-slate-600 text-white font-medium shadow hover:shadow-lg transition">🛠️ مورد معدات</button>
-            <button class="w-full rounded-xl px-4 py-3 bg-amber-400 text-black font-medium shadow hover:shadow-lg transition">🔧 خدمة الصيانة</button>
-            <button class="w-full rounded-xl px-4 py-3 bg-cyan-600 text-white font-medium shadow hover:shadow-lg transition">🚚 خدمة النقل</button>
-            <button class="w-full rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium shadow hover:shadow-lg transition">📦 التعبئة والتغليف</button>
-            <button class="w-full rounded-xl px-4 py-3 bg-teal-700 text-white font-medium shadow hover:shadow-lg transition">🚛 النقل الداخلي</button>
-            <button class="w-full rounded-xl px-4 py-3 bg-teal-800 text-white font-medium shadow hover:shadow-lg transition">🚛 النقل الداخلي</button>
-            <button class="w-full rounded-xl px-4 py-3 bg-green-600 text-white font-medium shadow hover:shadow-lg transition">✅ مراقبة الجودة</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-blue-600 text-white font-medium shadow hover:shadow-lg transition">🧱 {{ __('front.manufacturing.calculator.service_raw_material_supplier') }}</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-slate-600 text-white font-medium shadow hover:shadow-lg transition">🛠️ {{ __('front.manufacturing.calculator.service_equipment_supplier') }}</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-amber-400 text-black font-medium shadow hover:shadow-lg transition">🔧 {{ __('front.manufacturing.calculator.service_maintenance') }}</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-cyan-600 text-white font-medium shadow hover:shadow-lg transition">🚚 {{ __('front.manufacturing.calculator.service_transport') }}</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-emerald-600 text-white font-medium shadow hover:shadow-lg transition">📦 {{ __('front.manufacturing.calculator.service_packaging') }}</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-teal-700 text-white font-medium shadow hover:shadow-lg transition">🚛 {{ __('front.manufacturing.calculator.service_local_transport') }}</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-teal-800 text-white font-medium shadow hover:shadow-lg transition">🚛 {{ __('front.manufacturing.calculator.service_local_transport') }}</button>
+            <button class="w-full rounded-xl px-4 py-3 bg-green-600 text-white font-medium shadow hover:shadow-lg transition">✅ {{ __('front.manufacturing.calculator.service_quality_control') }}</button>
           </div>
         </div>
       </aside>
     </div>
     <div class="basis-[85%] grow min-w-0">
       <div class="rounded-xl mb-2 bg-gradient-to-l from-purple-600 to-indigo-600 text-white px-5 py-3 shadow">
-        <h4 class="text-base md:text-lg font-semibold">فاتورة التصنيع</h4>
+        <h4 class="text-base md:text-lg font-semibold">{{ __('front.manufacturing.calculator.invoice') }}</h4>
       </div>
       <div class="overflow-x-auto">
-        <table class="w-full border-separate border-spacing-y-1" dir="rtl">
+        <table class="w-full border-separate border-spacing-y-1">
       <thead>
         <tr>
-          <th class="sticky right-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 rounded-l-xl text-center">البيان</th>
+          <th class="sticky right-0 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 rounded-l-xl text-center">{{ __('front.manufacturing.calculator.statement') }}</th>
           <template x-for="c in cols" :key="'h'+c">
-            <th class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 text-center" x-text="'بند ' + c"></th>
+            <th class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 text-center" x-text="'{{ __('front.manufacturing.calculator.item_prefix') }} ' + c"></th>
           </template>
         </tr>
       </thead>
@@ -70,7 +71,7 @@
         <!-- صفوف المواد الخام (ديناميكية): مادة خام 1..N -->
         <template x-for="i in materialsCount" :key="'mat'+i">
           <tr>
-            <td class="sticky right-0 bg-slate-50/90 backdrop-blur px-4 py-2 text-center font-medium" x-text="'مادة خام ' + i"></td>
+            <td class="sticky right-0 bg-slate-50/90 backdrop-blur px-4 py-2 text-center font-medium" x-text="'{{ __('front.manufacturing.calculator.raw_material_prefix') }} ' + i"></td>
             <template x-for="c in cols" :key="'mc'+i+'-'+c">
               <td class="px-2 py-2">
                 <!-- قيمة تكلفة المادة الخام مباشرة (للتبسيط). يمكن لاحقًا فصلها إلى كمية*سعر لكل مادة -->
@@ -84,7 +85,7 @@
 
         <!-- 2) الكمية -->
         <tr>
-          <td class="sticky right-0 bg-slate-50/90 backdrop-blur px-4 py-2 text-center font-medium">الكمية</td>
+          <td class="sticky right-0 bg-slate-50/90 backdrop-blur px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.quantity') }}</td>
           <template x-for="c in cols" :key="'qty'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01"
@@ -96,7 +97,7 @@
 
         <!-- 3) السعر -->
         <tr>
-          <td class="sticky right-0 bg-slate-50/90 backdrop-blur px-4 py-2 text-center font-medium">السعر</td>
+          <td class="sticky right-0 bg-slate-50/90 backdrop-blur px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.price') }}</td>
           <template x-for="c in cols" :key="'price'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01"
@@ -108,7 +109,7 @@
 
         <!-- 4) إجمالي التكلفة الأولية = مجموع المواد -->
         <tr>
-          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">إجمالي التكلفة الأولية</td>
+          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.primary_total') }}</td>
           <template x-for="c in cols" :key="'prim'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01" readonly disabled
@@ -120,7 +121,7 @@
 
         <!-- 5) العمالة -->
         <tr>
-          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">العمالة</td>
+          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.labor') }}</td>
           <template x-for="c in cols" :key="'lab'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01"
@@ -132,7 +133,7 @@
 
         <!-- 6) الطاقة -->
         <tr>
-          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">الطاقة</td>
+          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.power') }}</td>
           <template x-for="c in cols" :key="'pow'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01"
@@ -144,7 +145,7 @@
 
         <!-- 7) صيانة المعدات -->
         <tr>
-          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">صيانة المعدات</td>
+          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.equipment_maintenance') }}</td>
           <template x-for="c in cols" :key="'mnt'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01"
@@ -156,7 +157,7 @@
 
         <!-- 8) إيجار المصنع -->
         <tr>
-          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">إيجار المصنع</td>
+          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.factory_rent') }}</td>
           <template x-for="c in cols" :key="'rent'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01"
@@ -168,7 +169,7 @@
 
         <!-- 9) إجمالي تكلفة التصنيع -->
         <tr>
-          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">إجمالي تكلفة التصنيع</td>
+          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.total_manufacturing_cost') }}</td>
           <template x-for="c in cols" :key="'mfg'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01" readonly disabled
@@ -180,7 +181,7 @@
 
         <!-- 10) تكلفة الوحدة = إجمالي التصنيع ÷ الكمية -->
         <tr>
-          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">تكلفة الوحدة</td>
+          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.unit_cost') }}</td>
           <template x-for="c in cols" :key="'cpu'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01" readonly disabled
@@ -192,7 +193,7 @@
 
         <!-- 11) سعر البيع المتوقع -->
         <tr>
-          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">سعر البيع المتوقع</td>
+          <td class="sticky right-0 bg-slate-50 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.expected_sale_price') }}</td>
           <template x-for="c in cols" :key="'sp'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01"
@@ -204,7 +205,7 @@
 
         <!-- 12) الربح المتوقع للوحدة -->
         <tr>
-          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">الربح المتوقع للوحدة</td>
+          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.expected_profit_per_unit') }}</td>
           <template x-for="c in cols" :key="'ppu'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01" readonly disabled
@@ -216,7 +217,7 @@
 
         <!-- 13) إجمالي الأرباح = الربح للوحدة × الكمية -->
         <tr>
-          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">إجمالي الأرباح</td>
+          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.total_profit') }}</td>
           <template x-for="c in cols" :key="'tp'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01" readonly disabled
@@ -228,7 +229,7 @@
 
         <!-- 14) تحليل الربحية % = الربح للوحدة ÷ سعر البيع × 100 -->
         <tr>
-          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">تحليل الربحية</td>
+          <td class="sticky right-0 bg-slate-100 px-4 py-2 text-center font-medium">{{ __('front.manufacturing.calculator.profitability_analysis') }}</td>
           <template x-for="c in cols" :key="'mr'+c">
             <td class="px-2 py-2">
               <input type="number" step="0.01" readonly disabled
@@ -346,7 +347,7 @@ function ManuCalc(){
       return sp>0 ? (this.profitPerUnit(col)/sp)*100 : 0;
     },
 
-    calcAll(){ /* تعتمد القيم على model bindings وتُحتسب on the fly */ },
+    calcAll(){ /* values are derived from model bindings and computed on-the-fly */ },
 
     doPrint(){ window.print(); }
   }

@@ -5,10 +5,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white">
-                        لوحة التحكم الرئيسية
+                        {{ __('لوحة التحكم الرئيسية') }}
                     </h1>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                        آخر تحديث: {{ $lastUpdate }}
+                        {{ __('آخر تحديث:') }} {{ $lastUpdate }}
                     </p>
                 </div>
                 
@@ -26,7 +26,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
-                        {{ $autoRefresh ? 'التحديث التلقائي مفعّل' : 'التحديث التلقائي معطّل' }}
+                        {{ $autoRefresh ? __('التحديث التلقائي مفعّل') : __('التحديث التلقائي معطّل') }}
                     </button>
                     
                     {{-- Manual Refresh --}}
@@ -39,7 +39,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                         </svg>
-                        تحديث الآن
+                        {{ __('تحديث الآن') }}
                     </button>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                 </div>
                 
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                    إجمالي الحجوزات
+                    {{ __('إجمالي الحجوزات') }}
                 </h3>
                 <p class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                     {{ number_format($totalBookings['value']) }}
@@ -130,16 +130,16 @@
                 </div>
                 
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                    متوسط زمن التخليص
+                    {{ __('متوسط زمن التخليص') }}
                 </h3>
                 <p class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                     {{ $avgClearanceTime['value'] }} <span class="text-lg">{{ $avgClearanceTime['unit'] }}</span>
                 </p>
                 
                 <div class="flex justify-between items-center text-xs">
-                    <span class="text-gray-500">الهدف:</span>
+                    <span class="text-gray-500">{{ __('الهدف:') }}</span>
                     <span class="font-semibold text-indigo-600 dark:text-indigo-400">
-                        {{ $avgClearanceTime['target'] }} أيام
+                        {{ $avgClearanceTime['target'] }} {{ __('أيام') }}
                     </span>
                 </div>
             </div>
@@ -178,7 +178,7 @@
                 </div>
                 
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                    الالتزام بالمواعيد
+                    {{ __('الالتزام بالمواعيد') }}
                 </h3>
                 <p class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                     {{ $onTimeRate['value'] }}<span class="text-lg">{{ $onTimeRate['unit'] }}</span>
@@ -186,11 +186,11 @@
                 
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="flex justify-between">
-                        <span class="text-gray-500">في الموعد:</span>
+                        <span class="text-gray-500">{{ __('في الموعد:') }}</span>
                         <span class="font-semibold text-green-600">{{ $onTimeRate['on_time'] }}</span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-gray-500">الهدف:</span>
+                        <span class="text-gray-500">{{ __('الهدف:') }}</span>
                         <span class="font-semibold text-indigo-600">{{ $onTimeRate['target'] }}%</span>
                     </div>
                 </div>
@@ -223,14 +223,14 @@
                 </div>
                 
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                    إيراد الاشتراكات
+                    {{ __('إيراد الاشتراكات') }}
                 </h3>
                 <p class="text-2xl font-bold text-gray-900 dark:text-white mb-3">
                     {{ $subscriptionRevenue['formatted'] }}
                 </p>
                 
                 <div class="flex justify-between items-center text-xs">
-                    <span class="text-gray-500">اشتراكات جديدة:</span>
+                    <span class="text-gray-500">{{ __('اشتراكات جديدة:') }}</span>
                     <span class="font-semibold text-emerald-600 dark:text-emerald-400">
                         {{ $subscriptionRevenue['new_subscriptions'] }}
                     </span>
@@ -271,7 +271,7 @@
                 </div>
                 
                 <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
-                    معدل النقر CTR
+                    {{ __('معدل النقر CTR') }}
                 </h3>
                 <p class="text-3xl font-bold text-gray-900 dark:text-white mb-3">
                     {{ $adsCtr['value'] }}<span class="text-lg">{{ $adsCtr['unit'] }}</span>
@@ -279,13 +279,13 @@
                 
                 <div class="grid grid-cols-2 gap-2 text-xs">
                     <div class="flex justify-between">
-                        <span class="text-gray-500">نقرات:</span>
+                        <span class="text-gray-500">{{ __('نقرات:') }}</span>
                         <span class="font-semibold text-gray-700 dark:text-gray-300">
                             {{ number_format($adsCtr['clicks']) }}
                         </span>
                     </div>
                     <div class="flex justify-between">
-                        <span class="text-gray-500">الهدف:</span>
+                        <span class="text-gray-500">{{ __('الهدف:') }}</span>
                         <span class="font-semibold text-indigo-600">{{ $adsCtr['target'] }}%</span>
                     </div>
                 </div>
@@ -299,7 +299,7 @@
             <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <div class="flex items-center justify-between mb-6">
                     <h2 class="text-xl font-bold text-gray-900 dark:text-white">
-                        قمع التحويل - {{ $funnelPeriod === 'daily' ? 'يومي' : ($funnelPeriod === 'weekly' ? 'أسبوعي' : 'شهري') }}
+                        {{ __('قمع التحويل -') }} {{ $funnelPeriod === 'daily' ? __('يومي') : ($funnelPeriod === 'weekly' ? __('أسبوعي') : __('شهري')) }}
                     </h2>
                     
                     {{-- Period Selector --}}
@@ -310,7 +310,7 @@
                                 {{ $funnelPeriod === 'daily' 
                                     ? 'bg-indigo-600 text-white' 
                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
-                            يومي
+                            {{ __('يومي') }}
                         </button>
                         <button 
                             wire:click="updateFunnelPeriod('weekly')"
@@ -318,7 +318,7 @@
                                 {{ $funnelPeriod === 'weekly' 
                                     ? 'bg-indigo-600 text-white' 
                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
-                            أسبوعي
+                            {{ __('أسبوعي') }}
                         </button>
                         <button 
                             wire:click="updateFunnelPeriod('monthly')"
@@ -326,7 +326,7 @@
                                 {{ $funnelPeriod === 'monthly' 
                                     ? 'bg-indigo-600 text-white' 
                                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
-                            شهري
+                            {{ __('شهري') }}
                         </button>
                     </div>
                 </div>
@@ -340,19 +340,19 @@
                 @if(isset($funnelChart['summary']))
                 <div class="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                     <div class="text-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">معدل التحويل الكلي</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('معدل التحويل الكلي') }}</p>
                         <p class="text-2xl font-bold text-indigo-600 dark:text-indigo-400">
                             {{ number_format($funnelChart['summary']['overall_conversion'], 1) }}%
                         </p>
                     </div>
                     <div class="text-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">بحث → عروض</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('بحث → عروض') }}</p>
                         <p class="text-2xl font-bold text-blue-600 dark:text-blue-400">
                             {{ number_format($funnelChart['summary']['search_to_quote'], 1) }}%
                         </p>
                     </div>
                     <div class="text-center">
-                        <p class="text-sm text-gray-500 dark:text-gray-400">عروض → حجز</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('عروض → حجز') }}</p>
                         <p class="text-2xl font-bold text-green-600 dark:text-green-400">
                             {{ number_format($funnelChart['summary']['quote_to_booking'], 1) }}%
                         </p>
@@ -364,7 +364,7 @@
             {{-- 2. أداء الموانئ (Bar Chart) --}}
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">
-                    أداء الموانئ
+                    {{ __('أداء الموانئ') }}
                 </h2>
                 
                 {{-- Canvas --}}
@@ -375,9 +375,9 @@
                 {{-- Average --}}
                 @if(isset($portsChart['average']))
                 <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 text-center">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">المتوسط العام</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('المتوسط العام') }}</p>
                     <p class="text-2xl font-bold text-gray-900 dark:text-white">
-                        {{ number_format($portsChart['average'], 1) }} يوم
+                        {{ number_format($portsChart['average'], 1) }} {{ __('يوم') }}
                     </p>
                 </div>
                 @endif
@@ -386,7 +386,7 @@
             {{-- 3. توزيع أنواع الحاويات (Doughnut) --}}
             <div class="lg:col-span-3 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-6">
-                    توزيع أنواع الحاويات (آخر 30 يوم)
+                    {{ __('توزيع أنواع الحاويات (آخر 30 يوم)') }}
                 </h2>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -425,7 +425,7 @@
                         </div>
                         
                         <div class="mt-4 p-4 bg-indigo-50 dark:bg-indigo-900 rounded-lg text-center">
-                            <p class="text-sm text-gray-600 dark:text-gray-300">إجمالي الحاويات</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-300">{{ __('إجمالي الحاويات') }}</p>
                             <p class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">
                                 {{ number_format($containersChart['total'] ?? 0) }}
                             </p>

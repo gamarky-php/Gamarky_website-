@@ -37,7 +37,7 @@
                 <input type="text" 
                        @focus="searchOpen = true"
                        @blur="setTimeout(() => searchOpen = false, 200)"
-                       placeholder="بحث شامل... (Ctrl+K)"
+                      placeholder="{{ __('ui.dashboard.topbar.search_placeholder') }}"
                        class="w-full pr-10 pl-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
             
@@ -47,7 +47,7 @@
                  x-transition
                  class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
                 <div class="p-4 text-sm text-gray-500 dark:text-gray-400 text-center">
-                    ابدأ الكتابة للبحث...
+                    {{ __('ui.dashboard.topbar.start_typing') }}
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
         <div class="relative" x-data="{ langOpen: false }">
             <button @click="langOpen = !langOpen" 
                     class="p-2 rounded-lg text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                    title="تغيير اللغة">
+                    title="{{ __('ui.dashboard.topbar.change_language') }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path>
                 </svg>
@@ -86,17 +86,17 @@
                 <a href="{{ route('locale.switch', 'ar') }}" 
                    class="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 {{ app()->getLocale() === 'ar' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-semibold' : 'text-gray-700 dark:text-gray-300' }}">
                     <span>🇸🇦</span>
-                    العربية
+                    {{ __('ui.dashboard.topbar.lang_ar') }}
                 </a>
                 <a href="{{ route('locale.switch', 'zh') }}" 
                    class="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 {{ app()->getLocale() === 'zh' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-semibold' : 'text-gray-700 dark:text-gray-300' }}">
                     <span>🇨🇳</span>
-                    الصينية
+                    {{ __('ui.dashboard.topbar.lang_zh') }}
                 </a>
                 <a href="{{ route('locale.switch', 'en') }}" 
                    class="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-gray-50 dark:hover:bg-gray-700 {{ app()->getLocale() === 'en' ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 font-semibold' : 'text-gray-700 dark:text-gray-300' }}">
                     <span>🇬🇧</span>
-                    الإنجليزية
+                    {{ __('ui.dashboard.topbar.lang_en') }}
                 </a>
             </div>
         </div>
@@ -123,9 +123,9 @@
                 
                 <!-- Header -->
                 <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-                    <h3 class="font-semibold text-gray-900 dark:text-white">الإشعارات</h3>
+                    <h3 class="font-semibold text-gray-900 dark:text-white">{{ __('ui.dashboard.topbar.notifications') }}</h3>
                     <button class="text-sm text-blue-600 dark:text-blue-400 hover:underline">
-                        تعليم الكل كمقروء
+                        {{ __('ui.dashboard.topbar.mark_all_read') }}
                     </button>
                 </div>
                 
@@ -140,9 +140,9 @@
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">عملية استيراد جديدة</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">تم إضافة عملية استيراد جديدة #12345</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">منذ 5 دقائق</p>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ __('ui.dashboard.topbar.notif_import_title') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('ui.dashboard.topbar.notif_import_desc') }}</p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ __('ui.dashboard.topbar.notif_time_5m') }}</p>
                             </div>
                         </div>
                     </a>
@@ -155,9 +155,9 @@
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">تم الموافقة على الطلب</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">تمت الموافقة على طلب التخليص #98765</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">منذ ساعة</p>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ __('ui.dashboard.topbar.notif_approval_title') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('ui.dashboard.topbar.notif_approval_desc') }}</p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ __('ui.dashboard.topbar.notif_time_hour') }}</p>
                             </div>
                         </div>
                     </a>
@@ -170,9 +170,9 @@
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">تنبيه موعد نهائي</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">ينتهي موعد الشحنة #54321 خلال 24 ساعة</p>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">منذ 3 ساعات</p>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ __('ui.dashboard.topbar.notif_deadline_title') }}</p>
+                                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ __('ui.dashboard.topbar.notif_deadline_desc') }}</p>
+                                <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">{{ __('ui.dashboard.topbar.notif_time_3h') }}</p>
                             </div>
                         </div>
                     </a>
@@ -182,11 +182,11 @@
                 @if(Route::has('dashboard.notifications.index'))
                     <a href="{{ route('dashboard.notifications.index') }}" 
                        class="block px-4 py-3 text-center text-sm text-blue-600 dark:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium">
-                        عرض جميع الإشعارات
+                        {{ __('ui.dashboard.topbar.view_all_notifications') }}
                     </a>
                 @else
                     <span class="block px-4 py-3 text-center text-sm text-gray-400 dark:text-gray-500 font-medium cursor-not-allowed opacity-60">
-                        عرض جميع الإشعارات (قيد الإعداد)
+                        {{ __('ui.dashboard.topbar.view_all_notifications_pending') }}
                     </span>
                 @endif
             </div>
@@ -200,12 +200,12 @@
                      alt="{{ Auth::user()->name ?? 'User' }}" 
                      class="w-8 h-8 rounded-full ring-2 ring-gray-200 dark:ring-gray-700">
                 <div class="hidden md:block text-right">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ Auth::user()->name ?? 'مستخدم' }}</p>
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ Auth::user()->name ?? __('ui.dashboard.topbar.default_user') }}</p>
                     <p class="text-xs text-gray-500 dark:text-gray-400">
                         @if(Auth::user()->roles->first())
                             {{ Auth::user()->roles->first()->name }}
                         @else
-                            مستخدم
+                            {{ __('ui.dashboard.topbar.default_user') }}
                         @endif
                     </p>
                 </div>
@@ -223,7 +223,7 @@
                 
                 <!-- User Info -->
                 <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ Auth::user()->name ?? 'مستخدم' }}</p>
+                    <p class="text-sm font-medium text-gray-900 dark:text-white">{{ Auth::user()->name ?? __('ui.dashboard.topbar.default_user') }}</p>
                     <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ Auth::user()->email }}</p>
                 </div>
                 
@@ -235,14 +235,14 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
-                            الملف الشخصي
+                            {{ __('ui.dashboard.topbar.profile') }}
                         </a>
                     @else
                         <span class="flex items-center gap-3 px-4 py-2 text-sm text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-60">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                             </svg>
-                            الملف الشخصي (قيد الإعداد)
+                            {{ __('ui.dashboard.topbar.profile_pending') }}
                         </span>
                     @endif
                     
@@ -253,7 +253,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            الإعدادات
+                            {{ __('ui.dashboard.topbar.settings') }}
                         </a>
                     @else
                         <span class="flex items-center gap-3 px-4 py-2 text-sm text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-60">
@@ -261,7 +261,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             </svg>
-                            الإعدادات (قيد الإعداد)
+                            {{ __('ui.dashboard.topbar.settings_pending') }}
                         </span>
                     @endif
                     
@@ -271,14 +271,14 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                             </svg>
-                            إعدادات الإشعارات
+                            {{ __('ui.dashboard.topbar.notification_settings') }}
                         </a>
                     @else
                         <span class="flex items-center gap-3 px-4 py-2 text-sm text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-60">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
                             </svg>
-                            إعدادات الإشعارات (قيد الإعداد)
+                            {{ __('ui.dashboard.topbar.notification_settings_pending') }}
                         </span>
                     @endif
                 </div>
@@ -292,7 +292,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                             </svg>
-                            تسجيل الخروج
+                            {{ __('ui.nav.logout') }}
                         </button>
                     </form>
                 </div>

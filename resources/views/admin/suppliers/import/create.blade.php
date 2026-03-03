@@ -1,17 +1,18 @@
-{{-- صفحة رفع ملف الموردين --}}
+﻿{{-- Suppliers import upload page --}}
 @extends('layouts.app')
 
-@section('title', 'رفع ملف الموردين')
+@section('title', __('dashboard.admin.suppliers.import_create.title'))
 
 @section('content')
-<div class="container mx-auto px-4 py-6" dir="rtl">
-    {{-- العنوان --}}
+{{-- dir inherited from layout --}}
+<div class="container mx-auto px-4 py-6">
+    {{-- Header --}}
     <div class="mb-6">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">رفع ملف الموردين (CSV)</h1>
-        <p class="text-gray-600">ارفع ملف CSV يحتوي على بيانات الموردين للمراجعة والاعتماد</p>
+        <h1 class="text-3xl font-bold text-gray-800 mb-2">{{ __('dashboard.admin.suppliers.import_create.heading') }}</h1>
+        <p class="text-gray-600">{{ __('dashboard.admin.suppliers.import_create.subtitle') }}</p>
     </div>
 
-    {{-- عرض الرسائل --}}
+    {{-- Flash messages --}}
     @if (session('success'))
         <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
             <div class="flex items-center">
@@ -36,7 +37,7 @@
 
     @if ($errors->any())
         <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-            <div class="font-medium mb-2">يرجى تصحيح الأخطاء التالية:</div>
+            <div class="font-medium mb-2">{{ __('dashboard.admin.suppliers.import_create.validation_errors') }}</div>
             <ul class="list-disc list-inside">
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -46,16 +47,16 @@
     @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {{-- نموذج رفع الملف --}}
+        {{-- Upload form --}}
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800">رفع ملف CSV</h2>
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ __('dashboard.admin.suppliers.import_create.upload_csv') }}</h2>
             
             <form action="{{ route('admin.suppliers.import.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
                 
                 <div>
                     <label for="excel" class="block text-sm font-medium text-gray-700 mb-2">
-                        اختر ملف CSV (.csv)
+                        {{ __('dashboard.admin.suppliers.import_create.choose_csv') }}
                     </label>
                     <input type="file" 
                            name="excel" 
@@ -74,14 +75,14 @@
                             <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
                         </svg>
                         <div>
-                            <h3 class="text-sm font-medium text-yellow-800">تنبيه هام:</h3>
+                            <h3 class="text-sm font-medium text-yellow-800">{{ __('dashboard.admin.suppliers.import_create.important_notice') }}</h3>
                             <div class="mt-2 text-sm text-yellow-700">
                                 <ul class="list-disc list-inside space-y-1">
-                                    <li><strong>احفظ ملف Excel بصيغة CSV UTF-8 (Comma) ثم ارفعه</strong></li>
-                                    <li>النظام يدعم الفواصل المختلفة (، ; Tab) ويكتشفها تلقائياً</li>
-                                    <li>أسماء الأعمدة مرنة (مسافات، أقواس، تسميات بديلة)</li>
-                                    <li>الحد الأقصى لحجم الملف: 10 ميجابايت</li>
-                                    <li>سيتم وضع جميع الموردين في حالة "قيد المراجعة"</li>
+                                    <li><strong>{{ __('dashboard.admin.suppliers.import_create.notes.save_utf8') }}</strong></li>
+                                    <li>{{ __('dashboard.admin.suppliers.import_create.notes.delimiter_detection') }}</li>
+                                    <li>{{ __('dashboard.admin.suppliers.import_create.notes.flexible_headers') }}</li>
+                                    <li>{{ __('dashboard.admin.suppliers.import_create.notes.max_size') }}</li>
+                                    <li>{{ __('dashboard.admin.suppliers.import_create.notes.pending_status') }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -93,14 +94,14 @@
                     <svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM6.293 6.707a1 1 0 010-1.414l3-3a1 1 0 011.414 0l3 3a1 1 0 01-1.414 1.414L11 5.414V13a1 1 0 11-2 0V5.414L7.707 6.707a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
                     </svg>
-                    رفع واستيراد
+                    {{ __('dashboard.admin.suppliers.import_create.upload_import') }}
                 </button>
             </form>
         </div>
 
-        {{-- إرشادات الاستخدام --}}
+        {{-- Usage instructions --}}
         <div class="bg-white rounded-lg shadow-md p-6">
-            <h2 class="text-xl font-semibold mb-4 text-gray-800">رؤوس الأعمدة المطلوبة</h2>
+            <h2 class="text-xl font-semibold mb-4 text-gray-800">{{ __('dashboard.admin.suppliers.import_create.required_headers') }}</h2>
             
             <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
                 <div class="grid grid-cols-2 gap-2 text-sm text-blue-700">
@@ -127,12 +128,12 @@
                     <svg class="w-4 h-4 inline ml-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
                     </svg>
-                    صفحة المراجعة
+                    {{ __('dashboard.admin.suppliers.import_create.review_page') }}
                 </a>
                 
                 <a href="{{ route('admin.suppliers.index') }}" 
                    class="block w-full text-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 transition">
-                    العودة لإدارة الموردين
+                    {{ __('dashboard.admin.suppliers.import_create.back_to_suppliers') }}
                 </a>
             </div>
         </div>

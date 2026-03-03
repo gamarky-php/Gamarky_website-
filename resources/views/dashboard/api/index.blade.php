@@ -1,8 +1,9 @@
 @extends('layouts.app')
 @section('title','API')
 @section('content')
-<div class="container mx-auto py-8" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="container mx-auto py-8">
   <h1 class="text-2xl font-bold mb-4">API</h1>
-  <p class="text-gray-600">صفحة القسم — جاهزة لإضافة المحتوى لاحقًا.</p>
+  <p class="text-gray-600">{{ __('صفحة القسم — جاهزة لإضافة المحتوى لاحقًا.') }}</p>
 </div>
 @endsection

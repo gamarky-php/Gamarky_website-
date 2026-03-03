@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Direction helpers */
+.ltr {
+    direction: ltr !important;
+}
+
+.rtl {
+    direction: rtl !important;
+}
+
 [x-cloak] {
     display: none;
 }

@@ -42,6 +42,11 @@ Route::get('/test-dashboard', function () {
     return view('test-dashboard');
 });
 
+// TEST ROUTE - Phase 8 Locale Helpers Test
+Route::get('/test-locale', function () {
+    return view('test-locale-helpers');
+})->name('test.locale');
+
 /*
 |==========================================================================
 | PUBLIC ROUTES - الراوتات العامة (الواجهة الأمامية)
@@ -80,7 +85,7 @@ Route::get('/lang/{locale}', function ($locale) {
         }
     }
     
-    return redirect()->back()->with('success', 'تم تغيير اللغة بنجاح');
+    return redirect()->back()->with('success', __('messages.success'));
 })->name('locale.switch');
 
 Route::prefix('import')->name('front.import.')->group(function () {
@@ -145,6 +150,32 @@ Route::prefix('agent')->name('front.agent.')->group(function () {
 // ================= SUPPLIERS SECTION (الموردون) =================
 Route::prefix('suppliers')->name('front.suppliers.')->group(function () {
     Route::get('/', [PublicSuppliersController::class, 'index'])->name('index');
+});
+
+// ================= JOURNEY / PAY-PER-JOURNEY SECTION (الدفع مقابل الوظيفة) =================
+Route::prefix('journey')->name('front.journey.')->group(function () {
+    // Public journey info page
+    Route::get('/', [\App\Http\Controllers\JourneyController::class, 'index'])->name('index');
+    
+    // Payment callback pages (no auth required - Paymob redirects here)
+    Route::get('/success', [\App\Http\Controllers\JourneyController::class, 'success'])->name('success');
+    Route::get('/failed', [\App\Http\Controllers\JourneyController::class, 'failed'])->name('failed');
+    
+    // Protected routes (require authentication)
+    Route::middleware('auth')->group(function () {
+        // My journeys
+        Route::get('/my', [\App\Http\Controllers\JourneyController::class, 'myJourneys'])->name('my');
+        
+        // Create journey
+        Route::get('/create', [\App\Http\Controllers\JourneyController::class, 'create'])->name('create');
+        Route::post('/', [\App\Http\Controllers\JourneyController::class, 'store'])->name('store');
+        
+        // View journey
+        Route::get('/{journey}', [\App\Http\Controllers\JourneyController::class, 'show'])->name('show');
+        
+        // Checkout
+        Route::post('/{journey}/checkout', [\App\Http\Controllers\JourneyController::class, 'checkout'])->name('checkout');
+    });
 });
 
 /*
@@ -330,3 +361,9 @@ Route::fallback(function () {
 });
 
 Route::view('/privacy-policy', 'front.privacy')->name('privacy.policy');
+Route::get('/debug-locale', function () {
+    return response()->json([
+        'app_locale' => app()->getLocale(),
+        'session_locale' => session('locale'),
+    ]);
+});

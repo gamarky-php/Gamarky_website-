@@ -1,6 +1,7 @@
-<div dir="rtl" class="space-y-6">
+{{-- dir inherited from layout --}}
+<div class="space-y-6">
     <div class="flex justify-between items-center">
-        <h2 class="text-2xl font-bold text-gray-900">🖼️ مكتبة الوسائط</h2>
+        <h2 class="text-2xl font-bold text-gray-900">🖼️ {{ __('dashboard.shared.media_library.title') }}</h2>
     </div>
 
     @if(session('success'))
@@ -8,22 +9,22 @@
     @endif
 
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
-        <h3 class="font-semibold text-gray-900 mb-4">رفع ملفات</h3>
+        <h3 class="font-semibold text-gray-900 mb-4">{{ __('dashboard.shared.media_library.upload_files') }}</h3>
         <form wire:submit.prevent="uploadFiles" class="space-y-4">
             <input type="file" wire:model="files" multiple class="w-full">
             @error('files.*') <span class="text-xs text-red-600">{{ $message }}</span> @enderror
-            <button type="submit" class="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">رفع الملفات</button>
+            <button type="submit" class="px-5 py-2.5 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">{{ __('dashboard.shared.media_library.upload_button') }}</button>
         </form>
     </div>
 
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
         <div class="grid grid-cols-3 gap-4">
-            <input type="text" wire:model.live="search" placeholder="بحث..." class="rounded-lg border-gray-300">
+            <input type="text" wire:model.live="search" placeholder="{{ __('dashboard.shared.media_library.search_placeholder') }}" class="rounded-lg border-gray-300">
             <select wire:model.live="filterType" class="rounded-lg border-gray-300">
-                <option value="">جميع الأنواع</option>
-                <option value="image">صور</option>
-                <option value="document">مستندات</option>
-                <option value="video">فيديو</option>
+                <option value="">{{ __('dashboard.shared.media_library.all_types') }}</option>
+                <option value="image">{{ __('dashboard.shared.media_library.type_image') }}</option>
+                <option value="document">{{ __('dashboard.shared.media_library.type_document') }}</option>
+                <option value="video">{{ __('dashboard.shared.media_library.type_video') }}</option>
             </select>
         </div>
     </div>
@@ -42,7 +43,7 @@
                 @endif
                 <p class="text-xs text-gray-700 truncate font-medium">{{ $file->filename }}</p>
                 <p class="text-xs text-gray-500">{{ number_format($file->size / 1024, 1) }} KB</p>
-                <button wire:click="deleteFile({{ $file->id }})" wire:confirm="حذف؟" class="mt-2 w-full px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">حذف</button>
+                <button wire:click="deleteFile({{ $file->id }})" wire:confirm="{{ __('dashboard.shared.media_library.delete_confirm') }}" class="mt-2 w-full px-2 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200">{{ __('dashboard.shared.media_library.delete') }}</button>
             </div>
         @endforeach
     </div>

@@ -1,9 +1,10 @@
-@extends('layouts.dashboard')
-@section('title','التصدير')
+﻿@extends('layouts.dashboard')
+@section('title', __('nav.export'))
 @section('dashboard')
-  <div class="p-6" dir="rtl">
-    <h1 class="text-xl font-bold mb-4">التصدير</h1>
-    <p class="text-gray-600">هذه صفحة مؤقتة، سنستبدلها لاحقًا بالوظائف الكاملة.</p>
+  {{-- dir inherited from layout --}}
+  <div class="p-6">
+    <h1 class="text-xl font-bold mb-4">{{ __('nav.export') }}</h1>
+    <p class="text-gray-600">{{ __('dashboard.admin.generic_placeholder') }}</p>
   </div>
 @endsection
 

@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'لوحة التحكم - الرئيسية')
+@section('title', __('ui.dashboard.index.page_title'))
 
 @section('content')
 <div class="space-y-6">
@@ -8,21 +8,21 @@
     <!-- Page Header -->
     <div class="flex items-center justify-between">
         <div>
-            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">مرحباً، {{ Auth::user()->name ?? 'مستخدم' }}! 👋</h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-1">إليك نظرة عامة على أداء عملياتك اليوم</p>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('ui.dashboard.index.welcome', ['name' => (Auth::user()->name ?? __('ui.dashboard.topbar.default_user'))]) }} 👋</h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-1">{{ __('ui.dashboard.index.overview_today') }}</p>
         </div>
         <div class="flex items-center gap-3">
             <button class="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                 <svg class="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
                 </svg>
-                تصدير التقرير
+                {{ __('ui.dashboard.index.export_report') }}
             </button>
             <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
                 <svg class="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                 </svg>
-                عملية جديدة
+                {{ __('ui.dashboard.index.new_operation') }}
             </button>
         </div>
     </div>
@@ -42,9 +42,9 @@
                     +12.5%
                 </span>
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">إجمالي العمليات</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ __('ui.dashboard.index.total_operations') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">1,284</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">هذا الشهر</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ __('ui.dashboard.index.this_month') }}</p>
         </div>
         
         <!-- Active Shipments -->
@@ -59,9 +59,9 @@
                     +8.2%
                 </span>
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">الشحنات النشطة</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ __('ui.dashboard.index.active_shipments') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">142</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">قيد التنفيذ</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ __('ui.dashboard.index.in_progress') }}</p>
         </div>
         
         <!-- Pending Approvals -->
@@ -73,12 +73,12 @@
                     </svg>
                 </div>
                 <span class="text-xs font-medium text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-900/30 px-2 py-1 rounded-full">
-                    23 جديد
+                    {{ __('ui.dashboard.index.new_count', ['count' => 23]) }}
                 </span>
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">بانتظار الموافقة</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ __('ui.dashboard.index.pending_approval') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">67</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">يتطلب إجراء</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ __('ui.dashboard.index.action_required') }}</p>
         </div>
         
         <!-- Total Revenue -->
@@ -93,9 +93,9 @@
                     +18.3%
                 </span>
             </div>
-            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">الإيرادات الإجمالية</h3>
+            <h3 class="text-gray-600 dark:text-gray-400 text-sm font-medium mb-1">{{ __('ui.dashboard.index.total_revenue') }}</h3>
             <p class="text-3xl font-bold text-gray-900 dark:text-white">2.4M SR</p>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">هذا الربع</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">{{ __('ui.dashboard.index.this_quarter') }}</p>
         </div>
         
     </div>
@@ -106,11 +106,11 @@
         <!-- Operations by Section -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">العمليات حسب القسم</h2>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('ui.dashboard.index.operations_by_section') }}</h2>
                 <select class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-1.5 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                    <option>هذا الشهر</option>
-                    <option>آخر 3 أشهر</option>
-                    <option>هذا العام</option>
+                    <option>{{ __('ui.dashboard.index.this_month') }}</option>
+                    <option>{{ __('ui.dashboard.index.last_3_months') }}</option>
+                    <option>{{ __('ui.dashboard.index.this_year') }}</option>
                 </select>
             </div>
             <div class="h-64 flex items-center justify-center text-gray-400 dark:text-gray-600">
@@ -118,7 +118,7 @@
                     <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                     </svg>
-                    <p>Chart.js سيتم تكامله قريباً</p>
+                    <p>{{ __('ui.dashboard.index.chart_coming_soon') }}</p>
                 </div>
             </div>
         </div>
@@ -126,8 +126,8 @@
         <!-- Recent Activity -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">النشاط الأخير</h2>
-                <a href="#" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">عرض الكل</a>
+                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('ui.dashboard.index.recent_activity') }}</h2>
+                <a href="#" class="text-sm text-blue-600 dark:text-blue-400 hover:underline">{{ __('ui.dashboard.index.view_all') }}</a>
             </div>
             <div class="space-y-4">
                 <!-- Activity Item -->
@@ -138,8 +138,8 @@
                         </svg>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm text-gray-900 dark:text-white">تمت إضافة عملية استيراد جديدة</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">منذ 5 دقائق</p>
+                        <p class="text-sm text-gray-900 dark:text-white">{{ __('ui.dashboard.index.activity_import_added') }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('ui.dashboard.topbar.notif_time_5m') }}</p>
                     </div>
                 </div>
                 
@@ -150,8 +150,8 @@
                         </svg>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm text-gray-900 dark:text-white">تمت الموافقة على طلب التخليص #12345</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">منذ 12 دقيقة</p>
+                        <p class="text-sm text-gray-900 dark:text-white">{{ __('ui.dashboard.index.activity_approval', ['id' => '12345']) }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('ui.dashboard.index.time_12m') }}</p>
                     </div>
                 </div>
                 
@@ -162,8 +162,8 @@
                         </svg>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm text-gray-900 dark:text-white">تحديث حالة الحاوية MSKU123456</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">منذ 25 دقيقة</p>
+                        <p class="text-sm text-gray-900 dark:text-white">{{ __('ui.dashboard.index.activity_container_update', ['id' => 'MSKU123456']) }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('ui.dashboard.index.time_25m') }}</p>
                     </div>
                 </div>
                 
@@ -174,8 +174,8 @@
                         </svg>
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm text-gray-900 dark:text-white">طلب عرض سعر تصدير جديد</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">منذ ساعة</p>
+                        <p class="text-sm text-gray-900 dark:text-white">{{ __('ui.dashboard.index.activity_export_quote') }}</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ __('ui.dashboard.topbar.notif_time_hour') }}</p>
                     </div>
                 </div>
             </div>
@@ -185,7 +185,7 @@
     
     <!-- Quick Actions -->
     <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-6">
-        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">إجراءات سريعة</h2>
+        <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('ui.dashboard.index.quick_actions') }}</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
             @can('view-import-section')
             <a href="{{ route('dashboard.import.index') }}" class="flex flex-col items-center gap-2 p-4 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
@@ -194,7 +194,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
                     </svg>
                 </div>
-                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">الاستيراد</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">{{ __('ui.dashboard.sidebar.import') }}</span>
             </a>
             @endcan
             
@@ -205,7 +205,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
                     </svg>
                 </div>
-                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">التصدير</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">{{ __('ui.dashboard.sidebar.export') }}</span>
             </a>
             @endcan
             
@@ -216,7 +216,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
                     </svg>
                 </div>
-                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">التصنيع</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">{{ __('ui.dashboard.sidebar.manufacturing') }}</span>
             </a>
             @endcan
             
@@ -227,7 +227,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
                 </div>
-                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">التخليص</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">{{ __('ui.dashboard.index.clearance_short') }}</span>
             </a>
             @endcan
             
@@ -238,7 +238,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                     </svg>
                 </div>
-                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">الحاويات</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">{{ __('ui.dashboard.breadcrumbs.containers') }}</span>
             </a>
             @endcan
             
@@ -249,7 +249,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                     </svg>
                 </div>
-                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">الوكالات</span>
+                <span class="text-sm text-gray-700 dark:text-gray-300 text-center">{{ __('ui.dashboard.breadcrumbs.agency') }}</span>
             </a>
             @endcan
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'الاشتراكات')
+@section('title', __('dashboard.subscriptions.title'))
 
 @section('content')
 <div class="space-y-6">
@@ -12,16 +12,16 @@
                 <svg class="w-8 h-8 inline-block ml-3 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
                 </svg>
-                الاشتراكات
+                {{ __('dashboard.subscriptions.title') }}
             </h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">إدارة خطط الاشتراكات والفواتير</p>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('dashboard.subscriptions.subtitle') }}</p>
         </div>
         <a href="{{ route('dashboard.index') }}" 
            class="px-4 py-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             <svg class="w-5 h-5 inline-block ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
             </svg>
-            العودة للوحة التحكم
+            {{ __('dashboard.subscriptions.back_to_dashboard') }}
         </a>
     </div>
     
@@ -37,12 +37,12 @@
             
             <!-- Title -->
             <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                صفحة إدارة الاشتراكات
+                {{ __('dashboard.subscriptions.page_title') }}
             </h2>
             
             <!-- Description -->
             <p class="text-gray-600 dark:text-gray-400 mb-4">
-                سيتم ربط الفواتير وخطط الأسعار لاحقاً
+                {{ __('dashboard.subscriptions.page_desc') }}
             </p>
             
             <!-- Info Badge -->
@@ -50,7 +50,7 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span>الجدول أدناه يحتوي على بيانات تجريبية للعرض فقط</span>
+                <span>{{ __('dashboard.subscriptions.demo_badge') }}</span>
             </div>
         </div>
         
@@ -60,22 +60,22 @@
                 <thead class="bg-gray-50 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700">
                     <tr>
                         <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            الخطة
+                            {{ __('dashboard.subscriptions.table.plan') }}
                         </th>
                         <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            السعر
+                            {{ __('dashboard.subscriptions.table.price') }}
                         </th>
                         <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            الحالة
+                            {{ __('dashboard.subscriptions.table.status') }}
                         </th>
                         <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            عدد المشتركين
+                            {{ __('dashboard.subscriptions.table.subscribers') }}
                         </th>
                         <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            آخر تحديث
+                            {{ __('dashboard.subscriptions.table.last_update') }}
                         </th>
                         <th class="px-6 py-4 text-right text-xs font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wider">
-                            الإجراءات
+                            {{ __('dashboard.subscriptions.table.actions') }}
                         </th>
                     </tr>
                 </thead>
@@ -91,21 +91,21 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">الخطة الأساسية</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ __('dashboard.subscriptions.plans.basic_ar') }}</div>
                                     <div class="text-xs text-gray-500 dark:text-gray-400">Basic Plan</div>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="text-lg font-bold text-gray-900 dark:text-white">$29</span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">/شهر</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">/{{ __('dashboard.subscriptions.per_month') }}</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
                                 <svg class="w-3 h-3 ml-1 mt-0.5" fill="currentColor" viewBox="0 0 8 8">
                                     <circle cx="4" cy="4" r="3"/>
                                 </svg>
-                                نشطة
+                                {{ __('dashboard.subscriptions.status.active') }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -121,7 +121,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <button class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium cursor-not-allowed opacity-50">
-                                تعديل
+                                {{ __('dashboard.subscriptions.edit') }}
                             </button>
                         </td>
                     </tr>
@@ -136,21 +136,21 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">الخطة الاحترافية</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ __('dashboard.subscriptions.plans.pro_ar') }}</div>
                                     <div class="text-xs text-gray-500 dark:text-gray-400">Pro Plan</div>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="text-lg font-bold text-gray-900 dark:text-white">$79</span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">/شهر</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">/{{ __('dashboard.subscriptions.per_month') }}</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
                                 <svg class="w-3 h-3 ml-1 mt-0.5" fill="currentColor" viewBox="0 0 8 8">
                                     <circle cx="4" cy="4" r="3"/>
                                 </svg>
-                                نشطة
+                                {{ __('dashboard.subscriptions.status.active') }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -166,7 +166,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <button class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium cursor-not-allowed opacity-50">
-                                تعديل
+                                {{ __('dashboard.subscriptions.edit') }}
                             </button>
                         </td>
                     </tr>
@@ -181,21 +181,21 @@
                                     </svg>
                                 </div>
                                 <div>
-                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">خطة الشركات</div>
+                                    <div class="text-sm font-semibold text-gray-900 dark:text-white">{{ __('dashboard.subscriptions.plans.enterprise_ar') }}</div>
                                     <div class="text-xs text-gray-500 dark:text-gray-400">Enterprise Plan</div>
                                 </div>
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="text-lg font-bold text-gray-900 dark:text-white">$199</span>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">/شهر</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">/{{ __('dashboard.subscriptions.per_month') }}</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300">
                                 <svg class="w-3 h-3 ml-1 mt-0.5" fill="currentColor" viewBox="0 0 8 8">
                                     <circle cx="4" cy="4" r="3"/>
                                 </svg>
-                                قيد المراجعة
+                                {{ __('dashboard.subscriptions.status.pending_review') }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
@@ -211,7 +211,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <button class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium cursor-not-allowed opacity-50">
-                                تعديل
+                                {{ __('dashboard.subscriptions.edit') }}
                             </button>
                         </td>
                     </tr>
@@ -224,13 +224,13 @@
         <div class="bg-gray-50 dark:bg-gray-900/50 border-t border-gray-200 dark:border-gray-700 px-6 py-4">
             <div class="flex items-center justify-between text-sm">
                 <span class="text-gray-600 dark:text-gray-400">
-                    إجمالي الخطط: <span class="font-semibold text-gray-900 dark:text-white">3</span>
+                    {{ __('dashboard.subscriptions.stats.total_plans') }}: <span class="font-semibold text-gray-900 dark:text-white">3</span>
                 </span>
                 <span class="text-gray-600 dark:text-gray-400">
-                    إجمالي المشتركين: <span class="font-semibold text-gray-900 dark:text-white">918</span>
+                    {{ __('dashboard.subscriptions.stats.total_subscribers') }}: <span class="font-semibold text-gray-900 dark:text-white">918</span>
                 </span>
                 <span class="text-gray-600 dark:text-gray-400">
-                    الإيرادات المتوقعة: <span class="font-semibold text-emerald-600 dark:text-emerald-400">$98,127</span>/شهر
+                    {{ __('dashboard.subscriptions.stats.expected_revenue') }}: <span class="font-semibold text-emerald-600 dark:text-emerald-400">$98,127</span>/{{ __('dashboard.subscriptions.per_month') }}
                 </span>
             </div>
         </div>
@@ -246,8 +246,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                 </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">إدارة الفواتير</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">إصدار وتتبع الفواتير تلقائياً للمشتركين</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('dashboard.subscriptions.cards.invoice.title') }}</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ __('dashboard.subscriptions.cards.invoice.desc') }}</p>
         </div>
         
         <!-- Card 2 -->
@@ -257,8 +257,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
                 </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">الدفع الآمن</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">معالجة المدفوعات بطرق دفع متعددة وآمنة</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('dashboard.subscriptions.cards.secure_payment.title') }}</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ __('dashboard.subscriptions.cards.secure_payment.desc') }}</p>
         </div>
         
         <!-- Card 3 -->
@@ -268,8 +268,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                 </svg>
             </div>
-            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">تقارير الإيرادات</h3>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">تحليلات مفصلة للإيرادات والاشتراكات</p>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">{{ __('dashboard.subscriptions.cards.revenue_reports.title') }}</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ __('dashboard.subscriptions.cards.revenue_reports.desc') }}</p>
         </div>
         
     </div>

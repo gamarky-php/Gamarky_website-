@@ -3,7 +3,7 @@
 @if(!empty($cards))
 <div class="rounded-2xl shadow-xl overflow-hidden bg-gradient-to-b from-[#6E7CF2] to-[#6A42C1] reveal">
   <div class="flex items-center justify-between px-4 py-3 text-white">
-    <h3 class="text-sm font-semibold">إعلانات الخدمات</h3>
+    <h3 class="text-sm font-semibold">{{ __('إعلانات الخدمات') }}</h3>
     <span class="opacity-90">📣</span>
   </div>
 
@@ -26,7 +26,7 @@
             <a href="{{ $card['cta']['url'] ?? '#' }}"
                class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-medium text-white
                       bg-indigo-600 hover:bg-indigo-700 transition">
-              {{ $card['cta']['text'] ?? 'تفاصيل' }}
+              {{ $card['cta']['text'] ?? __('تفاصيل') }}
             </a>
           </div>
         </div>

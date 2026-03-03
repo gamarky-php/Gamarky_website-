@@ -1,32 +1,32 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
-@section('title', 'تكاليف الحاويات')
+@section('title', __('ui.dashboard.container_costs.page_title'))
 
 @section('content')
 @php
-    // KPI بيانات وهمية
+    // Demo KPI
     $kpis = [
-        ['title' => 'متوسط التكلفة', 'value' => '$2,450', 'change' => '+5.2%', 'color' => 'blue'],
-        ['title' => 'أقل تكلفة', 'value' => '$1,850', 'change' => '-3.1%', 'color' => 'green'],
-        ['title' => 'أعلى تكلفة', 'value' => '$3,200', 'change' => '+12%', 'color' => 'red'],
-        ['title' => 'عدد العروض', 'value' => '127', 'change' => '+8', 'color' => 'purple'],
+        ['title' => __('ui.dashboard.container_costs.kpi_avg_cost'), 'value' => '$2,450', 'change' => '+5.2%', 'color' => 'blue'],
+        ['title' => __('ui.dashboard.container_costs.kpi_lowest_cost'), 'value' => '$1,850', 'change' => '-3.1%', 'color' => 'green'],
+        ['title' => __('ui.dashboard.container_costs.kpi_highest_cost'), 'value' => '$3,200', 'change' => '+12%', 'color' => 'red'],
+        ['title' => __('ui.dashboard.container_costs.kpi_quotes_count'), 'value' => '127', 'change' => '+8', 'color' => 'purple'],
     ];
     
-    // تفصيل التكاليف
+    // Cost breakdown
     $costBreakdown = [
-        ['item' => 'رسوم الشحن الأساسية (Freight)', 'cost' => '1,500.00', 'currency' => 'USD', 'note' => 'السعر الأساسي للنقل البحري'],
-        ['item' => 'رسوم المحطة - ميناء الشحن (THC Origin)', 'cost' => '185.00', 'currency' => 'USD', 'note' => 'رسوم التحميل والتفريغ'],
-        ['item' => 'رسوم المحطة - ميناء الوصول (THC Destination)', 'cost' => '220.00', 'currency' => 'USD', 'note' => 'رسوم التحميل والتفريغ بالمقصد'],
-        ['item' => 'رسوم الوثائق (Documentation)', 'cost' => '75.00', 'currency' => 'USD', 'note' => 'إعداد وثائق الشحن'],
-        ['item' => 'رسوم الختم (Seal)', 'cost' => '15.00', 'currency' => 'USD', 'note' => 'ختم الحاوية'],
-        ['item' => 'رسوم بوليصة الشحن (B/L Fee)', 'cost' => '50.00', 'currency' => 'USD', 'note' => 'إصدار وثيقة الشحن'],
-        ['item' => 'رسوم التخليص الجمركي (Customs Handling)', 'cost' => '150.00', 'currency' => 'USD', 'note' => 'خدمات التخليص الجمركي'],
-        ['item' => 'التأمين (Insurance)', 'cost' => '85.00', 'currency' => 'USD', 'note' => 'تأمين البضائع'],
-        ['item' => 'النقل الداخلي (Inland Transport)', 'cost' => '120.00', 'currency' => 'USD', 'note' => 'النقل من/إلى الميناء'],
-        ['item' => 'رسوم متفرقة (Other)', 'cost' => '50.00', 'currency' => 'USD', 'note' => 'رسوم إضافية أخرى'],
+        ['item' => __('ui.dashboard.container_costs.cb_1_item'), 'cost' => '1,500.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_1_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_2_item'), 'cost' => '185.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_2_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_3_item'), 'cost' => '220.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_3_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_4_item'), 'cost' => '75.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_4_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_5_item'), 'cost' => '15.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_5_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_6_item'), 'cost' => '50.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_6_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_7_item'), 'cost' => '150.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_7_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_8_item'), 'cost' => '85.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_8_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_9_item'), 'cost' => '120.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_9_note')],
+        ['item' => __('ui.dashboard.container_costs.cb_10_item'), 'cost' => '50.00', 'currency' => 'USD', 'note' => __('ui.dashboard.container_costs.cb_10_note')],
     ];
     
-    // عروض أسعار حديثة
+    // Recent quotes
     $recentQuotes = [
         ['date' => '2026-01-14', 'line' => 'Maersk', 'type' => '40HC', 'pol' => 'Shanghai', 'pod' => 'Jeddah', 'price' => '$2,350', 'status' => 'new'],
         ['date' => '2026-01-13', 'line' => 'MSC', 'type' => '20GP', 'pol' => 'Dubai', 'pod' => 'Dammam', 'price' => '$1,850', 'status' => 'confirmed'],
@@ -41,13 +41,14 @@
     ];
     
     $statusConfig = [
-        'new' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-800 dark:text-blue-300', 'label' => 'جديد'],
-        'confirmed' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-800 dark:text-green-300', 'label' => 'مؤكد'],
-        'expired' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-800 dark:text-red-300', 'label' => 'منتهي'],
+        'new' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-800 dark:text-blue-300', 'label' => __('ui.dashboard.container_costs.status_new')],
+        'confirmed' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-800 dark:text-green-300', 'label' => __('ui.dashboard.container_costs.status_confirmed')],
+        'expired' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-800 dark:text-red-300', 'label' => __('ui.dashboard.container_costs.status_expired')],
     ];
 @endphp
 
-<div class="space-y-6" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="space-y-6">
     
     <!-- Page Header -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -56,9 +57,9 @@
                 <svg class="w-8 h-8 inline-block ml-3 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                تكاليف الحاويات
+                {{ __('ui.dashboard.container_costs.page_title') }}
             </h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">مقارنة الأسعار وعروض الأسعار من خطوط الشحن المختلفة</p>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('ui.dashboard.container_costs.page_subtitle') }}</p>
         </div>
     </div>
 
@@ -68,28 +69,28 @@
             <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
             </svg>
-            الفلاتر
+            {{ __('ui.dashboard.container_costs.filters') }}
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
             <!-- Container Type -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">نوع الحاوية</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('ui.dashboard.container_costs.container_type') }}</label>
                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                    <option value="">جميع الأنواع</option>
-                    <option value="20GP">20 قدم (GP)</option>
-                    <option value="40GP">40 قدم (GP)</option>
-                    <option value="40HC">40 قدم (HC)</option>
-                    <option value="20RF">20 قدم (RF)</option>
-                    <option value="40RF">40 قدم (RF)</option>
+                    <option value="">{{ __('ui.dashboard.container_costs.all_types') }}</option>
+                    <option value="20GP">{{ __('ui.dashboard.container_costs.type_20gp') }}</option>
+                    <option value="40GP">{{ __('ui.dashboard.container_costs.type_40gp') }}</option>
+                    <option value="40HC">{{ __('ui.dashboard.container_costs.type_40hc') }}</option>
+                    <option value="20RF">{{ __('ui.dashboard.container_costs.type_20rf') }}</option>
+                    <option value="40RF">{{ __('ui.dashboard.container_costs.type_40rf') }}</option>
                 </select>
             </div>
 
             <!-- Shipping Line -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">خط الشحن</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('ui.dashboard.container_costs.shipping_line') }}</label>
                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                    <option value="">جميع الخطوط</option>
+                    <option value="">{{ __('ui.dashboard.container_costs.all_lines') }}</option>
                     <option value="maersk">Maersk</option>
                     <option value="msc">MSC</option>
                     <option value="cosco">COSCO</option>
@@ -101,9 +102,9 @@
 
             <!-- POL -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">ميناء الشحن (POL)</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('ui.dashboard.container_costs.pol') }}</label>
                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                    <option value="">اختر الميناء</option>
+                    <option value="">{{ __('ui.dashboard.container_costs.select_port') }}</option>
                     <option value="shanghai">Shanghai</option>
                     <option value="singapore">Singapore</option>
                     <option value="dubai">Dubai</option>
@@ -114,19 +115,19 @@
 
             <!-- POD -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">ميناء الوصول (POD)</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('ui.dashboard.container_costs.pod') }}</label>
                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                    <option value="">اختر الميناء</option>
-                    <option value="jeddah">جدة الإسلامي</option>
-                    <option value="dammam">الدمام</option>
-                    <option value="yanbu">ينبع</option>
-                    <option value="jubail">الجبيل</option>
+                    <option value="">{{ __('ui.dashboard.container_costs.select_port') }}</option>
+                    <option value="jeddah">{{ __('ui.dashboard.container_costs.port_jeddah') }}</option>
+                    <option value="dammam">{{ __('ui.dashboard.container_costs.port_dammam') }}</option>
+                    <option value="yanbu">{{ __('ui.dashboard.container_costs.port_yanbu') }}</option>
+                    <option value="jubail">{{ __('ui.dashboard.container_costs.port_jubail') }}</option>
                 </select>
             </div>
 
             <!-- Date Range -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الفترة الزمنية</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('ui.dashboard.container_costs.date_range') }}</label>
                 <div class="flex gap-2">
                     <input type="date" class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
                     <input type="date" class="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-sm">
@@ -140,13 +141,13 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
-                تطبيق
+                {{ __('ui.dashboard.container_costs.apply') }}
             </button>
             <button class="px-5 py-2.5 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors flex items-center gap-2 font-medium">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                 </svg>
-                إعادة تعيين
+                {{ __('ui.dashboard.container_costs.reset') }}
             </button>
         </div>
     </div>
@@ -183,19 +184,19 @@
                     <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                     </svg>
-                    تفصيل التكاليف
+                    {{ __('ui.dashboard.container_costs.cost_breakdown_title') }}
                 </h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">تفاصيل بنود التكلفة لحاوية 40HC</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('ui.dashboard.container_costs.cost_breakdown_subtitle') }}</p>
             </div>
 
             <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-700/50 sticky top-0">
                         <tr>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">البند</th>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">التكلفة</th>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">العملة</th>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">ملاحظة</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_item') }}</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_cost') }}</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_currency') }}</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_note') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -219,10 +220,10 @@
                         @endforeach
                         <!-- Total Row -->
                         <tr class="bg-emerald-50 dark:bg-emerald-900/20 font-bold">
-                            <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">الإجمالي</td>
+                            <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">{{ __('ui.dashboard.container_costs.total') }}</td>
                             <td class="px-4 py-3 text-sm text-emerald-700 dark:text-emerald-400">2,450.00</td>
                             <td class="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">USD</td>
-                            <td class="px-4 py-3 text-xs text-gray-600 dark:text-gray-400">التكلفة الإجمالية</td>
+                            <td class="px-4 py-3 text-xs text-gray-600 dark:text-gray-400">{{ __('ui.dashboard.container_costs.total_cost') }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -236,22 +237,22 @@
                     <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                     </svg>
-                    عروض أسعار حديثة
+                    {{ __('ui.dashboard.container_costs.recent_quotes_title') }}
                 </h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">آخر العروض المستلمة</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('ui.dashboard.container_costs.recent_quotes_subtitle') }}</p>
             </div>
 
             <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-700/50 sticky top-0">
                         <tr>
-                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">التاريخ</th>
-                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">الخط</th>
-                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">النوع</th>
+                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_date') }}</th>
+                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_line') }}</th>
+                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_type') }}</th>
                             <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">POL</th>
                             <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">POD</th>
-                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">السعر</th>
-                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">الحالة</th>
+                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_price') }}</th>
+                            <th class="px-3 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_costs.col_status') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">

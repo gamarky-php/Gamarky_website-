@@ -3,28 +3,28 @@
     <li>
       <a href="{{ route('mobile.home') }}" class="flex flex-col items-center py-2 hover:text-[#143B6E] transition">
         <x-icon-home class="w-6 h-6 mb-0.5" />
-        <span>{{ __('الرئيسية') }}</span>
+        <span>{{ __('nav.home') }}</span>
       </a>
     </li>
     <li>
       <a href="#invoice" class="flex flex-col items-center py-2 hover:text-[#143B6E] transition">
         <x-icon-receipt class="w-6 h-6 mb-0.5" />
-        <span>{{ __('الفاتورة') }}</span>
+        <span>{{ __('nav.invoice') }}</span>
       </a>
     </li>
     <li>
       <a href="@auth {{ route('profile.show') }} @else {{ route('login') }} @endauth" 
          class="flex flex-col items-center py-2 hover:text-[#143B6E] transition">
         <x-icon-user class="w-6 h-6 mb-0.5" />
-        <span>{{ __('حسابي') }}</span>
+        <span>{{ __('auth.my_account') }}</span>
       </a>
     </li>
     <li>
       <a href="#alerts" class="flex flex-col items-center py-2 hover:text-[#143B6E] transition relative">
         <x-icon-bell class="w-6 h-6 mb-0.5" />
-        {{-- Badge للإشعارات --}}
+        {{-- Notifications badge --}}
         <span class="absolute top-1 {{ app()->getLocale()==='ar' ? 'left-6' : 'right-6' }} w-2 h-2 bg-red-500 rounded-full"></span>
-        <span>{{ __('الإشعارات') }}</span>
+        <span>{{ __('nav.notifications') }}</span>
       </a>
     </li>
   </ul>

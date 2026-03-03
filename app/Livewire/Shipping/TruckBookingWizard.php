@@ -78,7 +78,7 @@ class TruckBookingWizard extends Component
     public function submitBooking()
     {
         $this->validateCurrentStep();
-        session()->flash('success', 'تم حجز الشاحنة بنجاح!');
+        session()->flash('success', __('shipping.booking.success_truck'));
         return redirect()->route('front.shipping.track-truck');
     }
 

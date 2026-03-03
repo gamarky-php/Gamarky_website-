@@ -14,7 +14,7 @@
       <tr>
         {{-- عمود البيان - Sticky --}}
         <th class="sticky right-0 z-20 bg-gradient-to-l from-[#1d4ed8] to-[#7e22ce] text-white text-center px-3 py-3 text-sm font-bold border-b-2 border-white">
-          البيان
+          {{ __('front.export.table.statement') }}
         </th>
         
         {{-- أعمدة البنود الديناميكية --}}
@@ -76,7 +76,7 @@
     <tfoot>
       <tr class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold">
         <td class="sticky right-0 z-10 bg-gradient-to-l from-indigo-600 to-purple-600 px-3 py-3 text-center">
-          المجموع الكلي
+          {{ __('front.export.table.grand_total') }}
         </td>
         <template x-for="(col, idx) in columns" :key="'total-' + idx">
           <td class="px-3 py-3 text-center">
@@ -95,11 +95,11 @@
       <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
     </svg>
     <div class="text-sm text-blue-800">
-      <p class="font-semibold mb-1">ملاحظات:</p>
+      <p class="font-semibold mb-1">{{ __('front.export.table.notes') }}</p>
       <ul class="list-disc list-inside space-y-1 text-xs">
-        <li>الصفوف المظللة باللون الرمادي هي إجماليات محسوبة تلقائياً</li>
-        <li>تظهر/تختفي البنود حسب الـ Incoterm المختار</li>
-        <li>هامش الربح يُطبق كنسبة مئوية على التكلفة الكلية</li>
+        <li>{{ __('front.export.table.note_1') }}</li>
+        <li>{{ __('front.export.table.note_2') }}</li>
+        <li>{{ __('front.export.table.note_3') }}</li>
       </ul>
     </div>
   </div>

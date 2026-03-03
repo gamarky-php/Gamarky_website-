@@ -1,16 +1,17 @@
 @extends('layouts.dashboard')
 
-@section('title', 'إدارة الوكلاء - Admin Agents')
+@section('title', __('dashboard.admin.agents.page_title'))
 
 @section('content')
-<div class="container mx-auto px-4 py-6" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="container mx-auto px-4 py-6">
     
     {{-- Page Header --}}
     <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
         <div class="flex items-center justify-between">
             <div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">إدارة الوكلاء</h1>
-                <p class="text-gray-600">إدارة شبكة الوكلاء والممثلين التجاريين</p>
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ __('dashboard.admin.agents.title') }}</h1>
+                <p class="text-gray-600">{{ __('dashboard.admin.agents.subtitle') }}</p>
             </div>
             <div class="bg-purple-100 p-4 rounded-lg">
                 <svg class="w-12 h-12 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -30,8 +31,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="font-semibold text-gray-900">إضافة وكيل جديد</h3>
-                    <p class="text-sm text-gray-500">تسجيل وكيل أو ممثل تجاري</p>
+                    <h3 class="font-semibold text-gray-900">{{ __('dashboard.admin.agents.actions.add_new') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('dashboard.admin.agents.actions.add_new_desc') }}</p>
                 </div>
             </div>
         </a>
@@ -44,8 +45,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="font-semibold text-gray-900">عرض جميع الوكلاء</h3>
-                    <p class="text-sm text-gray-500">قائمة الوكلاء المسجلين</p>
+                    <h3 class="font-semibold text-gray-900">{{ __('dashboard.admin.agents.actions.view_all') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('dashboard.admin.agents.actions.view_all_desc') }}</p>
                 </div>
             </div>
         </a>
@@ -58,8 +59,8 @@
                     </svg>
                 </div>
                 <div>
-                    <h3 class="font-semibold text-gray-900">تقارير الأداء</h3>
-                    <p class="text-sm text-gray-500">إحصائيات ومؤشرات الأداء</p>
+                    <h3 class="font-semibold text-gray-900">{{ __('dashboard.admin.agents.actions.performance_reports') }}</h3>
+                    <p class="text-sm text-gray-500">{{ __('dashboard.admin.agents.actions.performance_reports_desc') }}</p>
                 </div>
             </div>
         </a>
@@ -73,13 +74,13 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                 </svg>
             </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-2">قسم إدارة الوكلاء</h3>
-            <p class="text-gray-600 mb-6">إدارة شبكة الوكلاء والممثلين التجاريين - قريباً</p>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{ __('dashboard.admin.agents.section_title') }}</h3>
+            <p class="text-gray-600 mb-6">{{ __('dashboard.admin.agents.section_desc') }}</p>
             <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                العودة للوحة التحكم
+                {{ __('dashboard.subscriptions.back_to_dashboard') }}
             </a>
         </div>
     </div>

@@ -1,40 +1,41 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
-@section('title', 'التخليص الجمركي')
+@section('title', __('ui.dashboard.clearance_index.page_title'))
 
 @section('content')
 @php
-    // بيانات KPI وهمية
+    // Demo KPI data
     $kpis = [
-        ['title' => 'ملفات اليوم', 'value' => '12', 'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', 'color' => 'blue'],
-        ['title' => 'قيد المراجعة', 'value' => '8', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'purple'],
-        ['title' => 'تحتاج مستندات', 'value' => '5', 'icon' => 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z', 'color' => 'yellow'],
-        ['title' => 'تم التخليص', 'value' => '156', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'green'],
+        ['title' => __('ui.dashboard.clearance_index.kpi_files_today'), 'value' => '12', 'icon' => 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z', 'color' => 'blue'],
+        ['title' => __('ui.dashboard.clearance_index.kpi_under_review'), 'value' => '8', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'purple'],
+        ['title' => __('ui.dashboard.clearance_index.kpi_needs_documents'), 'value' => '5', 'icon' => 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z', 'color' => 'yellow'],
+        ['title' => __('ui.dashboard.clearance_index.kpi_cleared'), 'value' => '156', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'green'],
     ];
     
-    // ملفات تخليص تجريبية
+    // Demo clearance jobs
     $clearanceJobs = [
-        ['jobId' => 'CLR-2026-001', 'importer' => 'شركة التجارة العالمية', 'port' => 'جدة الإسلامي', 'status' => 'cleared', 'updated_at' => '2026-01-14 10:30'],
-        ['jobId' => 'CLR-2026-002', 'importer' => 'مؤسسة الاستيراد الحديثة', 'port' => 'الدمام', 'status' => 'under_review', 'updated_at' => '2026-01-14 09:15'],
-        ['jobId' => 'CLR-2026-003', 'importer' => 'شركة النقل البحري', 'port' => 'جدة الإسلامي', 'status' => 'needs_documents', 'updated_at' => '2026-01-14 08:45'],
-        ['jobId' => 'CLR-2026-004', 'importer' => 'مجموعة الشحن السريع', 'port' => 'ينبع', 'status' => 'cleared', 'updated_at' => '2026-01-13 16:20'],
-        ['jobId' => 'CLR-2026-005', 'importer' => 'شركة اللوجستيات الذكية', 'port' => 'الدمام', 'status' => 'under_review', 'updated_at' => '2026-01-13 14:50'],
-        ['jobId' => 'CLR-2026-006', 'importer' => 'مؤسسة الخليج التجارية', 'port' => 'جدة الإسلامي', 'status' => 'needs_documents', 'updated_at' => '2026-01-13 11:30'],
-        ['jobId' => 'CLR-2026-007', 'importer' => 'شركة المستوردون المتحدون', 'port' => 'الجبيل', 'status' => 'cleared', 'updated_at' => '2026-01-12 15:40'],
-        ['jobId' => 'CLR-2026-008', 'importer' => 'شركة التوريدات العامة', 'port' => 'جدة الإسلامي', 'status' => 'rejected', 'updated_at' => '2026-01-12 10:25'],
-        ['jobId' => 'CLR-2026-009', 'importer' => 'مجموعة الأعمال الدولية', 'port' => 'الدمام', 'status' => 'under_review', 'updated_at' => '2026-01-11 13:15'],
-        ['jobId' => 'CLR-2026-010', 'importer' => 'شركة النقل المتطور', 'port' => 'ينبع', 'status' => 'cleared', 'updated_at' => '2026-01-11 09:00'],
+        ['jobId' => 'CLR-2026-001', 'importer' => __('ui.dashboard.clearance_index.importer_1'), 'port' => __('ui.dashboard.clearance_index.port_jeddah'), 'status' => 'cleared', 'updated_at' => '2026-01-14 10:30'],
+        ['jobId' => 'CLR-2026-002', 'importer' => __('ui.dashboard.clearance_index.importer_2'), 'port' => __('ui.dashboard.clearance_index.port_dammam'), 'status' => 'under_review', 'updated_at' => '2026-01-14 09:15'],
+        ['jobId' => 'CLR-2026-003', 'importer' => __('ui.dashboard.clearance_index.importer_3'), 'port' => __('ui.dashboard.clearance_index.port_jeddah'), 'status' => 'needs_documents', 'updated_at' => '2026-01-14 08:45'],
+        ['jobId' => 'CLR-2026-004', 'importer' => __('ui.dashboard.clearance_index.importer_4'), 'port' => __('ui.dashboard.clearance_index.port_yanbu'), 'status' => 'cleared', 'updated_at' => '2026-01-13 16:20'],
+        ['jobId' => 'CLR-2026-005', 'importer' => __('ui.dashboard.clearance_index.importer_5'), 'port' => __('ui.dashboard.clearance_index.port_dammam'), 'status' => 'under_review', 'updated_at' => '2026-01-13 14:50'],
+        ['jobId' => 'CLR-2026-006', 'importer' => __('ui.dashboard.clearance_index.importer_6'), 'port' => __('ui.dashboard.clearance_index.port_jeddah'), 'status' => 'needs_documents', 'updated_at' => '2026-01-13 11:30'],
+        ['jobId' => 'CLR-2026-007', 'importer' => __('ui.dashboard.clearance_index.importer_7'), 'port' => __('ui.dashboard.clearance_index.port_jubail'), 'status' => 'cleared', 'updated_at' => '2026-01-12 15:40'],
+        ['jobId' => 'CLR-2026-008', 'importer' => __('ui.dashboard.clearance_index.importer_8'), 'port' => __('ui.dashboard.clearance_index.port_jeddah'), 'status' => 'rejected', 'updated_at' => '2026-01-12 10:25'],
+        ['jobId' => 'CLR-2026-009', 'importer' => __('ui.dashboard.clearance_index.importer_9'), 'port' => __('ui.dashboard.clearance_index.port_dammam'), 'status' => 'under_review', 'updated_at' => '2026-01-11 13:15'],
+        ['jobId' => 'CLR-2026-010', 'importer' => __('ui.dashboard.clearance_index.importer_10'), 'port' => __('ui.dashboard.clearance_index.port_yanbu'), 'status' => 'cleared', 'updated_at' => '2026-01-11 09:00'],
     ];
     
     $statusConfig = [
-        'cleared' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-800 dark:text-green-300', 'label' => 'تم التخليص'],
-        'under_review' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-800 dark:text-blue-300', 'label' => 'قيد المراجعة'],
-        'needs_documents' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-800 dark:text-yellow-300', 'label' => 'تحتاج مستندات'],
-        'rejected' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-800 dark:text-red-300', 'label' => 'مرفوض'],
+        'cleared' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-800 dark:text-green-300', 'label' => __('ui.dashboard.clearance_index.status_cleared')],
+        'under_review' => ['bg' => 'bg-blue-100 dark:bg-blue-900/30', 'text' => 'text-blue-800 dark:text-blue-300', 'label' => __('ui.dashboard.clearance_index.status_under_review')],
+        'needs_documents' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-800 dark:text-yellow-300', 'label' => __('ui.dashboard.clearance_index.status_needs_documents')],
+        'rejected' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-800 dark:text-red-300', 'label' => __('ui.dashboard.clearance_index.status_rejected')],
     ];
 @endphp
 
-<div class="space-y-6" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="space-y-6">
     
     <!-- Page Header -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -43,9 +44,9 @@
                 <svg class="w-8 h-8 inline-block ml-3 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                 </svg>
-                التخليص الجمركي
+                {{ __('ui.dashboard.clearance_index.page_title') }}
             </h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">إدارة ومتابعة ملفات التخليص الجمركي</p>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('ui.dashboard.clearance_index.page_subtitle') }}</p>
         </div>
     </div>
 
@@ -60,21 +61,21 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                         </svg>
-                        لوحة التخليص
+                        {{ __('ui.dashboard.clearance_index.clearance_board') }}
                     </a>
                     <a href="{{ route('dashboard.clearance.costs') }}" 
                        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        التكاليف
+                        {{ __('ui.dashboard.clearance_index.costs') }}
                     </a>
                     <a href="{{ route('dashboard.clearance.pending') }}" 
                        class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        المعلّقة
+                        {{ __('ui.dashboard.clearance_index.pending') }}
                     </a>
                 </div>
             </div>
@@ -84,7 +85,7 @@
                 <input 
                     type="text" 
                     id="jobIdSearch"
-                    placeholder="رقم ملف التخليص (مثال: CLR-2026-001)"
+                    placeholder="{{ __('ui.dashboard.clearance_index.search_placeholder') }}"
                     class="px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
                 >
                 <button 
@@ -93,7 +94,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    بحث
+                    {{ __('ui.dashboard.clearance_index.search') }}
                 </button>
             </div>
         </div>
@@ -127,9 +128,9 @@
                 <svg class="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
                 </svg>
-                قائمة ملفات التخليص
+                {{ __('ui.dashboard.clearance_index.jobs_list') }}
             </h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">عرض جميع ملفات التخليص النشطة</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('ui.dashboard.clearance_index.jobs_list_subtitle') }}</p>
         </div>
 
         <!-- Table -->
@@ -138,11 +139,11 @@
                 <thead class="bg-gray-50 dark:bg-gray-700/50">
                     <tr>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Job ID</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">المستورد</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">الميناء</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">الحالة</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">آخر تحديث</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">إجراءات</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.clearance_index.importer') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.clearance_index.port') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.clearance_index.status') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.clearance_index.last_update') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.clearance_index.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -187,21 +188,21 @@
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('dashboard.clearance.timeline.job', ['jobId' => $job['jobId']]) }}" 
                                        class="text-indigo-600 hover:text-indigo-800 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors" 
-                                       title="عرض التايملاين">
+                                                    title="{{ __('ui.dashboard.clearance_index.view_timeline') }}">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                                         </svg>
                                     </a>
                                     <a href="{{ route('dashboard.clearance.costs') }}" 
                                        class="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 transition-colors" 
-                                       title="التكاليف">
+                                                    title="{{ __('ui.dashboard.clearance_index.costs') }}">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                     </a>
                                     <button disabled 
                                             class="text-gray-300 dark:text-gray-600 cursor-not-allowed" 
-                                            title="تحديد كمعلّق">
+                                            title="{{ __('ui.dashboard.clearance_index.mark_as_pending') }}">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
                                         </svg>
@@ -218,17 +219,17 @@
         <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between">
                 <div class="text-sm text-gray-700 dark:text-gray-300">
-                    عرض <span class="font-medium">1-10</span> من <span class="font-medium">{{ count($clearanceJobs) }}</span> نتيجة
+                    {!! __('ui.dashboard.clearance_index.results_summary', ['from' => '1-10', 'total' => count($clearanceJobs)]) !!}
                 </div>
                 <div class="flex gap-2">
                     <button disabled class="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 text-gray-400 rounded cursor-not-allowed">
-                        السابق
+                        {{ __('ui.dashboard.clearance_index.previous') }}
                     </button>
                     <button class="px-3 py-1 text-sm bg-indigo-600 text-white rounded">
                         1
                     </button>
                     <button disabled class="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 text-gray-400 rounded cursor-not-allowed">
-                        التالي
+                        {{ __('ui.dashboard.clearance_index.next') }}
                     </button>
                 </div>
             </div>
@@ -239,18 +240,18 @@
 </div>
 
 <script>
-// بحث عن ملف تخليص والتوجيه للتايملاين
+// Search by clearance job and redirect to timeline
 document.getElementById('searchBtn').addEventListener('click', function() {
     const jobId = document.getElementById('jobIdSearch').value.trim();
     if (jobId) {
         const url = "{{ route('dashboard.clearance.timeline.job', ['jobId' => '__JOB_ID__']) }}".replace('__JOB_ID__', encodeURIComponent(jobId));
         window.location.href = url;
     } else {
-        alert('الرجاء إدخال رقم ملف التخليص');
+        alert(@json(__('ui.dashboard.clearance_index.enter_job_id_alert')));
     }
 });
 
-// السماح بالضغط على Enter للبحث
+// Allow Enter key to trigger search
 document.getElementById('jobIdSearch').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
         document.getElementById('searchBtn').click();

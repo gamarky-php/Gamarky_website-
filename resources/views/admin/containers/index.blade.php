@@ -1,9 +1,10 @@
-@extends('layouts.dashboard')
-@section('title','الحاويات')
+﻿@extends('layouts.dashboard')
+@section('title', __('dashboard.admin.containers.title'))
 @section('dashboard')
-  <div class="p-6" dir="rtl">
-    <h1 class="text-xl font-bold mb-4">الحاويات</h1>
-    <p class="text-gray-600">هذه صفحة مؤقتة لإدارة الحاويات وتتبعها.</p>
+  {{-- dir inherited from layout --}}
+  <div class="p-6">
+    <h1 class="text-xl font-bold mb-4">{{ __('dashboard.admin.containers.title') }}</h1>
+    <p class="text-gray-600">{{ __('dashboard.admin.containers.placeholder') }}</p>
   </div>
 @endsection
 

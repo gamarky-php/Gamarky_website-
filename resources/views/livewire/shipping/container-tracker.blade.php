@@ -1,18 +1,19 @@
-<div class="container mx-auto px-4 py-8" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="container mx-auto px-4 py-8">
     
     {{-- SEARCH FORM --}}
     <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
         <form wire:submit.prevent="trackShipment" class="flex gap-4">
             <div class="flex-1">
-                <input type="text" wire:model="tracking_number" placeholder="أدخل رقم التتبع (مثلاً: MAEU123456789)"
+                <input type="text" wire:model="tracking_number" placeholder="{{ __('shipping.container_tracker.tracking_placeholder') }}"
                     class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-teal-500 text-right text-lg">
                 @error('tracking_number') <span class="text-red-500 text-xs block mt-1">{{ $message }}</span> @enderror
             </div>
             <button type="submit" wire:loading.attr="disabled"
                 class="px-12 py-3 bg-gradient-to-r from-teal-500 to-teal-600 text-white rounded-lg font-bold hover:shadow-xl transition-all disabled:opacity-50">
                 <i class="fas fa-search ml-2"></i>
-                <span wire:loading.remove>تتبع</span>
-                <span wire:loading>جاري البحث...</span>
+                <span wire:loading.remove>{{ __('shipping.actions.track') }}</span>
+                <span wire:loading>{{ __('shipping.actions.searching') }}</span>
             </button>
         </form>
     </div>
@@ -23,7 +24,7 @@
             {{-- Status Card --}}
             <div class="bg-gradient-to-br from-teal-500 to-teal-600 text-white rounded-xl p-6 shadow-lg">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold">الحالة الحالية</h3>
+                    <h3 class="text-lg font-bold">{{ __('shipping.container_tracker.current_status') }}</h3>
                     <i class="fas fa-ship text-3xl opacity-70"></i>
                 </div>
                 <p class="text-2xl font-bold mb-2">{{ $trackingData['status'] }}</p>
@@ -32,7 +33,7 @@
 
             {{-- Progress Card --}}
             <div class="bg-white rounded-xl p-6 shadow-lg">
-                <h3 class="text-lg font-bold text-gray-800 mb-4">نسبة الإنجاز</h3>
+                <h3 class="text-lg font-bold text-gray-800 mb-4">{{ __('shipping.container_tracker.progress') }}</h3>
                 <div class="relative pt-1">
                     <div class="flex mb-2 items-center justify-between">
                         <div>
@@ -52,7 +53,7 @@
             {{-- ETA Card --}}
             <div class="bg-white rounded-xl p-6 shadow-lg">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-bold text-gray-800">الوصول المتوقع</h3>
+                    <h3 class="text-lg font-bold text-gray-800">{{ __('shipping.container_tracker.estimated_arrival') }}</h3>
                     <i class="fas fa-clock text-2xl text-teal-500"></i>
                 </div>
                 <p class="text-2xl font-bold text-teal-600">{{ $trackingData['estimated_arrival'] }}</p>
@@ -61,7 +62,7 @@
 
         {{-- TIMELINE --}}
         <div class="bg-white rounded-xl shadow-lg p-6">
-            <h3 class="text-xl font-bold text-[#0F2E5D] mb-6">سجل الرحلة</h3>
+            <h3 class="text-xl font-bold text-[#0F2E5D] mb-6">{{ __('shipping.container_tracker.journey_log') }}</h3>
             
             <div class="space-y-6">
                 @foreach($trackingData['events'] as $index => $event)
@@ -84,7 +85,7 @@
                                 @if($event['date'])
                                     <span class="text-sm text-gray-600 bg-white px-3 py-1 rounded-full">{{ $event['date'] }}</span>
                                 @else
-                                    <span class="text-sm text-gray-500 italic">منتظر</span>
+                                    <span class="text-sm text-gray-500 italic">{{ __('shipping.container_tracker.pending') }}</span>
                                 @endif
                             </div>
                             <p class="text-gray-600">{{ $event['location'] }}</p>

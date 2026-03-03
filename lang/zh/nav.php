@@ -5,6 +5,9 @@ return [
     'tagline' => '商务平台',
     
     // Main Navigation
+    'home' => '首页',
+    'invoice' => '发票',
+    'notifications' => '通知',
     'import' => '进口',
     'import_calculator' => '进口成本计算器',
     'import_procedures' => '进口程序',
@@ -34,6 +37,7 @@ return [
     'track_truck' => '跟踪卡车',
     
     'agent' => '代理',
+    'suppliers' => '供应商',
     'shipping_agent' => '查找货运代理',
     'brand_agents' => '品牌代理',
     
@@ -49,4 +53,10 @@ return [
     'arabic' => '阿拉伯语',
     'chinese' => '中文',
     'english' => '英语',
+    'arabic_short' => '阿',
+    'open_menu' => '打开菜单',
+    'close_menu' => '关闭菜单',
+    'login_register' => '登录 / 注册',
+    'menu' => '菜单',
+    'avatar_alt' => '头像',
 ];

@@ -1,13 +1,13 @@
-<div class="bg-white shadow rounded-lg p-6" dir="rtl">
+<div class="bg-white shadow rounded-lg p-6">
     <div class="flex items-center justify-between mb-4">
         <div>
-            <h3 class="text-lg font-semibold text-gray-900">تأكيد رقم الهاتف</h3>
+            <h3 class="text-lg font-semibold text-gray-900">{{ __('auth.verify_phone') }}</h3>
             <p class="text-sm text-gray-600 mt-1">
                 @if(Auth::user()->phone_verified_at)
-                    <span class="text-green-600 font-medium">✓ تم التحقق من رقم الهاتف</span>
+                    <span class="text-green-600 font-medium">✓ {{ __('auth.phone_verified') }}</span>
                     <span class="text-gray-500 block mt-1">{{ Auth::user()->phone }}</span>
                 @else
-                    <span class="text-amber-600 font-medium">⚠ لم يتم التحقق من رقم الهاتف بعد</span>
+                    <span class="text-amber-600 font-medium">⚠ {{ __('auth.phone_not_verified') }}</span>
                 @endif
             </p>
         </div>
@@ -29,13 +29,13 @@
 
     @if (session('status') == 'sms-sent')
         <div class="bg-green-100 text-green-800 p-3 rounded-lg mb-4 text-sm">
-            ✓ تم إرسال رمز التحقق إلى هاتفك
+            ✓ {{ __('auth.sms_sent') }}
         </div>
     @endif
 
     @if (session('status') == 'phone-verified')
         <div class="bg-green-100 text-green-800 p-3 rounded-lg mb-4 text-sm">
-            ✓ تم تأكيد رقم الهاتف بنجاح!
+            ✓ {{ __('auth.phone_verified_success') }}
         </div>
     @endif
 
@@ -47,9 +47,9 @@
 
     @if(!Auth::user()->phone_verified_at)
         <div class="space-y-4">
-            {{-- إرسال الرمز --}}
+            {{-- Send verification code --}}
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">رقم الهاتف</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('auth.phone_number') }}</label>
                 <form method="POST" action="{{ route('phone.send') }}" class="flex gap-2">
                     @csrf
                     <input 
@@ -58,18 +58,17 @@
                         value="{{ old('phone', Auth::user()->phone) }}"
                         required 
                         placeholder="+966501234567" 
-                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                        dir="ltr">
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ltr">
                     <button type="submit" class="px-6 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors">
-                        إرسال رمز التحقق
+                        {{ __('auth.send_code') }}
                     </button>
                 </form>
-                <p class="text-xs text-gray-500 mt-1">مثال: +966501234567</p>
+                <p class="text-xs text-gray-500 mt-1">{{ __('auth.example_phone') }}</p>
             </div>
 
-            {{-- إدخال الرمز --}}
+            {{-- Enter verification code --}}
             <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">رمز التحقق</label>
+                <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('auth.verification_code') }}</label>
                 <form method="POST" action="{{ route('phone.verify.submit') }}" class="flex gap-2">
                     @csrf
                     <input 
@@ -77,29 +76,28 @@
                         name="code" 
                         required 
                         maxlength="6"
-                        placeholder="أدخل الرمز المكون من 6 أرقام" 
-                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-center text-lg tracking-widest"
-                        dir="ltr">
+                        placeholder="{{ __('auth.code_placeholder') }}" 
+                        class="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 focus:border-green-500 text-center text-lg tracking-widest ltr">
                     <button type="submit" class="px-6 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-medium transition-colors">
-                        تأكيد الرمز
+                        {{ __('auth.verify_code') }}
                     </button>
                 </form>
-                <p class="text-xs text-gray-500 mt-1">الرمز صالح لمدة 10 دقائق</p>
+                <p class="text-xs text-gray-500 mt-1">{{ __('auth.code_valid_for') }}</p>
             </div>
         </div>
     @else
         <div class="bg-gray-50 rounded-lg p-4 text-center">
             <p class="text-sm text-gray-600">
-                تم تأكيد رقم الهاتف بنجاح في 
+                {{ __('auth.phone_verified_on') }}
                 <span class="font-medium text-gray-900">{{ Auth::user()->phone_verified_at->format('Y-m-d H:i') }}</span>
             </p>
             
-            {{-- زر لتغيير الرقم (اختياري) --}}
+            {{-- Change number button (optional) --}}
             <form method="POST" action="{{ route('phone.send') }}" class="mt-3">
                 @csrf
                 <input type="hidden" name="phone" value="{{ Auth::user()->phone }}">
                 <button type="submit" class="text-sm text-blue-600 hover:text-blue-800 font-medium">
-                    إعادة إرسال رمز التحقق
+                    {{ __('auth.resend_code') }}
                 </button>
             </form>
         </div>

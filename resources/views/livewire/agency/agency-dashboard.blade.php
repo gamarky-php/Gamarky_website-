@@ -1,16 +1,17 @@
-<div dir="rtl" class="space-y-6">
+{{-- dir inherited from layout --}}
+<div class="space-y-6">
     {{-- Tabs Navigation --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200">
         <div class="flex border-b border-gray-200">
             <button
                 wire:click="switchTab('shipping')"
                 class="px-6 py-3 text-sm font-medium transition-colors duration-150 {{ $activeTab === 'shipping' ? 'text-indigo-600 border-b-2 border-indigo-600' : 'text-gray-600 hover:text-gray-800' }}">
-                🚢 وكلاء الشحن
+                {{ __('🚢 وكلاء الشحن') }}
             </button>
             <button
                 wire:click="switchTab('brand')"
                 class="px-6 py-3 text-sm font-medium transition-colors duration-150 {{ $activeTab === 'brand' ? 'text-purple-600 border-b-2 border-purple-600' : 'text-gray-600 hover:text-gray-800' }}">
-                🏷️ وكلاء العلامات التجارية
+                {{ __('🏷️ وكلاء العلامات التجارية') }}
             </button>
         </div>
     </div>
@@ -22,7 +23,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">إجمالي الوكلاء</p>
+                        <p class="text-sm text-gray-600">{{ __('إجمالي الوكلاء') }}</p>
                         <p class="text-2xl font-bold text-gray-900 mt-1">{{ number_format($shippingKpis['total_agents']) }}</p>
                     </div>
                     <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
@@ -36,7 +37,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">نشط هذا الشهر</p>
+                        <p class="text-sm text-gray-600">{{ __('نشط هذا الشهر') }}</p>
                         <p class="text-2xl font-bold text-green-600 mt-1">{{ number_format($shippingKpis['active_this_month']) }}</p>
                     </div>
                     <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -50,7 +51,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">إجمالي الحجوزات</p>
+                        <p class="text-sm text-gray-600">{{ __('إجمالي الحجوزات') }}</p>
                         <p class="text-2xl font-bold text-blue-600 mt-1">{{ number_format($shippingKpis['total_bookings']) }}</p>
                     </div>
                     <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -64,7 +65,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">إجمالي الإيرادات</p>
+                        <p class="text-sm text-gray-600">{{ __('إجمالي الإيرادات') }}</p>
                         <p class="text-2xl font-bold text-emerald-600 mt-1">${{ number_format($shippingKpis['total_revenue'], 0) }}</p>
                     </div>
                     <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center">
@@ -78,12 +79,12 @@
 
         {{-- Filters --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
-            <h3 class="text-sm font-semibold text-gray-900 mb-4">تصفية النتائج</h3>
+            <h3 class="text-sm font-semibold text-gray-900 mb-4">{{ __('تصفية النتائج') }}</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">المنطقة</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('المنطقة') }}</label>
                     <select wire:model.live="shippingRegion" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
-                        <option value="">جميع المناطق</option>
+                        <option value="">{{ __('جميع المناطق') }}</option>
                         @foreach($regions as $region)
                             <option value="{{ $region }}">{{ $region }}</option>
                         @endforeach
@@ -91,7 +92,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">الحد الأدنى للإيرادات ($)</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('الحد الأدنى للإيرادات ($)') }}</label>
                     <input type="number" wire:model.live="shippingMinRevenue" min="0" step="1000" 
                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" placeholder="0">
                 </div>
@@ -100,20 +101,20 @@
 
         {{-- Agents List --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
-            <h3 class="text-lg font-bold text-gray-900 mb-4">وكلاء الشحن ({{ $shippingAgents->total() }})</h3>
+            <h3 class="text-lg font-bold text-gray-900 mb-4">{{ __('وكلاء الشحن') }} ({{ $shippingAgents->total() }})</h3>
             
             @if($shippingAgents->count() > 0)
                 <div class="overflow-x-auto">
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الاسم</th>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">البلد</th>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">القطاع</th>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">عروض نشطة</th>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">الإيرادات</th>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">تاريخ التسجيل</th>
-                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">إجراءات</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('الاسم') }}</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('البلد') }}</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('القطاع') }}</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('عروض نشطة') }}</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('الإيرادات') }}</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('تاريخ التسجيل') }}</th>
+                                <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('إجراءات') }}</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -133,7 +134,7 @@
                                     <td class="px-4 py-3 whitespace-nowrap">
                                         <span class="px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">{{ $agent->country }}</span>
                                     </td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ $agent->business_sector ?? 'غير محدد' }}</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ $agent->business_sector ?? __('غير محدد') }}</td>
                                     <td class="px-4 py-3 whitespace-nowrap">
                                         <span class="px-2 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">{{ $agent->active_quotes }}</span>
                                     </td>
@@ -142,7 +143,7 @@
                                     </td>
                                     <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-500">{{ \Carbon\Carbon::parse($agent->created_at)->format('Y-m-d') }}</td>
                                     <td class="px-4 py-3 whitespace-nowrap text-sm">
-                                        <button wire:click="viewShippingAgent({{ $agent->id }})" class="text-indigo-600 hover:text-indigo-800 font-medium">عرض</button>
+                                        <button wire:click="viewShippingAgent({{ $agent->id }})" class="text-indigo-600 hover:text-indigo-800 font-medium">{{ __('عرض') }}</button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -154,7 +155,7 @@
                     {{ $shippingAgents->links() }}
                 </div>
             @else
-                <p class="text-center text-gray-500 py-8">لا توجد نتائج</p>
+                <p class="text-center text-gray-500 py-8">{{ __('لا توجد نتائج') }}</p>
             @endif
         </div>
     @endif
@@ -166,7 +167,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">إجمالي الطلبات</p>
+                        <p class="text-sm text-gray-600">{{ __('إجمالي الطلبات') }}</p>
                         <p class="text-2xl font-bold text-gray-900 mt-1">{{ number_format($brandKpis['total_requests']) }}</p>
                     </div>
                     <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
@@ -180,7 +181,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">قيد المراجعة</p>
+                        <p class="text-sm text-gray-600">{{ __('قيد المراجعة') }}</p>
                         <p class="text-2xl font-bold text-amber-600 mt-1">{{ number_format($brandKpis['pending_review']) }}</p>
                     </div>
                     <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
@@ -194,7 +195,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">وكلاء معتمدون</p>
+                        <p class="text-sm text-gray-600">{{ __('وكلاء معتمدون') }}</p>
                         <p class="text-2xl font-bold text-green-600 mt-1">{{ number_format($brandKpis['accepted_agents']) }}</p>
                     </div>
                     <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -208,7 +209,7 @@
             <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm text-gray-600">متوسط التقييم</p>
+                        <p class="text-sm text-gray-600">{{ __('متوسط التقييم') }}</p>
                         <p class="text-2xl font-bold text-indigo-600 mt-1">{{ $brandKpis['avg_score'] }}/100</p>
                     </div>
                     <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
@@ -222,12 +223,12 @@
 
         {{-- Filters --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
-            <h3 class="text-sm font-semibold text-gray-900 mb-4">تصفية النتائج</h3>
+            <h3 class="text-sm font-semibold text-gray-900 mb-4">{{ __('تصفية النتائج') }}</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">القطاع</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('القطاع') }}</label>
                     <select wire:model.live="brandSector" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
-                        <option value="">جميع القطاعات</option>
+                        <option value="">{{ __('جميع القطاعات') }}</option>
                         @foreach($sectors as $sector)
                             <option value="{{ $sector }}">{{ $sector }}</option>
                         @endforeach
@@ -235,18 +236,18 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">حالة القرار</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('حالة القرار') }}</label>
                     <select wire:model.live="brandDecision" class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500">
-                        <option value="">جميع الحالات</option>
-                        <option value="pending">قيد المراجعة</option>
-                        <option value="accepted">معتمد</option>
-                        <option value="conditional">مشروط</option>
-                        <option value="rejected">مرفوض</option>
+                        <option value="">{{ __('جميع الحالات') }}</option>
+                        <option value="pending">{{ __('قيد المراجعة') }}</option>
+                        <option value="accepted">{{ __('معتمد') }}</option>
+                        <option value="conditional">{{ __('مشروط') }}</option>
+                        <option value="rejected">{{ __('مرفوض') }}</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">الحد الأدنى للتقييم</label>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">{{ __('الحد الأدنى للتقييم') }}</label>
                     <input type="number" wire:model.live="brandMinScore" min="0" max="100" 
                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-purple-500 focus:ring-purple-500" placeholder="0">
                 </div>
@@ -255,7 +256,7 @@
 
         {{-- Requests List --}}
         <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-5">
-            <h3 class="text-lg font-bold text-gray-900 mb-4">طلبات الوكالة التجارية ({{ $brandAgents->total() }})</h3>
+            <h3 class="text-lg font-bold text-gray-900 mb-4">{{ __('طلبات الوكالة التجارية') }} ({{ $brandAgents->total() }})</h3>
             
             @if($brandAgents->count() > 0)
                 <div class="space-y-4">
@@ -272,19 +273,19 @@
                                     
                                     <div class="mt-2 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
                                         <div>
-                                            <span class="text-gray-500">القطاع:</span>
+                                            <span class="text-gray-500">{{ __('القطاع:') }}</span>
                                             <span class="font-medium text-gray-900 mr-1">{{ $request->sector }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-500">البلد:</span>
+                                            <span class="text-gray-500">{{ __('البلد:') }}</span>
                                             <span class="font-medium text-gray-900 mr-1">{{ $request->country }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-500">الخبرة:</span>
-                                            <span class="font-medium text-gray-900 mr-1">{{ $request->experience_years }} سنة</span>
+                                            <span class="text-gray-500">{{ __('الخبرة:') }}</span>
+                                            <span class="font-medium text-gray-900 mr-1">{{ $request->experience_years }} {{ __('سنة') }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-500">التقييم:</span>
+                                            <span class="text-gray-500">{{ __('التقييم:') }}</span>
                                             <span class="font-bold text-indigo-600 mr-1">{{ $request->score_total }}/100</span>
                                         </div>
                                     </div>
@@ -295,10 +296,10 @@
                                             {{ $request->decision === 'pending' ? 'bg-amber-100 text-amber-800' : '' }}
                                             {{ $request->decision === 'conditional' ? 'bg-blue-100 text-blue-800' : '' }}
                                             {{ $request->decision === 'rejected' ? 'bg-red-100 text-red-800' : '' }}">
-                                            {{ $request->decision === 'accepted' ? '✓ معتمد' : '' }}
-                                            {{ $request->decision === 'pending' ? '⏱ قيد المراجعة' : '' }}
-                                            {{ $request->decision === 'conditional' ? '⚠️ مشروط' : '' }}
-                                            {{ $request->decision === 'rejected' ? '✗ مرفوض' : '' }}
+                                            {{ $request->decision === 'accepted' ? __('✓ معتمد') : '' }}
+                                            {{ $request->decision === 'pending' ? __('⏱ قيد المراجعة') : '' }}
+                                            {{ $request->decision === 'conditional' ? __('⚠️ مشروط') : '' }}
+                                            {{ $request->decision === 'rejected' ? __('✗ مرفوض') : '' }}
                                         </span>
                                         
                                         <span class="text-xs text-gray-500">{{ \Carbon\Carbon::parse($request->created_at)->diffForHumans() }}</span>
@@ -306,7 +307,7 @@
                                 </div>
 
                                 <button wire:click="viewBrandAgent({{ $request->id }})" class="px-4 py-2 text-sm font-medium text-purple-600 hover:text-purple-800 hover:bg-purple-50 rounded-lg transition-colors">
-                                    عرض التفاصيل
+                                    {{ __('عرض التفاصيل') }}
                                 </button>
                             </div>
                         </div>
@@ -317,7 +318,7 @@
                     {{ $brandAgents->links() }}
                 </div>
             @else
-                <p class="text-center text-gray-500 py-8">لا توجد نتائج</p>
+                <p class="text-center text-gray-500 py-8">{{ __('لا توجد نتائج') }}</p>
             @endif
         </div>
     @endif
@@ -331,7 +332,7 @@
                 <div class="inline-block align-bottom bg-white rounded-lg text-right overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
                     <div class="bg-white px-6 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="flex items-start justify-between border-b border-gray-200 pb-4">
-                            <h3 class="text-xl font-bold text-gray-900">تفاصيل وكيل الشحن</h3>
+                            <h3 class="text-xl font-bold text-gray-900">{{ __('تفاصيل وكيل الشحن') }}</h3>
                             <button wire:click="closeModals" class="text-gray-400 hover:text-gray-600">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -342,27 +343,27 @@
                         <div class="mt-6 space-y-4">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p class="text-sm text-gray-500">الاسم</p>
+                                    <p class="text-sm text-gray-500">{{ __('الاسم') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedShippingAgent->name }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">البريد الإلكتروني</p>
+                                    <p class="text-sm text-gray-500">{{ __('البريد الإلكتروني') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedShippingAgent->email }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">الهاتف</p>
-                                    <p class="text-base font-semibold text-gray-900">{{ $selectedShippingAgent->phone ?? 'غير متوفر' }}</p>
+                                    <p class="text-sm text-gray-500">{{ __('الهاتف') }}</p>
+                                    <p class="text-base font-semibold text-gray-900">{{ $selectedShippingAgent->phone ?? __('غير متوفر') }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">البلد</p>
+                                    <p class="text-sm text-gray-500">{{ __('البلد') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedShippingAgent->country }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">القطاع</p>
-                                    <p class="text-base font-semibold text-gray-900">{{ $selectedShippingAgent->business_sector ?? 'غير محدد' }}</p>
+                                    <p class="text-sm text-gray-500">{{ __('القطاع') }}</p>
+                                    <p class="text-base font-semibold text-gray-900">{{ $selectedShippingAgent->business_sector ?? __('غير محدد') }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">تاريخ التسجيل</p>
+                                    <p class="text-sm text-gray-500">{{ __('تاريخ التسجيل') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ \Carbon\Carbon::parse($selectedShippingAgent->created_at)->format('Y-m-d') }}</p>
                                 </div>
                             </div>
@@ -370,7 +371,7 @@
                     </div>
 
                     <div class="bg-gray-50 px-6 py-4 flex justify-end">
-                        <button wire:click="closeModals" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">إغلاق</button>
+                        <button wire:click="closeModals" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">{{ __('إغلاق') }}</button>
                     </div>
                 </div>
             </div>
@@ -386,7 +387,7 @@
                 <div class="inline-block align-bottom bg-white rounded-lg text-right overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
                     <div class="bg-white px-6 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="flex items-start justify-between border-b border-gray-200 pb-4">
-                            <h3 class="text-xl font-bold text-gray-900">تفاصيل طلب الوكالة التجارية</h3>
+                            <h3 class="text-xl font-bold text-gray-900">{{ __('تفاصيل طلب الوكالة التجارية') }}</h3>
                             <button wire:click="closeModals" class="text-gray-400 hover:text-gray-600">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -397,72 +398,72 @@
                         <div class="mt-6 space-y-5">
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p class="text-sm text-gray-500">الاسم الكامل</p>
+                                    <p class="text-sm text-gray-500">{{ __('الاسم الكامل') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->full_name }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">اسم الشركة</p>
-                                    <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->company_name ?? 'غير محدد' }}</p>
+                                    <p class="text-sm text-gray-500">{{ __('اسم الشركة') }}</p>
+                                    <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->company_name ?? __('غير محدد') }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">البلد</p>
+                                    <p class="text-sm text-gray-500">{{ __('البلد') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->country }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">المدينة</p>
-                                    <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->city ?? 'غير محدد' }}</p>
+                                    <p class="text-sm text-gray-500">{{ __('المدينة') }}</p>
+                                    <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->city ?? __('غير محدد') }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">القطاع</p>
+                                    <p class="text-sm text-gray-500">{{ __('القطاع') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->sector }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">سنوات الخبرة</p>
-                                    <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->experience_years }} سنة</p>
+                                    <p class="text-sm text-gray-500">{{ __('سنوات الخبرة') }}</p>
+                                    <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->experience_years }} {{ __('سنة') }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">البريد الإلكتروني</p>
+                                    <p class="text-sm text-gray-500">{{ __('البريد الإلكتروني') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->email }}</p>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500">الهاتف</p>
+                                    <p class="text-sm text-gray-500">{{ __('الهاتف') }}</p>
                                     <p class="text-base font-semibold text-gray-900">{{ $selectedBrandAgent->phone }}</p>
                                 </div>
                             </div>
 
                             @if($selectedBrandAgent->expansion_plan)
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-2">خطة التوسع</p>
+                                    <p class="text-sm text-gray-500 mb-2">{{ __('خطة التوسع') }}</p>
                                     <p class="text-sm text-gray-800 bg-gray-50 rounded-lg p-3">{{ $selectedBrandAgent->expansion_plan }}</p>
                                 </div>
                             @endif
 
                             <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-2">التقييم الكلي</p>
+                                    <p class="text-sm text-gray-500 mb-2">{{ __('التقييم الكلي') }}</p>
                                     <div class="flex items-center gap-2">
                                         <span class="text-2xl font-bold text-indigo-600">{{ $selectedBrandAgent->score_total }}</span>
                                         <span class="text-sm text-gray-500">/100</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-2">حالة القرار</p>
+                                    <p class="text-sm text-gray-500 mb-2">{{ __('حالة القرار') }}</p>
                                     <span class="inline-block px-3 py-1 text-sm font-medium rounded-full 
                                         {{ $selectedBrandAgent->decision === 'accepted' ? 'bg-green-100 text-green-800' : '' }}
                                         {{ $selectedBrandAgent->decision === 'pending' ? 'bg-amber-100 text-amber-800' : '' }}
                                         {{ $selectedBrandAgent->decision === 'conditional' ? 'bg-blue-100 text-blue-800' : '' }}
                                         {{ $selectedBrandAgent->decision === 'rejected' ? 'bg-red-100 text-red-800' : '' }}">
-                                        {{ $selectedBrandAgent->decision === 'accepted' ? '✓ معتمد' : '' }}
-                                        {{ $selectedBrandAgent->decision === 'pending' ? '⏱ قيد المراجعة' : '' }}
-                                        {{ $selectedBrandAgent->decision === 'conditional' ? '⚠️ مشروط' : '' }}
-                                        {{ $selectedBrandAgent->decision === 'rejected' ? '✗ مرفوض' : '' }}
+                                        {{ $selectedBrandAgent->decision === 'accepted' ? __('✓ معتمد') : '' }}
+                                        {{ $selectedBrandAgent->decision === 'pending' ? __('⏱ قيد المراجعة') : '' }}
+                                        {{ $selectedBrandAgent->decision === 'conditional' ? __('⚠️ مشروط') : '' }}
+                                        {{ $selectedBrandAgent->decision === 'rejected' ? __('✗ مرفوض') : '' }}
                                     </span>
                                 </div>
                             </div>
 
                             @if($selectedBrandAgent->decision_notes)
                                 <div>
-                                    <p class="text-sm text-gray-500 mb-2">ملاحظات القرار</p>
+                                    <p class="text-sm text-gray-500 mb-2">{{ __('ملاحظات القرار') }}</p>
                                     <p class="text-sm text-gray-800 bg-amber-50 rounded-lg p-3 border border-amber-200">{{ $selectedBrandAgent->decision_notes }}</p>
                                 </div>
                             @endif
@@ -470,7 +471,7 @@
                     </div>
 
                     <div class="bg-gray-50 px-6 py-4 flex justify-end">
-                        <button wire:click="closeModals" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">إغلاق</button>
+                        <button wire:click="closeModals" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">{{ __('إغلاق') }}</button>
                     </div>
                 </div>
             </div>

@@ -2,10 +2,10 @@
     {{-- Header --}}
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-            إعدادات الإشعارات
+            {{ __('dashboard.shared.notifications_settings_page.title') }}
         </h1>
         <p class="text-gray-600 dark:text-gray-400">
-            إدارة تفضيلات الإشعارات والتنبيهات
+            {{ __('dashboard.shared.notifications_settings_page.subtitle') }}
         </p>
     </div>
 
@@ -17,18 +17,18 @@
             </svg>
             
             <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                قيد التجهيز
+                {{ __('dashboard.shared.notifications_settings_page.in_progress') }}
             </h3>
             
             <p class="text-gray-600 dark:text-gray-400 mb-4 max-w-md mx-auto">
-                صفحة إعدادات الإشعارات قيد التطوير حالياً. سيتم إضافة خيارات إدارة التنبيهات والإشعارات قريباً.
+                {{ __('dashboard.shared.notifications_settings_page.description') }}
             </p>
             
             <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg text-sm">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                <span>يمكنك العودة للوحة التحكم الرئيسية</span>
+                <span>{{ __('dashboard.shared.notifications_settings_page.back_hint') }}</span>
             </div>
         </div>
     </div>
@@ -36,23 +36,23 @@
     {{-- Future sections placeholder --}}
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
         <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 p-6">
-            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">إشعارات البريد الإلكتروني</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400">قريباً: إدارة الإشعارات عبر البريد</p>
+            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('dashboard.shared.notifications_settings_page.email_title') }}</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('dashboard.shared.notifications_settings_page.email_desc') }}</p>
         </div>
         
         <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 p-6">
-            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">إشعارات الموبايل</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400">قريباً: إدارة التنبيهات Push</p>
+            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('dashboard.shared.notifications_settings_page.mobile_title') }}</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('dashboard.shared.notifications_settings_page.mobile_desc') }}</p>
         </div>
         
         <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 p-6">
-            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">إشعارات النظام</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400">قريباً: إدارة التنبيهات داخل النظام</p>
+            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('dashboard.shared.notifications_settings_page.system_title') }}</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('dashboard.shared.notifications_settings_page.system_desc') }}</p>
         </div>
         
         <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 p-6">
-            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">تفضيلات الإشعارات</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400">قريباً: تخصيص أنواع الإشعارات</p>
+            <h4 class="font-semibold text-gray-700 dark:text-gray-300 mb-2">{{ __('dashboard.shared.notifications_settings_page.preferences_title') }}</h4>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ __('dashboard.shared.notifications_settings_page.preferences_desc') }}</p>
         </div>
     </div>
 </div>

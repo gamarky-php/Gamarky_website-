@@ -4,80 +4,82 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class TrackApiUsage
 {
-    /**
-     * Handle an incoming request.
-     */
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
 
-        // تسجيل استخدام الـ API إذا كان المستخدم مُسجل دخول
-        if ($request->user() && $request->bearerToken()) {
+        try {
             $this->updateTokenUsage($request);
+        } catch (\Throwable $e) {
+            // لا نكسر الـ API بسبب تتبع الاستخدام
+            // logger()->error('TrackApiUsage failed: '.$e->getMessage());
         }
 
         return $response;
     }
 
-    /**
-     * تحديث معلومات استخدام الـ token
-     */
-    private function updateTokenUsage(Request $request)
+    private function updateTokenUsage(Request $request): void
     {
-        try {
-            $token = $request->user()->currentAccessToken();
-            
-            if ($token) {
-                // تحديث وقت آخر استخدام
-                $token->last_used_at = now();
-                
-                // حفظ معلومات إضافية عن الطلب
-                $tokenData = $token->token_data ?? [];
-                $tokenData = array_merge($tokenData, [
-                    'last_ip' => $request->ip(),
-                    'last_user_agent' => $request->userAgent(),
-                    'last_endpoint' => $request->path(),
-                    'usage_count' => ($tokenData['usage_count'] ?? 0) + 1,
-                    'updated_at' => now()->toISOString(),
-                ]);
-                
-                // حفظ معلومات الموقع الجغرافي (اختياري)
-                if (!isset($tokenData['first_location'])) {
-                    $tokenData['first_location'] = $this->getLocationFromIP($request->ip());
-                }
-                
-                $token->token_data = $tokenData;
-                $token->saveQuietly(); // لا نريد إثارة events
+        $user = $request->user();
+        if (!$user) return;
+
+        $token = method_exists($user, 'currentAccessToken') ? $user->currentAccessToken() : null;
+        if (!$token) return;
+
+        // نختار حقل التخزين حسب الموجود فعلاً في جدول personal_access_tokens
+        $field = null;
+        foreach (['usage', 'meta', 'extra'] as $candidate) {
+            if (isset($token->{$candidate})) {
+                $field = $candidate;
+                break;
             }
-        } catch (\Exception $e) {
-            // تجاهل الأخطاء لعدم تأثيرها على الـ API
-            logger('Error tracking API usage: ' . $e->getMessage());
         }
-    }
+        if (!$field) return;
 
-    /**
-     * الحصول على معلومات الموقع من الـ IP (اختياري)
-     */
-    private function getLocationFromIP($ip)
-    {
-        // يمكن استخدام خدمة خارجية مثل GeoIP
-        // للآن سنحفظ معلومات أساسية فقط
-        
-        if ($ip === '127.0.0.1' || $ip === '::1') {
-            return [
-                'country' => 'Local',
-                'city' => 'localhost',
-                'ip' => $ip
-            ];
+        $raw = $token->{$field};
+
+        // لو كان نص (JSON) هنفكّه
+        $storeAsJsonString = false;
+        if (is_string($raw)) {
+            $decoded = json_decode($raw, true);
+            $current = is_array($decoded) ? $decoded : [];
+            $storeAsJsonString = true;
+        } elseif (is_array($raw)) {
+            $current = $raw;
+        } else {
+            $current = [];
         }
 
-        return [
-            'ip' => $ip,
-            'timestamp' => now()->toISOString()
-        ];
+        $path = $request->path();
+
+        // تحديث آمن بدون array_merge على قيمة ممكن تكون string
+        $current['total'] = (int)($current['total'] ?? 0) + 1;
+        $current['last_path'] = $path;
+        $current['last_at'] = now()->toDateTimeString();
+
+        $per = $current['per_endpoint'] ?? [];
+        if (is_string($per)) {
+            $perDecoded = json_decode($per, true);
+            $per = is_array($perDecoded) ? $perDecoded : [];
+            $storeAsJsonString = true;
+        } elseif (!is_array($per)) {
+            $per = [];
+        }
+        $per[$path] = (int)($per[$path] ?? 0) + 1;
+        $tokenValue = $current;
+        $tokenValue['per_endpoint'] = $per;
+
+        // لو الحقل أصلاً كان نص، نخزّن كـ JSON string لتجنب TypeError
+        $finalValue = $storeAsJsonString ? json_encode($tokenValue, JSON_UNESCAPED_UNICODE) : $tokenValue;
+
+        if (method_exists($token, 'forceFill')) {
+            $token->forceFill([$field => $finalValue])->save();
+        } else {
+            $token->{$field} = $finalValue;
+            $token->save();
+        }
     }
 }

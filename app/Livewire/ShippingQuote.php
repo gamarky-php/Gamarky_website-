@@ -8,7 +8,7 @@ use App\Services\Shipping\QuoteAggregatorService;
 
 class ShippingQuote extends Component
 {
-    // حقول البحث الأساسية
+    // Core search fields
     public $origin_port = '';
     public $destination_port = '';
     public $loading_date = '';
@@ -18,20 +18,20 @@ class ShippingQuote extends Component
     public $service_type = 'FCL'; // FCL, LCL
     public $container_type = '20GP'; // 20GP, 40GP, 40HQ, Reefer
     
-    // الأبعاد (اختيارية)
+    // Dimensions (optional)
     public $length = '';
     public $width = '';
     public $height = '';
     
-    // حالة البحث
+    // Search state
     public $searchPerformed = false;
     public $quotes = [];
     public $sortBy = 'best_value'; // best_value, price, transit_time
     
-    // المقارنة
+    // Comparison
     public $selectedForComparison = [];
     
-    // العروض المحفوظة
+    // Saved quotes
     public $savedQuotes = [];
 
     protected $rules = [
@@ -45,33 +45,36 @@ class ShippingQuote extends Component
         'container_type' => 'required|in:20GP,40GP,40HQ,Reefer',
     ];
 
-    protected $messages = [
-        'origin_port.required' => 'يرجى اختيار ميناء الشحن',
-        'destination_port.required' => 'يرجى اختيار ميناء الوصول',
-        'loading_date.required' => 'يرجى تحديد تاريخ التحميل',
-        'loading_date.after' => 'يجب أن يكون تاريخ التحميل في المستقبل',
-        'weight_kg.required' => 'يرجى إدخال الوزن بالكيلوجرام',
-        'weight_kg.numeric' => 'الوزن يجب أن يكون رقماً',
-        'cbm.numeric' => 'الحجم يجب أن يكون رقماً',
-    ];
+    protected function messages()
+    {
+        return [
+            'origin_port.required' => __('front.shipping.shipping_quote.validation.origin_port_required'),
+            'destination_port.required' => __('front.shipping.shipping_quote.validation.destination_port_required'),
+            'loading_date.required' => __('front.shipping.shipping_quote.validation.loading_date_required'),
+            'loading_date.after' => __('front.shipping.shipping_quote.validation.loading_date_after'),
+            'weight_kg.required' => __('front.shipping.shipping_quote.validation.weight_required'),
+            'weight_kg.numeric' => __('front.shipping.shipping_quote.validation.weight_numeric'),
+            'cbm.numeric' => __('front.shipping.shipping_quote.validation.cbm_numeric'),
+        ];
+    }
 
     public function mount()
     {
-        // تحميل العروض المحفوظة من الجلسة
+        // Load saved quotes from session
         $this->savedQuotes = session('saved_quotes', []);
         
-        // تعيين تاريخ تلقائي (بعد أسبوع من الآن)
+        // Set default loading date (one week ahead)
         $this->loading_date = now()->addWeek()->format('Y-m-d');
     }
 
     /**
-     * البحث عن العروض
+    * Search quotes
      */
     public function searchQuotes()
     {
         $this->validate();
 
-        // استخدام خدمة التجميع لجلب العروض
+        // Use aggregator service to fetch quotes
         $aggregator = app(QuoteAggregatorService::class);
         
         $searchParams = [
@@ -87,24 +90,24 @@ class ShippingQuote extends Component
 
         $this->quotes = $aggregator->aggregateQuotes($searchParams)->all();
         
-        // فرز العروض حسب المعيار المختار
+        // Sort quotes by selected criterion
         $this->sortQuotes();
         
         $this->searchPerformed = true;
     }
 
     /**
-     * محاكاة جلب العروض من خدمة التجميع
-     * (يُستخدم كـ fallback فقط)
+    * Simulate fetching quotes from aggregator service
+    * (fallback only)
      */
     private function getQuotesFromAggregator()
     {
-        // هذه الدالة احتياطية فقط - الخدمة الفعلية في QuoteAggregatorService
+        // Fallback only - real service is QuoteAggregatorService
         return [];
     }
 
     /**
-     * فرز العروض
+    * Sort quotes
      */
     public function sortQuotes()
     {
@@ -119,11 +122,11 @@ class ShippingQuote extends Component
                 break;
             case 'best_value':
             default:
-                // حساب القيمة الأفضل (سعر + زمن + تقييم)
+                // Calculate best value score (price + transit + rating)
                 $quotes = $quotes->sortBy(function ($quote) {
-                    $priceScore = $quote['total_price'] / 10; // وزن السعر
-                    $timeScore = $quote['transit_days'] * 5; // وزن الزمن
-                    $ratingScore = (5 - $quote['rating']) * 50; // وزن التقييم
+                    $priceScore = $quote['total_price'] / 10; // Price weight
+                    $timeScore = $quote['transit_days'] * 5; // Transit weight
+                    $ratingScore = (5 - $quote['rating']) * 50; // Rating weight
                     return $priceScore + $timeScore + $ratingScore;
                 });
                 break;
@@ -133,7 +136,7 @@ class ShippingQuote extends Component
     }
 
     /**
-     * تحديث طريقة الفرز
+    * Update sorting method
      */
     public function updateSort($sort)
     {
@@ -142,7 +145,7 @@ class ShippingQuote extends Component
     }
 
     /**
-     * إضافة/إزالة عرض للمقارنة
+    * Add/remove quote for comparison
      */
     public function toggleComparison($quoteId)
     {
@@ -152,13 +155,13 @@ class ShippingQuote extends Component
             if (count($this->selectedForComparison) < 3) {
                 $this->selectedForComparison[] = $quoteId;
             } else {
-                session()->flash('warning', 'يمكنك مقارنة حتى 3 عروض فقط');
+                session()->flash('warning', __('front.shipping.shipping_quote.flash.max_comparison')); 
             }
         }
     }
 
     /**
-     * حفظ العرض
+    * Save quote
      */
     public function saveQuote($quoteId)
     {
@@ -167,28 +170,28 @@ class ShippingQuote extends Component
         if ($quote && !in_array($quoteId, $this->savedQuotes)) {
             $this->savedQuotes[] = $quoteId;
             session()->put('saved_quotes', $this->savedQuotes);
-            session()->flash('success', 'تم حفظ العرض بنجاح');
+            session()->flash('success', __('front.shipping.shipping_quote.flash.saved_successfully'));
         }
     }
 
     /**
-     * اختيار العرض (إعادة توجيه لصفحة الحجز)
+    * Select quote (redirect to booking page)
      */
     public function selectQuote($quoteId)
     {
         $quote = collect($this->quotes)->firstWhere('id', $quoteId);
         
         if ($quote) {
-            // حفظ تفاصيل العرض في الجلسة
+            // Save quote details in session
             session()->put('selected_quote', $quote);
             
-            // إعادة توجيه لصفحة الحجز
+            // Redirect to booking page
             return redirect()->route('front.shipping.container.book');
         }
     }
 
     /**
-     * الحصول على العروض المحددة للمقارنة
+    * Get selected quotes for comparison
      */
     public function getSelectedQuotesProperty()
     {
@@ -199,7 +202,7 @@ class ShippingQuote extends Component
     }
 
     /**
-     * حساب الحجم CBM من الأبعاد
+    * Calculate CBM from dimensions
      */
     public function calculateCBM()
     {

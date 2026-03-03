@@ -4,6 +4,7 @@ return [
     /*
     |--------------------------------------------------------------------------
     | UX Copy - Call to Actions (CTAs)
+    | Note: Profile moved to auth.php, Dashboard moved to dashboard.php
     |--------------------------------------------------------------------------
     */
     'cta' => [
@@ -41,6 +42,7 @@ return [
         'close' => 'Close',
         'open' => 'Open',
         'expand' => 'Expand',
+        'explore' => 'Explore',
         'collapse' => 'Collapse',
         'refresh' => 'Refresh',
         'reload' => 'Reload',
@@ -49,8 +51,11 @@ return [
         'apply' => 'Apply',
         'approve' => 'Approve',
         'reject' => 'Reject',
+        'save' => 'Save',
         'send' => 'Send',
         'receive' => 'Receive',
+        'more' => 'More',
+        'menu' => 'Menu',
     ],
 
     /*

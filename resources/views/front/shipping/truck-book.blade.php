@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'حجز شاحنة - جماركي')
+@section('title', __('front.shipping.truck_book.title'))
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -10,10 +10,10 @@
         <div class="container mx-auto max-w-7xl">
             <h1 class="text-4xl md:text-5xl font-bold mb-3">
                 <i class="fas fa-truck-loading ml-3"></i>
-                حجز شاحنة نقل
+                {{ __('front.shipping.truck_book.heading') }}
             </h1>
             <p class="text-lg text-blue-100">
-                أكمل بيانات الحجز للنقل البري
+                {{ __('front.shipping.truck_book.subtitle') }}
             </p>
         </div>
     </div>
@@ -28,25 +28,25 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
             <div class="bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl shadow-lg p-6 text-white">
                 <i class="fas fa-clock text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold mb-2">توصيل سريع</h3>
+                <h3 class="text-xl font-bold mb-2">{{ __('front.shipping.truck_book.fast_delivery') }}</h3>
                 <p class="text-teal-100 text-sm">
-                    خدمة توصيل سريعة وموثوقة في المواعيد المحددة
+                    {{ __('front.shipping.truck_book.fast_delivery_desc') }}
                 </p>
             </div>
 
             <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
                 <i class="fas fa-shield-alt text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold mb-2">تأمين شامل</h3>
+                <h3 class="text-xl font-bold mb-2">{{ __('front.shipping.truck_book.full_insurance') }}</h3>
                 <p class="text-blue-100 text-sm">
-                    جميع الشحنات مؤمنة ضد الأضرار والفقد
+                    {{ __('front.shipping.truck_book.full_insurance_desc') }}
                 </p>
             </div>
 
             <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl shadow-lg p-6 text-white">
                 <i class="fas fa-route text-4xl mb-4"></i>
-                <h3 class="text-xl font-bold mb-2">تتبع مباشر</h3>
+                <h3 class="text-xl font-bold mb-2">{{ __('front.shipping.truck_book.live_tracking') }}</h3>
                 <p class="text-purple-100 text-sm">
-                    تتبع شحنتك لحظياً عبر GPS على مدار الساعة
+                    {{ __('front.shipping.truck_book.live_tracking_desc') }}
                 </p>
             </div>
         </div>
@@ -56,10 +56,9 @@
             <div class="flex items-start">
                 <i class="fas fa-check-circle text-green-600 text-2xl ml-3 mt-1"></i>
                 <div>
-                    <h4 class="font-bold text-green-800 mb-2">ضمان الجودة</h4>
+                    <h4 class="font-bold text-green-800 mb-2">{{ __('front.shipping.truck_book.quality_guarantee') }}</h4>
                     <p class="text-green-700 text-sm leading-relaxed">
-                        نعمل فقط مع شركات نقل معتمدة ومرخصة. جميع السائقين مدربون ومؤهلون.
-                        السعر النهائي شامل جميع الرسوم الظاهرة.
+                        {{ __('front.shipping.truck_book.quality_guarantee_desc') }}
                     </p>
                 </div>
             </div>

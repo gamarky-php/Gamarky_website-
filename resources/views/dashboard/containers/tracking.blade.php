@@ -1,39 +1,40 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
-@section('title', 'تتبع الحاويات')
+@section('title', __('ui.dashboard.container_tracking.page_title'))
 
 @section('content')
 @php
-    // بيانات وهمية للحالة
-    $currentStatus = 'في الطريق';
-    $lastLocation = 'ميناء سنغافورة';
+    // Demo tracking state
+    $currentStatus = __('ui.dashboard.container_tracking.current_status_value');
+    $lastLocation = __('ui.dashboard.container_tracking.location_singapore_port');
     $eta = '2026-01-20 14:30';
     
-    // Timeline مراحل الرحلة
+    // Journey timeline
     $timeline = [
-        ['status' => 'completed', 'title' => 'تم إنشاء الحجز', 'location' => 'النظام', 'date' => '2026-01-05 10:15', 'description' => 'تم تسجيل الحجز في النظام بنجاح'],
-        ['status' => 'completed', 'title' => 'تم التحميل بالميناء', 'location' => 'ميناء شنغهاي', 'date' => '2026-01-08 08:30', 'description' => 'تم تحميل الحاوية على السفينة MSC MAYA'],
-        ['status' => 'completed', 'title' => 'غادرت السفينة', 'location' => 'ميناء شنغهاي', 'date' => '2026-01-09 14:00', 'description' => 'غادرت السفينة الميناء متجهة إلى جدة'],
-        ['status' => 'active', 'title' => 'في الطريق', 'location' => 'ميناء سنغافورة', 'date' => '2026-01-14 09:00', 'description' => 'السفينة حالياً في ميناء سنغافورة'],
-        ['status' => 'pending', 'title' => 'وصول ميناء الوصول', 'location' => 'ميناء جدة الإسلامي', 'date' => '2026-01-20 (متوقع)', 'description' => 'موعد الوصول المتوقع'],
-        ['status' => 'pending', 'title' => 'التخليص الجمركي', 'location' => 'الجمارك السعودية', 'date' => 'قريباً', 'description' => 'سيتم البدء بعد الوصول'],
-        ['status' => 'pending', 'title' => 'تم التسليم', 'location' => 'مستودع العميل', 'date' => 'قريباً', 'description' => 'التسليم النهائي للعميل'],
+        ['status' => 'completed', 'title' => __('ui.dashboard.container_tracking.tl_1_title'), 'location' => __('ui.dashboard.container_tracking.location_system'), 'date' => '2026-01-05 10:15', 'description' => __('ui.dashboard.container_tracking.tl_1_desc')],
+        ['status' => 'completed', 'title' => __('ui.dashboard.container_tracking.tl_2_title'), 'location' => __('ui.dashboard.container_tracking.location_shanghai_port'), 'date' => '2026-01-08 08:30', 'description' => __('ui.dashboard.container_tracking.tl_2_desc')],
+        ['status' => 'completed', 'title' => __('ui.dashboard.container_tracking.tl_3_title'), 'location' => __('ui.dashboard.container_tracking.location_shanghai_port'), 'date' => '2026-01-09 14:00', 'description' => __('ui.dashboard.container_tracking.tl_3_desc')],
+        ['status' => 'active', 'title' => __('ui.dashboard.container_tracking.tl_4_title'), 'location' => __('ui.dashboard.container_tracking.location_singapore_port'), 'date' => '2026-01-14 09:00', 'description' => __('ui.dashboard.container_tracking.tl_4_desc')],
+        ['status' => 'pending', 'title' => __('ui.dashboard.container_tracking.tl_5_title'), 'location' => __('ui.dashboard.container_tracking.location_jeddah_port'), 'date' => __('ui.dashboard.container_tracking.eta_expected'), 'description' => __('ui.dashboard.container_tracking.tl_5_desc')],
+        ['status' => 'pending', 'title' => __('ui.dashboard.container_tracking.tl_6_title'), 'location' => __('ui.dashboard.container_tracking.location_saudi_customs'), 'date' => __('ui.dashboard.container_tracking.soon'), 'description' => __('ui.dashboard.container_tracking.tl_6_desc')],
+        ['status' => 'pending', 'title' => __('ui.dashboard.container_tracking.tl_7_title'), 'location' => __('ui.dashboard.container_tracking.location_client_warehouse'), 'date' => __('ui.dashboard.container_tracking.soon'), 'description' => __('ui.dashboard.container_tracking.tl_7_desc')],
     ];
     
-    // آخر عمليات التتبع
+    // Latest tracking events
     $trackingEvents = [
-        ['datetime' => '2026-01-14 09:00', 'location' => 'ميناء سنغافورة', 'event' => 'توقف ترانزيت', 'note' => 'السفينة راسية للتزود بالوقود'],
-        ['datetime' => '2026-01-13 16:45', 'location' => 'بحر الصين الجنوبي', 'event' => 'تحديث الموقع', 'note' => 'السفينة في المسار الطبيعي'],
-        ['datetime' => '2026-01-12 11:20', 'location' => 'مضيق ملقا', 'event' => 'تحديث الموقع', 'note' => 'عبور المضيق بسلاسة'],
-        ['datetime' => '2026-01-11 08:30', 'location' => 'بحر الصين الجنوبي', 'event' => 'تحديث الموقع', 'note' => 'ظروف بحرية جيدة'],
-        ['datetime' => '2026-01-10 14:15', 'location' => 'ميناء هونج كونج', 'event' => 'توقف ترانزيت', 'note' => 'توقف قصير للتزود بالبضائع'],
-        ['datetime' => '2026-01-09 14:00', 'location' => 'ميناء شنغهاي', 'event' => 'مغادرة الميناء', 'note' => 'غادرت السفينة متجهة إلى جدة'],
-        ['datetime' => '2026-01-08 08:30', 'location' => 'ميناء شنغهاي', 'event' => 'تحميل الحاوية', 'note' => 'تم التحميل على السفينة MSC MAYA'],
-        ['datetime' => '2026-01-05 10:15', 'location' => 'النظام', 'event' => 'إنشاء الحجز', 'note' => 'تم تسجيل الحجز MSKU1234567'],
+        ['datetime' => '2026-01-14 09:00', 'location' => __('ui.dashboard.container_tracking.location_singapore_port'), 'event' => __('ui.dashboard.container_tracking.event_transit_stop'), 'note' => __('ui.dashboard.container_tracking.note_refuel')],
+        ['datetime' => '2026-01-13 16:45', 'location' => __('ui.dashboard.container_tracking.location_south_china_sea'), 'event' => __('ui.dashboard.container_tracking.event_location_update'), 'note' => __('ui.dashboard.container_tracking.note_on_track')],
+        ['datetime' => '2026-01-12 11:20', 'location' => __('ui.dashboard.container_tracking.location_malacca_strait'), 'event' => __('ui.dashboard.container_tracking.event_location_update'), 'note' => __('ui.dashboard.container_tracking.note_strait_crossing')],
+        ['datetime' => '2026-01-11 08:30', 'location' => __('ui.dashboard.container_tracking.location_south_china_sea'), 'event' => __('ui.dashboard.container_tracking.event_location_update'), 'note' => __('ui.dashboard.container_tracking.note_good_weather')],
+        ['datetime' => '2026-01-10 14:15', 'location' => __('ui.dashboard.container_tracking.location_hong_kong_port'), 'event' => __('ui.dashboard.container_tracking.event_transit_stop'), 'note' => __('ui.dashboard.container_tracking.note_short_stop')],
+        ['datetime' => '2026-01-09 14:00', 'location' => __('ui.dashboard.container_tracking.location_shanghai_port'), 'event' => __('ui.dashboard.container_tracking.event_port_departure'), 'note' => __('ui.dashboard.container_tracking.note_departed_to_jeddah')],
+        ['datetime' => '2026-01-08 08:30', 'location' => __('ui.dashboard.container_tracking.location_shanghai_port'), 'event' => __('ui.dashboard.container_tracking.event_container_loaded'), 'note' => __('ui.dashboard.container_tracking.note_loaded_msc')],
+        ['datetime' => '2026-01-05 10:15', 'location' => __('ui.dashboard.container_tracking.location_system'), 'event' => __('ui.dashboard.container_tracking.event_booking_created'), 'note' => __('ui.dashboard.container_tracking.note_booking_created')],
     ];
 @endphp
 
-<div class="space-y-6" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="space-y-6">
     
     <!-- Page Header -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -42,9 +43,9 @@
                 <svg class="w-8 h-8 inline-block ml-3 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
                 </svg>
-                تتبع الحاويات
+                {{ __('ui.dashboard.container_tracking.page_title') }}
             </h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">تتبع موقع وحالة الحاويات في الوقت الفعلي</p>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('ui.dashboard.container_tracking.page_subtitle') }}</p>
         </div>
     </div>
 
@@ -53,12 +54,12 @@
         <div class="flex flex-col lg:flex-row gap-4">
             <div class="flex-1">
                 <label for="tracking-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    ابحث بـ: رقم الحاوية / رقم BL / رقم الحجز
+                    {{ __('ui.dashboard.container_tracking.search_by') }}
                 </label>
                 <input 
                     type="text" 
                     id="tracking-input"
-                    placeholder="مثال: MSKU1234567 أو BL-2026-001"
+                    placeholder="{{ __('ui.dashboard.container_tracking.search_placeholder') }}"
                     class="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     value="MSKU1234567"
                 >
@@ -70,7 +71,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
-                    بحث
+                    {{ __('ui.dashboard.container_tracking.search') }}
                 </button>
                 <button 
                     type="button"
@@ -78,7 +79,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
-                    مسح
+                    {{ __('ui.dashboard.container_tracking.clear') }}
                 </button>
             </div>
         </div>
@@ -89,7 +90,7 @@
         <!-- Current Status -->
         <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg p-6 text-white">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold">الحالة الحالية</h3>
+                <h3 class="text-lg font-semibold">{{ __('ui.dashboard.container_tracking.current_status') }}</h3>
                 <div class="p-3 bg-white/20 rounded-lg">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
@@ -97,13 +98,13 @@
                 </div>
             </div>
             <p class="text-3xl font-bold mb-1">{{ $currentStatus }}</p>
-            <p class="text-blue-100 text-sm">السفينة في حركة نشطة</p>
+            <p class="text-blue-100 text-sm">{{ __('ui.dashboard.container_tracking.ship_active') }}</p>
         </div>
 
         <!-- Last Known Location -->
         <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg p-6 text-white">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold">آخر موقع معروف</h3>
+                <h3 class="text-lg font-semibold">{{ __('ui.dashboard.container_tracking.last_known_location') }}</h3>
                 <div class="p-3 bg-white/20 rounded-lg">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
@@ -112,13 +113,13 @@
                 </div>
             </div>
             <p class="text-2xl font-bold mb-1">{{ $lastLocation }}</p>
-            <p class="text-emerald-100 text-sm">تحديث: اليوم 09:00 صباحاً</p>
+            <p class="text-emerald-100 text-sm">{{ __('ui.dashboard.container_tracking.updated_today_0900') }}</p>
         </div>
 
         <!-- ETA -->
         <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl shadow-lg p-6 text-white">
             <div class="flex items-center justify-between mb-4">
-                <h3 class="text-lg font-semibold">موعد الوصول المتوقع</h3>
+                <h3 class="text-lg font-semibold">{{ __('ui.dashboard.container_tracking.eta_title') }}</h3>
                 <div class="p-3 bg-white/20 rounded-lg">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -126,7 +127,7 @@
                 </div>
             </div>
             <p class="text-2xl font-bold mb-1">{{ $eta }}</p>
-            <p class="text-amber-100 text-sm">متبقي: 6 أيام تقريباً</p>
+            <p class="text-amber-100 text-sm">{{ __('ui.dashboard.container_tracking.remaining_days') }}</p>
         </div>
     </div>
 
@@ -140,9 +141,9 @@
                     <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                     </svg>
-                    مراحل رحلة الحاوية
+                    {{ __('ui.dashboard.container_tracking.journey_stages') }}
                 </h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">تتبع المراحل من الحجز حتى التسليم</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('ui.dashboard.container_tracking.journey_subtitle') }}</p>
             </div>
 
             <div class="space-y-4">
@@ -209,19 +210,19 @@
                     <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    آخر عمليات التتبع
+                    {{ __('ui.dashboard.container_tracking.latest_events') }}
                 </h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">سجل الأحداث والتحديثات</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('ui.dashboard.container_tracking.events_subtitle') }}</p>
             </div>
 
             <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
                 <table class="w-full">
                     <thead class="bg-gray-50 dark:bg-gray-700/50 sticky top-0">
                         <tr>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">التاريخ/الوقت</th>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">الموقع</th>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">الحدث</th>
-                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">ملاحظة</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_tracking.date_time') }}</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_tracking.location') }}</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_tracking.event') }}</th>
+                            <th class="px-4 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('ui.dashboard.container_tracking.note') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">

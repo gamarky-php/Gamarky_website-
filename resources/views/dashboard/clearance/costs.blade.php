@@ -1,49 +1,50 @@
-@extends('layouts.dashboard')
+﻿@extends('layouts.dashboard')
 
-@section('title', 'تكاليف التخليص')
+@section('title', __('تكاليف التخليص'))
 
 @section('content')
 @php
     // بيانات KPI وهمية
     $kpis = [
-        ['title' => 'إجمالي التكاليف', 'value' => '485,750', 'currency' => 'EGP', 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'blue'],
-        ['title' => 'المدفوع', 'value' => '342,500', 'currency' => 'EGP', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'green'],
-        ['title' => 'المتبقي', 'value' => '143,250', 'currency' => 'EGP', 'icon' => 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'red'],
-        ['title' => 'متوسط تكلفة/ملف', 'value' => '40,479', 'currency' => 'EGP', 'icon' => 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z', 'color' => 'purple'],
+        ['title' => __('إجمالي التكاليف'), 'value' => '485,750', 'currency' => 'EGP', 'icon' => 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'blue'],
+        ['title' => __('المدفوع'), 'value' => '342,500', 'currency' => 'EGP', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'green'],
+        ['title' => __('المتبقي'), 'value' => '143,250', 'currency' => 'EGP', 'icon' => 'M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'color' => 'red'],
+        ['title' => __('متوسط تكلفة/ملف'), 'value' => '40,479', 'currency' => 'EGP', 'icon' => 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z', 'color' => 'purple'],
     ];
     
     // بنود تكلفة تجريبية
     $costItems = [
-        ['jobId' => 'CLR-2026-001', 'item' => 'رسوم جمركية', 'category' => 'customs', 'amount' => '45,000', 'paid' => '45,000', 'status' => 'paid', 'updated_at' => '2026-01-14 10:30'],
-        ['jobId' => 'CLR-2026-001', 'item' => 'رسوم شحن', 'category' => 'shipping', 'amount' => '12,500', 'paid' => '12,500', 'status' => 'paid', 'updated_at' => '2026-01-14 10:30'],
-        ['jobId' => 'CLR-2026-002', 'item' => 'رسوم تخزين', 'category' => 'storage', 'amount' => '8,750', 'paid' => '0', 'status' => 'unpaid', 'updated_at' => '2026-01-14 09:15'],
-        ['jobId' => 'CLR-2026-002', 'item' => 'رسوم فحص', 'category' => 'inspection', 'amount' => '5,200', 'paid' => '5,200', 'status' => 'paid', 'updated_at' => '2026-01-14 09:15'],
-        ['jobId' => 'CLR-2026-003', 'item' => 'رسوم جمركية', 'category' => 'customs', 'amount' => '38,500', 'paid' => '20,000', 'status' => 'partially_paid', 'updated_at' => '2026-01-14 08:45'],
-        ['jobId' => 'CLR-2026-003', 'item' => 'رسوم أخرى', 'category' => 'other', 'amount' => '3,200', 'paid' => '0', 'status' => 'unpaid', 'updated_at' => '2026-01-14 08:45'],
-        ['jobId' => 'CLR-2026-004', 'item' => 'رسوم شحن', 'category' => 'shipping', 'amount' => '15,800', 'paid' => '15,800', 'status' => 'paid', 'updated_at' => '2026-01-13 16:20'],
-        ['jobId' => 'CLR-2026-005', 'item' => 'رسوم جمركية', 'category' => 'customs', 'amount' => '52,300', 'paid' => '30,000', 'status' => 'partially_paid', 'updated_at' => '2026-01-13 14:50'],
-        ['jobId' => 'CLR-2026-005', 'item' => 'رسوم تخزين', 'category' => 'storage', 'amount' => '6,500', 'paid' => '6,500', 'status' => 'paid', 'updated_at' => '2026-01-13 14:50'],
-        ['jobId' => 'CLR-2026-006', 'item' => 'رسوم فحص', 'category' => 'inspection', 'amount' => '4,800', 'paid' => '0', 'status' => 'unpaid', 'updated_at' => '2026-01-13 11:30'],
-        ['jobId' => 'CLR-2026-007', 'item' => 'رسوم جمركية', 'category' => 'customs', 'amount' => '41,200', 'paid' => '41,200', 'status' => 'paid', 'updated_at' => '2026-01-12 15:40'],
-        ['jobId' => 'CLR-2026-008', 'item' => 'رسوم أخرى', 'category' => 'other', 'amount' => '2,900', 'paid' => '1,500', 'status' => 'partially_paid', 'updated_at' => '2026-01-12 10:25'],
+        ['jobId' => 'CLR-2026-001', 'item' => __('رسوم جمركية'), 'category' => 'customs', 'amount' => '45,000', 'paid' => '45,000', 'status' => 'paid', 'updated_at' => '2026-01-14 10:30'],
+        ['jobId' => 'CLR-2026-001', 'item' => __('رسوم شحن'), 'category' => 'shipping', 'amount' => '12,500', 'paid' => '12,500', 'status' => 'paid', 'updated_at' => '2026-01-14 10:30'],
+        ['jobId' => 'CLR-2026-002', 'item' => __('رسوم تخزين'), 'category' => 'storage', 'amount' => '8,750', 'paid' => '0', 'status' => 'unpaid', 'updated_at' => '2026-01-14 09:15'],
+        ['jobId' => 'CLR-2026-002', 'item' => __('رسوم فحص'), 'category' => 'inspection', 'amount' => '5,200', 'paid' => '5,200', 'status' => 'paid', 'updated_at' => '2026-01-14 09:15'],
+        ['jobId' => 'CLR-2026-003', 'item' => __('رسوم جمركية'), 'category' => 'customs', 'amount' => '38,500', 'paid' => '20,000', 'status' => 'partially_paid', 'updated_at' => '2026-01-14 08:45'],
+        ['jobId' => 'CLR-2026-003', 'item' => __('رسوم أخرى'), 'category' => 'other', 'amount' => '3,200', 'paid' => '0', 'status' => 'unpaid', 'updated_at' => '2026-01-14 08:45'],
+        ['jobId' => 'CLR-2026-004', 'item' => __('رسوم شحن'), 'category' => 'shipping', 'amount' => '15,800', 'paid' => '15,800', 'status' => 'paid', 'updated_at' => '2026-01-13 16:20'],
+        ['jobId' => 'CLR-2026-005', 'item' => __('رسوم جمركية'), 'category' => 'customs', 'amount' => '52,300', 'paid' => '30,000', 'status' => 'partially_paid', 'updated_at' => '2026-01-13 14:50'],
+        ['jobId' => 'CLR-2026-005', 'item' => __('رسوم تخزين'), 'category' => 'storage', 'amount' => '6,500', 'paid' => '6,500', 'status' => 'paid', 'updated_at' => '2026-01-13 14:50'],
+        ['jobId' => 'CLR-2026-006', 'item' => __('رسوم فحص'), 'category' => 'inspection', 'amount' => '4,800', 'paid' => '0', 'status' => 'unpaid', 'updated_at' => '2026-01-13 11:30'],
+        ['jobId' => 'CLR-2026-007', 'item' => __('رسوم جمركية'), 'category' => 'customs', 'amount' => '41,200', 'paid' => '41,200', 'status' => 'paid', 'updated_at' => '2026-01-12 15:40'],
+        ['jobId' => 'CLR-2026-008', 'item' => __('رسوم أخرى'), 'category' => 'other', 'amount' => '2,900', 'paid' => '1,500', 'status' => 'partially_paid', 'updated_at' => '2026-01-12 10:25'],
     ];
     
     $statusConfig = [
-        'paid' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-800 dark:text-green-300', 'label' => 'مدفوع'],
-        'unpaid' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-800 dark:text-red-300', 'label' => 'غير مدفوع'],
-        'partially_paid' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-800 dark:text-yellow-300', 'label' => 'مدفوع جزئياً'],
+        'paid' => ['bg' => 'bg-green-100 dark:bg-green-900/30', 'text' => 'text-green-800 dark:text-green-300', 'label' => __('مدفوع')],
+        'unpaid' => ['bg' => 'bg-red-100 dark:bg-red-900/30', 'text' => 'text-red-800 dark:text-red-300', 'label' => __('غير مدفوع')],
+        'partially_paid' => ['bg' => 'bg-yellow-100 dark:bg-yellow-900/30', 'text' => 'text-yellow-800 dark:text-yellow-300', 'label' => __('مدفوع جزئياً')],
     ];
     
     $categoryLabels = [
-        'customs' => 'رسوم جمركية',
-        'shipping' => 'شحن',
-        'storage' => 'تخزين',
-        'inspection' => 'فحص',
-        'other' => 'أخرى',
+        'customs' => __('رسوم جمركية'),
+        'shipping' => __('شحن'),
+        'storage' => __('تخزين'),
+        'inspection' => __('فحص'),
+        'other' => __('أخرى'),
     ];
 @endphp
 
-<div class="space-y-6" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="space-y-6">
     
     <!-- Page Header -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
@@ -52,9 +53,9 @@
                 <svg class="w-8 h-8 inline-block ml-3 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                تكاليف التخليص
+                {{ __('تكاليف التخليص') }}
             </h1>
-            <p class="text-gray-600 dark:text-gray-400 mt-2">إدارة ومتابعة تكاليف ملفات التخليص الجمركي</p>
+            <p class="text-gray-600 dark:text-gray-400 mt-2">{{ __('إدارة ومتابعة تكاليف ملفات التخليص الجمركي') }}</p>
         </div>
     </div>
 
@@ -66,21 +67,21 @@
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
                 </svg>
-                لوحة التخليص
+                {{ __('لوحة التخليص') }}
             </a>
             <a href="{{ route('dashboard.clearance.costs') }}" 
                class="px-4 py-2 bg-emerald-600 text-white rounded-lg font-medium transition-colors flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                التكاليف
+                {{ __('التكاليف') }}
             </a>
             <a href="{{ route('dashboard.clearance.pending') }}" 
                class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg font-medium transition-colors flex items-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
-                المعلّقة
+                {{ __('المعلّقة') }}
             </a>
         </div>
     </div>
@@ -91,41 +92,41 @@
             <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path>
             </svg>
-            الفلاتر
+            {{ __('الفلاتر') }}
         </h2>
         
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <!-- Job ID Search -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">بحث عن Job ID</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('بحث عن Job ID') }}</label>
                 <input 
                     type="text" 
-                    placeholder="مثال: CLR-2026-001"
+                    placeholder="{{ __('مثال: CLR-2026-001') }}"
                     class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
                 >
             </div>
 
             <!-- Status Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الحالة</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الحالة') }}</label>
                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                    <option value="all">الكل</option>
-                    <option value="paid">مدفوع</option>
-                    <option value="unpaid">غير مدفوع</option>
-                    <option value="partially_paid">مدفوع جزئياً</option>
+                    <option value="all">{{ __('الكل') }}</option>
+                    <option value="paid">{{ __('مدفوع') }}</option>
+                    <option value="unpaid">{{ __('غير مدفوع') }}</option>
+                    <option value="partially_paid">{{ __('مدفوع جزئياً') }}</option>
                 </select>
             </div>
 
             <!-- Category Filter -->
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">نوع البند</label>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('نوع البند') }}</label>
                 <select class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-                    <option value="all">الكل</option>
-                    <option value="customs">رسوم جمركية</option>
-                    <option value="shipping">شحن</option>
-                    <option value="storage">تخزين</option>
-                    <option value="inspection">فحص</option>
-                    <option value="other">أخرى</option>
+                    <option value="all">{{ __('الكل') }}</option>
+                    <option value="customs">{{ __('رسوم جمركية') }}</option>
+                    <option value="shipping">{{ __('شحن') }}</option>
+                    <option value="storage">{{ __('تخزين') }}</option>
+                    <option value="inspection">{{ __('فحص') }}</option>
+                    <option value="other">{{ __('أخرى') }}</option>
                 </select>
             </div>
 
@@ -136,7 +137,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                     </svg>
-                    تطبيق
+                    {{ __('تطبيق') }}
                 </button>
             </div>
         </div>
@@ -171,9 +172,9 @@
                 <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
                 </svg>
-                بنود التكلفة
+                {{ __('بنود التكلفة') }}
             </h2>
-            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">تفاصيل تكاليف ملفات التخليص</p>
+            <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">{{ __('تفاصيل تكاليف ملفات التخليص') }}</p>
         </div>
 
         <!-- Table -->
@@ -182,13 +183,13 @@
                 <thead class="bg-gray-50 dark:bg-gray-700/50">
                     <tr>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Job ID</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">البند</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">النوع</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">المبلغ</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">المدفوع</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">الحالة</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">آخر تحديث</th>
-                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">إجراءات</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('البند') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('النوع') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('المبلغ') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('المدفوع') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('الحالة') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('آخر تحديث') }}</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('إجراءات') }}</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
@@ -235,14 +236,14 @@
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('dashboard.clearance.timeline.job', ['jobId' => $item['jobId']]) }}" 
                                        class="text-emerald-600 hover:text-emerald-800 dark:text-emerald-400 dark:hover:text-emerald-300 transition-colors" 
-                                       title="فتح التايملاين">
+                                       title="{{ __('فتح التايملاين') }}">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
                                         </svg>
                                     </a>
                                     <button disabled 
                                             class="text-gray-300 dark:text-gray-600 cursor-not-allowed" 
-                                            title="تصدير">
+                                            title="{{ __('تصدير') }}">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                                         </svg>
@@ -259,17 +260,17 @@
         <div class="px-6 py-4 bg-gray-50 dark:bg-gray-700/50 border-t border-gray-200 dark:border-gray-700">
             <div class="flex items-center justify-between">
                 <div class="text-sm text-gray-700 dark:text-gray-300">
-                    عرض <span class="font-medium">1-12</span> من <span class="font-medium">{{ count($costItems) }}</span> نتيجة
+                    {{ __('عرض') }} <span class="font-medium">1-12</span> {{ __('من') }} <span class="font-medium">{{ count($costItems) }}</span> {{ __('نتيجة') }}
                 </div>
                 <div class="flex gap-2">
                     <button disabled class="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 text-gray-400 rounded cursor-not-allowed">
-                        السابق
+                        {{ __('السابق') }}
                     </button>
                     <button class="px-3 py-1 text-sm bg-emerald-600 text-white rounded">
                         1
                     </button>
                     <button disabled class="px-3 py-1 text-sm bg-gray-200 dark:bg-gray-700 text-gray-400 rounded cursor-not-allowed">
-                        التالي
+                        {{ __('التالي') }}
                     </button>
                 </div>
             </div>

@@ -9,7 +9,7 @@
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                رجوع
+                {{ __('رجوع') }}
             </a>
         </div>
     </x-slot>
@@ -24,9 +24,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">أسواق التصدير</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ __('أسواق التصدير') }}</h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                            الصفحة تحت التجهيز — سيتم هنا عرض تحليلات الأسواق المستهدفة، حجم الطلب، المنافسة، والتوصيات لكل سوق.
+                            {{ __('الصفحة تحت التجهيز — سيتم هنا عرض تحليلات الأسواق المستهدفة، حجم الطلب، المنافسة، والتوصيات لكل سوق.') }}
                         </p>
                     </div>
                 </div>

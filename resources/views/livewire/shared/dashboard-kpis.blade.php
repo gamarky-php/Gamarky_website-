@@ -1,4 +1,5 @@
-<div dir="rtl">
+{{-- dir inherited from layout --}}
+<div>
     @if($layout === 'grid')
         <div class="grid grid-cols-1 {{ $this->getGridClasses() }} gap-4">
             @foreach($kpis as $kpi)

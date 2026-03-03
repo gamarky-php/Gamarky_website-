@@ -39,43 +39,43 @@
                     $segments = explode('.', $routeName);
                     $breadcrumbsAuto = [];
                     
-                    // تعريف الترجمات
+                    // Translation keys
                     $translations = [
-                        'dashboard' => 'لوحة التحكم',
-                        'import' => 'الاستيراد',
-                        'export' => 'التصدير',
-                        'manufacturing' => 'التصنيع',
-                        'clearance' => 'التخليص الجمركي',
-                        'containers' => 'الحاويات',
-                        'agency' => 'الوكالات',
-                        'index' => 'الرئيسية',
-                        'costs' => 'التكاليف',
-                        'quotes' => 'عروض الأسعار',
-                        'shipments' => 'الشحنات',
-                        'markets' => 'الأسواق',
-                        'bom' => 'قائمة المواد',
-                        'pending' => 'قيد الانتظار',
-                        'brokers' => 'المخلصين',
-                        'bookings' => 'الحجوزات',
-                        'tracking' => 'التتبع',
-                        'shipping' => 'الشحن',
-                        'brands' => 'العلامات التجارية',
-                        'commissions' => 'العمولات',
-                        'ads' => 'الإعلانات',
-                        'notifications' => 'الإشعارات',
-                        'articles' => 'المقالات',
-                        'media' => 'المكتبة',
-                        'subscriptions' => 'الاشتراكات',
-                        'users' => 'المستخدمون',
-                        'roles' => 'الأدوار',
-                        'settings' => 'الإعدادات',
+                        'dashboard' => 'ui.dashboard.breadcrumbs.dashboard',
+                        'import' => 'ui.dashboard.breadcrumbs.import',
+                        'export' => 'ui.dashboard.breadcrumbs.export',
+                        'manufacturing' => 'ui.dashboard.breadcrumbs.manufacturing',
+                        'clearance' => 'ui.dashboard.breadcrumbs.clearance',
+                        'containers' => 'ui.dashboard.breadcrumbs.containers',
+                        'agency' => 'ui.dashboard.breadcrumbs.agency',
+                        'index' => 'ui.dashboard.breadcrumbs.index',
+                        'costs' => 'ui.dashboard.breadcrumbs.costs',
+                        'quotes' => 'ui.dashboard.breadcrumbs.quotes',
+                        'shipments' => 'ui.dashboard.breadcrumbs.shipments',
+                        'markets' => 'ui.dashboard.breadcrumbs.markets',
+                        'bom' => 'ui.dashboard.breadcrumbs.bom',
+                        'pending' => 'ui.dashboard.breadcrumbs.pending',
+                        'brokers' => 'ui.dashboard.breadcrumbs.brokers',
+                        'bookings' => 'ui.dashboard.breadcrumbs.bookings',
+                        'tracking' => 'ui.dashboard.breadcrumbs.tracking',
+                        'shipping' => 'ui.dashboard.breadcrumbs.shipping',
+                        'brands' => 'ui.dashboard.breadcrumbs.brands',
+                        'commissions' => 'ui.dashboard.breadcrumbs.commissions',
+                        'ads' => 'ui.dashboard.breadcrumbs.ads',
+                        'notifications' => 'ui.dashboard.breadcrumbs.notifications',
+                        'articles' => 'ui.dashboard.breadcrumbs.articles',
+                        'media' => 'ui.dashboard.breadcrumbs.media',
+                        'subscriptions' => 'ui.dashboard.breadcrumbs.subscriptions',
+                        'users' => 'ui.dashboard.breadcrumbs.users',
+                        'roles' => 'ui.dashboard.breadcrumbs.roles',
+                        'settings' => 'ui.dashboard.breadcrumbs.settings',
                     ];
                     
                     $url = '';
                     foreach ($segments as $index => $segment) {
                         if ($index > 0) {
                             $url .= ($index === 1 ? '' : '.') . $segment;
-                            $title = $translations[$segment] ?? ucfirst($segment);
+                            $title = isset($translations[$segment]) ? __($translations[$segment]) : ucfirst($segment);
                             
                             // Smart fallback: try route, then route.index, then '#'
                             $route1 = 'dashboard.' . $url;

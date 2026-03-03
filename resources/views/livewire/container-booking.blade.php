@@ -5,9 +5,9 @@
         <div class="max-w-7xl mx-auto">
             <h1 class="text-3xl font-bold">
                 <i class="fas fa-clipboard-check ml-2"></i>
-                حجز حاوية
+                {{ __('front.shipping.container_book.heading') }}
             </h1>
-            <p class="text-blue-100 mt-2">أكمل البيانات التالية لإتمام حجزك</p>
+            <p class="text-blue-100 mt-2">{{ __('front.shipping.container_book.subtitle') }}</p>
         </div>
     </div>
 
@@ -31,7 +31,14 @@
                                     @endif
                                 </div>
                                 <span class="text-xs text-center font-semibold {{ $currentStep == $i ? 'text-teal-600' : 'text-gray-600' }}">
-                                    {{ ['بيانات الشحنة', 'اختيار الحاوية', 'المواعيد', 'المستندات', 'المراجعة', 'التأكيد'][$i-1] }}
+                                    {{ [
+                                        __('front.shipping.container_book.steps.cargo_data'),
+                                        __('front.shipping.container_book.steps.container_selection'),
+                                        __('front.shipping.container_book.steps.schedule'),
+                                        __('front.shipping.container_book.steps.documents'),
+                                        __('front.shipping.container_book.steps.review'),
+                                        __('front.shipping.container_book.steps.confirmation')
+                                    ][$i-1] }}
                                 </span>
                             </div>
                             
@@ -72,7 +79,7 @@
                         @if($currentStep === 1)
                             <h2 class="text-2xl font-bold text-[#0F2E5D] mb-6">
                                 <i class="fas fa-shipping-fast ml-2"></i>
-                                بيانات الشحنة
+                                {{ __('front.shipping.container_book.steps.cargo_data') }}
                             </h2>
 
                             <div class="space-y-6">
@@ -80,35 +87,35 @@
                                 <div class="border-b border-gray-200 pb-6">
                                     <h3 class="text-lg font-bold text-gray-800 mb-4">
                                         <i class="fas fa-user-tie ml-2 text-teal-600"></i>
-                                        بيانات الشاحن (Shipper)
+                                        {{ __('front.shipping.container_book.sections.shipper_info') }}
                                     </h3>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">الاسم الكامل *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.full_name_required') }}</label>
                                             <input type="text" wire:model.defer="shipper_name" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('shipper_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">اسم الشركة *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.company_name_required') }}</label>
                                             <input type="text" wire:model.defer="shipper_company" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('shipper_company') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="md:col-span-2">
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">العنوان الكامل *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.full_address_required') }}</label>
                                             <textarea wire:model.defer="shipper_address" rows="2"
                                                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200"></textarea>
                                             @error('shipper_address') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">رقم الهاتف *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.phone_required') }}</label>
                                             <input type="tel" wire:model.defer="shipper_phone" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('shipper_phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">البريد الإلكتروني *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.email_required') }}</label>
                                             <input type="email" wire:model.defer="shipper_email" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('shipper_email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -120,35 +127,35 @@
                                 <div class="border-b border-gray-200 pb-6">
                                     <h3 class="text-lg font-bold text-gray-800 mb-4">
                                         <i class="fas fa-user-check ml-2 text-teal-600"></i>
-                                        بيانات المرسل إليه (Consignee)
+                                        {{ __('front.shipping.container_book.sections.consignee_info') }}
                                     </h3>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">الاسم الكامل *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.full_name_required') }}</label>
                                             <input type="text" wire:model.defer="consignee_name" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('consignee_name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">اسم الشركة *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.company_name_required') }}</label>
                                             <input type="text" wire:model.defer="consignee_company" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('consignee_company') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div class="md:col-span-2">
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">العنوان الكامل *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.full_address_required') }}</label>
                                             <textarea wire:model.defer="consignee_address" rows="2"
                                                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200"></textarea>
                                             @error('consignee_address') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">رقم الهاتف *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.phone_required') }}</label>
                                             <input type="tel" wire:model.defer="consignee_phone" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('consignee_phone') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">البريد الإلكتروني *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.email_required') }}</label>
                                             <input type="email" wire:model.defer="consignee_email" 
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('consignee_email') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -160,24 +167,24 @@
                                 <div>
                                     <h3 class="text-lg font-bold text-gray-800 mb-4">
                                         <i class="fas fa-boxes ml-2 text-teal-600"></i>
-                                        معلومات البضاعة
+                                        {{ __('front.shipping.container_book.sections.cargo_info') }}
                                     </h3>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div class="md:col-span-2">
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">وصف البضاعة *</label>
+                                            <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.cargo_description_required') }}</label>
                                             <textarea wire:model.defer="cargo_description" rows="3"
-                                                      placeholder="مثال: أجهزة إلكترونية، ملابس، مواد غذائية..."
+                                                      placeholder="{{ __('front.shipping.container_book.placeholders.cargo_description') }}"
                                                       class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200"></textarea>
                                             @error('cargo_description') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">الرمز الجمركي (HS Code)</label>
-                                            <input type="text" wire:model.defer="hs_code" placeholder="مثال: 8517.12.00"
+                                              <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.hs_code') }}</label>
+                                              <input type="text" wire:model.defer="hs_code" placeholder="{{ __('front.shipping.container_book.placeholders.hs_code') }}"
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                         </div>
                                         <div>
-                                            <label class="block text-sm font-semibold mb-2 text-gray-700">القيمة (USD) *</label>
-                                            <input type="number" wire:model.defer="cargo_value" placeholder="مثال: 50000"
+                                              <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.value_usd_required') }}</label>
+                                              <input type="number" wire:model.defer="cargo_value" placeholder="{{ __('front.shipping.container_book.placeholders.cargo_value') }}"
                                                    class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                             @error('cargo_value') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                         </div>
@@ -190,16 +197,21 @@
                         @if($currentStep === 2)
                             <h2 class="text-2xl font-bold text-[#0F2E5D] mb-6">
                                 <i class="fas fa-container-storage ml-2"></i>
-                                اختيار الحاوية
+                                {{ __('front.shipping.container_book.steps.container_selection') }}
                             </h2>
 
                             <div class="space-y-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {{-- Container Type --}}
                                     <div>
-                                        <label class="block text-sm font-semibold mb-3 text-gray-700">نوع الحاوية *</label>
+                                        <label class="block text-sm font-semibold mb-3 text-gray-700">{{ __('front.shipping.container_book.labels.container_type_required') }}</label>
                                         <div class="grid grid-cols-2 gap-3">
-                                            @foreach(['20GP' => '20 قدم قياسية', '40GP' => '40 قدم قياسية', '40HQ' => '40 قدم عالية', 'Reefer' => 'مبردة'] as $type => $label)
+                                            @foreach([
+                                                '20GP' => __('front.shipping.container_book.container_types.20gp'),
+                                                '40GP' => __('front.shipping.container_book.container_types.40gp'),
+                                                '40HQ' => __('front.shipping.container_book.container_types.40hq'),
+                                                'Reefer' => __('front.shipping.container_book.container_types.reefer')
+                                            ] as $type => $label)
                                                 <label class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition
                                                     {{ $container_type === $type ? 'border-teal-600 bg-teal-50' : 'border-gray-300 hover:border-teal-400' }}">
                                                     <input type="radio" wire:model="container_type" value="{{ $type }}" class="ml-3">
@@ -212,32 +224,32 @@
 
                                     {{-- Container Quantity --}}
                                     <div>
-                                        <label class="block text-sm font-semibold mb-3 text-gray-700">عدد الحاويات *</label>
+                                             <label class="block text-sm font-semibold mb-3 text-gray-700">{{ __('front.shipping.container_book.labels.container_quantity_required') }}</label>
                                         <input type="number" wire:model="container_quantity" min="1" max="10"
                                                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 text-2xl font-bold text-center">
-                                        <p class="text-xs text-gray-500 mt-2">يمكنك حجز من 1 إلى 10 حاويات</p>
+                                             <p class="text-xs text-gray-500 mt-2">{{ __('front.shipping.container_book.hints.container_quantity_range') }}</p>
                                         @error('container_quantity') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
 
                                 {{-- Container Ownership --}}
                                 <div>
-                                    <label class="block text-sm font-semibold mb-3 text-gray-700">ملكية الحاوية *</label>
+                                    <label class="block text-sm font-semibold mb-3 text-gray-700">{{ __('front.shipping.container_book.labels.container_ownership_required') }}</label>
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <label class="flex items-start p-4 border-2 rounded-lg cursor-pointer transition
                                             {{ $container_ownership === 'carrier' ? 'border-teal-600 bg-teal-50' : 'border-gray-300 hover:border-teal-400' }}">
                                             <input type="radio" wire:model="container_ownership" value="carrier" class="mt-1 ml-3">
                                             <div>
-                                                <div class="font-bold text-gray-800">حاوية الناقل</div>
-                                                <div class="text-sm text-gray-600">الشركة توفر الحاوية (الخيار الأكثر شيوعاً)</div>
+                                                <div class="font-bold text-gray-800">{{ __('front.shipping.container_book.ownership.carrier_title') }}</div>
+                                                <div class="text-sm text-gray-600">{{ __('front.shipping.container_book.ownership.carrier_desc') }}</div>
                                             </div>
                                         </label>
                                         <label class="flex items-start p-4 border-2 rounded-lg cursor-pointer transition
                                             {{ $container_ownership === 'shipper_owned' ? 'border-teal-600 bg-teal-50' : 'border-gray-300 hover:border-teal-400' }}">
                                             <input type="radio" wire:model="container_ownership" value="shipper_owned" class="mt-1 ml-3">
                                             <div>
-                                                <div class="font-bold text-gray-800">حاوية خاصة (SOC)</div>
-                                                <div class="text-sm text-gray-600">استخدام حاوية الشاحن الخاصة</div>
+                                                <div class="font-bold text-gray-800">{{ __('front.shipping.container_book.ownership.soc_title') }}</div>
+                                                <div class="text-sm text-gray-600">{{ __('front.shipping.container_book.ownership.soc_desc') }}</div>
                                             </div>
                                         </label>
                                     </div>
@@ -245,9 +257,16 @@
 
                                 {{-- Special Requirements --}}
                                 <div>
-                                    <label class="block text-sm font-semibold mb-3 text-gray-700">متطلبات خاصة (اختياري)</label>
+                                    <label class="block text-sm font-semibold mb-3 text-gray-700">{{ __('front.shipping.container_book.labels.special_requirements_optional') }}</label>
                                     <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                        @foreach(['ventilation' => 'تهوية', 'temperature_controlled' => 'تحكم حرارة', 'shock_resistant' => 'مقاومة صدمات', 'moisture_proof' => 'حماية رطوبة', 'fragile' => 'قابل للكسر', 'stackable' => 'قابل للتكديس'] as $req => $label)
+                                        @foreach([
+                                            'ventilation' => __('front.shipping.container_book.special_requirements.ventilation'),
+                                            'temperature_controlled' => __('front.shipping.container_book.special_requirements.temperature_controlled'),
+                                            'shock_resistant' => __('front.shipping.container_book.special_requirements.shock_resistant'),
+                                            'moisture_proof' => __('front.shipping.container_book.special_requirements.moisture_proof'),
+                                            'fragile' => __('front.shipping.container_book.special_requirements.fragile'),
+                                            'stackable' => __('front.shipping.container_book.special_requirements.stackable')
+                                        ] as $req => $label)
                                             <label class="flex items-center p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
                                                 <input type="checkbox" wire:model="special_requirements" value="{{ $req }}" class="ml-2">
                                                 <span class="text-sm">{{ $label }}</span>
@@ -262,14 +281,14 @@
                         @if($currentStep === 3)
                             <h2 class="text-2xl font-bold text-[#0F2E5D] mb-6">
                                 <i class="fas fa-calendar-alt ml-2"></i>
-                                تحديد المواعيد
+                                {{ __('front.shipping.container_book.steps.schedule') }}
                             </h2>
 
                             <div class="space-y-6">
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     {{-- Preferred Loading Date --}}
                                     <div>
-                                        <label class="block text-sm font-semibold mb-2 text-gray-700">تاريخ التحميل المفضل *</label>
+                                        <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.preferred_loading_date_required') }}</label>
                                         <input type="date" wire:model="preferred_loading_date"
                                                class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 text-lg">
                                         @error('preferred_loading_date') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -277,12 +296,12 @@
 
                                     {{-- Time Window --}}
                                     <div>
-                                        <label class="block text-sm font-semibold mb-2 text-gray-700">النافذة الزمنية المفضلة *</label>
+                                        <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.preferred_time_window_required') }}</label>
                                         <select wire:model="time_window"
                                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
-                                            <option value="morning">صباحاً (8 ص - 12 ظ)</option>
-                                            <option value="afternoon">ظهراً (12 ظ - 4 م)</option>
-                                            <option value="evening">مساءً (4 م - 8 م)</option>
+                                            <option value="morning">{{ __('front.shipping.container_book.time_windows.morning') }}</option>
+                                            <option value="afternoon">{{ __('front.shipping.container_book.time_windows.afternoon') }}</option>
+                                            <option value="evening">{{ __('front.shipping.container_book.time_windows.evening') }}</option>
                                         </select>
                                         @error('time_window') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
                                     </div>
@@ -293,10 +312,9 @@
                                     <div class="flex items-start">
                                         <i class="fas fa-exclamation-triangle text-orange-600 ml-3 mt-1"></i>
                                         <div>
-                                            <h4 class="font-bold text-orange-800 mb-1">موعد القطع (Cut-off Date)</h4>
+                                            <h4 class="font-bold text-orange-800 mb-1">{{ __('front.shipping.container_book.cutoff.title') }}</h4>
                                             <p class="text-sm text-orange-700">
-                                                يجب تسليم الحاوية قبل <strong>{{ now()->parse($selectedQuote['cutoff_date'] ?? now()->addDays(14))->format('Y-m-d') }}</strong> 
-                                                للتأكد من الشحن في الموعد المحدد.
+                                                {{ __('front.shipping.container_book.cutoff.description', ['date' => now()->parse($selectedQuote['cutoff_date'] ?? now()->addDays(14))->format('Y-m-d')]) }}
                                             </p>
                                         </div>
                                     </div>
@@ -308,8 +326,8 @@
                                         {{ $cutoff_acknowledgement ? 'border-teal-600 bg-teal-50' : 'border-gray-300' }}">
                                         <input type="checkbox" wire:model="cutoff_acknowledgement" class="mt-1 ml-3">
                                         <div class="text-sm">
-                                            <span class="font-bold text-gray-800">أوافق على موعد القطع *</span>
-                                            <p class="text-gray-600 mt-1">أتعهد بتسليم الحاوية قبل الموعد النهائي المحدد</p>
+                                            <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.acknowledgements.cutoff_required') }}</span>
+                                            <p class="text-gray-600 mt-1">{{ __('front.shipping.container_book.acknowledgements.cutoff_desc') }}</p>
                                         </div>
                                     </label>
                                     @error('cutoff_acknowledgement') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
@@ -318,8 +336,8 @@
                                         {{ $flexible_dates ? 'border-blue-600 bg-blue-50' : 'border-gray-300' }}">
                                         <input type="checkbox" wire:model="flexible_dates" class="mt-1 ml-3">
                                         <div class="text-sm">
-                                            <span class="font-bold text-gray-800">لدي مرونة في التواريخ</span>
-                                            <p class="text-gray-600 mt-1">يمكنني تعديل التاريخ بـ ±3 أيام إذا لزم الأمر</p>
+                                            <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.acknowledgements.flexible_dates') }}</span>
+                                            <p class="text-gray-600 mt-1">{{ __('front.shipping.container_book.acknowledgements.flexible_dates_desc') }}</p>
                                         </div>
                                     </label>
                                 </div>
@@ -330,7 +348,7 @@
                         @if($currentStep === 4)
                             <h2 class="text-2xl font-bold text-[#0F2E5D] mb-6">
                                 <i class="fas fa-file-upload ml-2"></i>
-                                المستندات والتأمين
+                                {{ __('front.shipping.container_book.steps.documents') }}
                             </h2>
 
                             <div class="space-y-6">
@@ -338,7 +356,7 @@
                                 <div>
                                     <h3 class="text-lg font-bold text-gray-800 mb-4">
                                         <i class="fas fa-folder-open ml-2 text-teal-600"></i>
-                                        رفع المستندات المطلوبة
+                                        {{ __('front.shipping.container_book.sections.upload_documents') }}
                                     </h3>
                                     
                                     <div class="space-y-4">
@@ -347,23 +365,23 @@
                                             <label class="block cursor-pointer">
                                                 <div class="text-center">
                                                     <i class="fas fa-file-invoice text-4xl text-gray-400 mb-3"></i>
-                                                    <h4 class="font-bold text-gray-800 mb-1">فاتورة تجارية (Commercial Invoice)</h4>
-                                                    <p class="text-sm text-gray-600 mb-3">اسحب الملف هنا أو اضغط للتحميل — PDF/JPG حتى 20MB</p>
+                                                    <h4 class="font-bold text-gray-800 mb-1">{{ __('front.shipping.container_book.documents.invoice_title') }}</h4>
+                                                    <p class="text-sm text-gray-600 mb-3">{{ __('front.shipping.container_book.documents.upload_hint') }}</p>
                                                     <input type="file" wire:model="invoice_file" accept=".pdf,.jpg,.jpeg,.png" class="hidden">
                                                     @if($uploaded_invoice_path)
                                                         <span class="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-lg font-semibold">
-                                                            <i class="fas fa-check-circle ml-1"></i> تم الرفع بنجاح
+                                                            <i class="fas fa-check-circle ml-1"></i> {{ __('front.shipping.container_book.documents.uploaded_success') }}
                                                         </span>
                                                     @else
                                                         <span class="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-semibold">
-                                                            اضغط للاختيار
+                                                            {{ __('front.shipping.container_book.documents.click_to_select') }}
                                                         </span>
                                                     @endif
                                                 </div>
                                             </label>
                                             <div wire:loading wire:target="invoice_file" class="text-center mt-3">
                                                 <i class="fas fa-spinner fa-spin text-teal-600"></i>
-                                                <span class="text-teal-600 mr-2">جاري الرفع...</span>
+                                                <span class="text-teal-600 mr-2">{{ __('front.shipping.container_book.documents.uploading') }}</span>
                                             </div>
                                             @error('invoice_file') <span class="text-red-500 text-sm block mt-2">{{ $message }}</span> @enderror
                                         </div>
@@ -373,23 +391,23 @@
                                             <label class="block cursor-pointer">
                                                 <div class="text-center">
                                                     <i class="fas fa-list-alt text-4xl text-gray-400 mb-3"></i>
-                                                    <h4 class="font-bold text-gray-800 mb-1">قائمة التعبئة (Packing List)</h4>
-                                                    <p class="text-sm text-gray-600 mb-3">اسحب الملف هنا أو اضغط للتحميل — PDF/JPG حتى 20MB</p>
+                                                    <h4 class="font-bold text-gray-800 mb-1">{{ __('front.shipping.container_book.documents.packing_list_title') }}</h4>
+                                                    <p class="text-sm text-gray-600 mb-3">{{ __('front.shipping.container_book.documents.upload_hint') }}</p>
                                                     <input type="file" wire:model="packing_list_file" accept=".pdf,.jpg,.jpeg,.png" class="hidden">
                                                     @if($uploaded_packing_path)
                                                         <span class="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-lg font-semibold">
-                                                            <i class="fas fa-check-circle ml-1"></i> تم الرفع بنجاح
+                                                            <i class="fas fa-check-circle ml-1"></i> {{ __('front.shipping.container_book.documents.uploaded_success') }}
                                                         </span>
                                                     @else
                                                         <span class="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-semibold">
-                                                            اضغط للاختيار
+                                                            {{ __('front.shipping.container_book.documents.click_to_select') }}
                                                         </span>
                                                     @endif
                                                 </div>
                                             </label>
                                             <div wire:loading wire:target="packing_list_file" class="text-center mt-3">
                                                 <i class="fas fa-spinner fa-spin text-teal-600"></i>
-                                                <span class="text-teal-600 mr-2">جاري الرفع...</span>
+                                                <span class="text-teal-600 mr-2">{{ __('front.shipping.container_book.documents.uploading') }}</span>
                                             </div>
                                             @error('packing_list_file') <span class="text-red-500 text-sm block mt-2">{{ $message }}</span> @enderror
                                         </div>
@@ -399,23 +417,23 @@
                                             <label class="block cursor-pointer">
                                                 <div class="text-center">
                                                     <i class="fas fa-certificate text-4xl text-gray-400 mb-3"></i>
-                                                    <h4 class="font-bold text-gray-800 mb-1">شهادة المنشأ (Certificate of Origin)</h4>
-                                                    <p class="text-sm text-gray-600 mb-3">اسحب الملف هنا أو اضغط للتحميل — PDF/JPG حتى 20MB</p>
+                                                    <h4 class="font-bold text-gray-800 mb-1">{{ __('front.shipping.container_book.documents.certificate_of_origin_title') }}</h4>
+                                                    <p class="text-sm text-gray-600 mb-3">{{ __('front.shipping.container_book.documents.upload_hint') }}</p>
                                                     <input type="file" wire:model="certificate_of_origin_file" accept=".pdf,.jpg,.jpeg,.png" class="hidden">
                                                     @if($uploaded_coo_path)
                                                         <span class="inline-block bg-green-100 text-green-800 px-4 py-2 rounded-lg font-semibold">
-                                                            <i class="fas fa-check-circle ml-1"></i> تم الرفع بنجاح
+                                                            <i class="fas fa-check-circle ml-1"></i> {{ __('front.shipping.container_book.documents.uploaded_success') }}
                                                         </span>
                                                     @else
                                                         <span class="inline-block bg-gray-100 text-gray-700 px-4 py-2 rounded-lg font-semibold">
-                                                            اضغط للاختيار
+                                                            {{ __('front.shipping.container_book.documents.click_to_select') }}
                                                         </span>
                                                     @endif
                                                 </div>
                                             </label>
                                             <div wire:loading wire:target="certificate_of_origin_file" class="text-center mt-3">
                                                 <i class="fas fa-spinner fa-spin text-teal-600"></i>
-                                                <span class="text-teal-600 mr-2">جاري الرفع...</span>
+                                                <span class="text-teal-600 mr-2">{{ __('front.shipping.container_book.documents.uploading') }}</span>
                                             </div>
                                             @error('certificate_of_origin_file') <span class="text-red-500 text-sm block mt-2">{{ $message }}</span> @enderror
                                         </div>
@@ -426,43 +444,43 @@
                                 <div class="border-t border-gray-200 pt-6">
                                     <h3 class="text-lg font-bold text-gray-800 mb-4">
                                         <i class="fas fa-shield-alt ml-2 text-teal-600"></i>
-                                        التأمين على الشحنة
+                                        {{ __('front.shipping.container_book.sections.insurance') }}
                                     </h3>
 
                                     <label class="flex items-start p-4 border-2 rounded-lg cursor-pointer mb-4
                                         {{ $insurance_required ? 'border-teal-600 bg-teal-50' : 'border-gray-300' }}">
                                         <input type="checkbox" wire:model="insurance_required" class="mt-1 ml-3">
                                         <div>
-                                            <span class="font-bold text-gray-800">أرغب بتأمين الشحنة</span>
-                                            <p class="text-sm text-gray-600 mt-1">حماية شحنتك ضد الأضرار والفقد</p>
+                                            <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.insurance.required_label') }}</span>
+                                            <p class="text-sm text-gray-600 mt-1">{{ __('front.shipping.container_book.insurance.required_desc') }}</p>
                                         </div>
                                     </label>
 
                                     @if($insurance_required)
                                         <div class="space-y-4">
                                             <div>
-                                                <label class="block text-sm font-semibold mb-3 text-gray-700">نوع التأمين</label>
+                                                <label class="block text-sm font-semibold mb-3 text-gray-700">{{ __('front.shipping.container_book.labels.insurance_type') }}</label>
                                                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                     <label class="flex flex-col p-4 border-2 rounded-lg cursor-pointer transition
                                                         {{ $insurance_type === 'basic' ? 'border-teal-600 bg-teal-50' : 'border-gray-300 hover:border-teal-400' }}">
                                                         <input type="radio" wire:model="insurance_type" value="basic" class="mb-2">
-                                                        <span class="font-bold text-gray-800">أساسي</span>
-                                                        <span class="text-sm text-gray-600">2% من القيمة</span>
-                                                        <span class="text-xs text-gray-500 mt-1">حماية أساسية</span>
+                                                        <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.insurance_types.basic.name') }}</span>
+                                                        <span class="text-sm text-gray-600">{{ __('front.shipping.container_book.insurance_types.basic.rate') }}</span>
+                                                        <span class="text-xs text-gray-500 mt-1">{{ __('front.shipping.container_book.insurance_types.basic.desc') }}</span>
                                                     </label>
                                                     <label class="flex flex-col p-4 border-2 rounded-lg cursor-pointer transition
                                                         {{ $insurance_type === 'comprehensive' ? 'border-teal-600 bg-teal-50' : 'border-gray-300 hover:border-teal-400' }}">
                                                         <input type="radio" wire:model="insurance_type" value="comprehensive" class="mb-2">
-                                                        <span class="font-bold text-gray-800">شامل</span>
-                                                        <span class="text-sm text-gray-600">5% من القيمة</span>
-                                                        <span class="text-xs text-gray-500 mt-1">حماية كاملة</span>
+                                                        <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.insurance_types.comprehensive.name') }}</span>
+                                                        <span class="text-sm text-gray-600">{{ __('front.shipping.container_book.insurance_types.comprehensive.rate') }}</span>
+                                                        <span class="text-xs text-gray-500 mt-1">{{ __('front.shipping.container_book.insurance_types.comprehensive.desc') }}</span>
                                                     </label>
                                                     <label class="flex flex-col p-4 border-2 rounded-lg cursor-pointer transition
                                                         {{ $insurance_type === 'custom' ? 'border-teal-600 bg-teal-50' : 'border-gray-300 hover:border-teal-400' }}">
                                                         <input type="radio" wire:model="insurance_type" value="custom" class="mb-2">
-                                                        <span class="font-bold text-gray-800">مخصص</span>
-                                                        <span class="text-sm text-gray-600">8% من القيمة</span>
-                                                        <span class="text-xs text-gray-500 mt-1">تأمين مفصل</span>
+                                                        <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.insurance_types.custom.name') }}</span>
+                                                        <span class="text-sm text-gray-600">{{ __('front.shipping.container_book.insurance_types.custom.rate') }}</span>
+                                                        <span class="text-xs text-gray-500 mt-1">{{ __('front.shipping.container_book.insurance_types.custom.desc') }}</span>
                                                     </label>
                                                 </div>
                                             </div>
@@ -476,51 +494,51 @@
                         @if($currentStep === 5)
                             <h2 class="text-2xl font-bold text-[#0F2E5D] mb-6">
                                 <i class="fas fa-clipboard-check ml-2"></i>
-                                مراجعة الحجز والدفع
+                                {{ __('front.shipping.container_book.sections.review_and_payment') }}
                             </h2>
 
                             <div class="space-y-6">
                                 {{-- Booking Summary --}}
                                 <div class="bg-gray-50 rounded-lg p-6">
-                                    <h3 class="text-lg font-bold text-gray-800 mb-4">ملخص الحجز</h3>
+                                    <h3 class="text-lg font-bold text-gray-800 mb-4">{{ __('front.shipping.container_book.sections.booking_summary') }}</h3>
                                     <div class="grid grid-cols-2 gap-4 text-sm">
                                         <div>
-                                            <span class="text-gray-600">الشاحن:</span>
+                                            <span class="text-gray-600">{{ __('front.shipping.container_book.summary.shipper') }}</span>
                                             <span class="font-semibold text-gray-800 mr-2">{{ $shipper_name }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-600">المرسل إليه:</span>
+                                            <span class="text-gray-600">{{ __('front.shipping.container_book.summary.consignee') }}</span>
                                             <span class="font-semibold text-gray-800 mr-2">{{ $consignee_name }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-600">نوع الحاوية:</span>
+                                            <span class="text-gray-600">{{ __('front.shipping.container_book.summary.container_type') }}</span>
                                             <span class="font-semibold text-gray-800 mr-2">{{ $container_type }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-600">العدد:</span>
+                                            <span class="text-gray-600">{{ __('front.shipping.container_book.summary.quantity') }}</span>
                                             <span class="font-semibold text-gray-800 mr-2">{{ $container_quantity }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-600">تاريخ التحميل:</span>
+                                            <span class="text-gray-600">{{ __('front.shipping.container_book.summary.loading_date') }}</span>
                                             <span class="font-semibold text-gray-800 mr-2">{{ $preferred_loading_date }}</span>
                                         </div>
                                         <div>
-                                            <span class="text-gray-600">التأمين:</span>
-                                            <span class="font-semibold text-gray-800 mr-2">{{ $insurance_required ? 'نعم' : 'لا' }}</span>
+                                            <span class="text-gray-600">{{ __('front.shipping.container_book.summary.insurance') }}</span>
+                                            <span class="font-semibold text-gray-800 mr-2">{{ $insurance_required ? __('front.shipping.container_book.common.yes') : __('front.shipping.container_book.common.no') }}</span>
                                         </div>
                                     </div>
                                 </div>
 
                                 {{-- Payment Method --}}
                                 <div>
-                                    <label class="block text-sm font-semibold mb-3 text-gray-700">وسيلة الدفع *</label>
+                                    <label class="block text-sm font-semibold mb-3 text-gray-700">{{ __('front.shipping.container_book.labels.payment_method_required') }}</label>
                                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <label class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition
                                             {{ $payment_method === 'bank_transfer' ? 'border-teal-600 bg-teal-50' : 'border-gray-300' }}">
                                             <input type="radio" wire:model="payment_method" value="bank_transfer" class="ml-3">
                                             <div class="flex items-center">
                                                 <i class="fas fa-university text-2xl text-teal-600 ml-3"></i>
-                                                <span class="font-semibold">تحويل بنكي</span>
+                                                <span class="font-semibold">{{ __('front.shipping.container_book.payment_methods.bank_transfer') }}</span>
                                             </div>
                                         </label>
                                         <label class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition
@@ -528,7 +546,7 @@
                                             <input type="radio" wire:model="payment_method" value="credit_card" class="ml-3">
                                             <div class="flex items-center">
                                                 <i class="fas fa-credit-card text-2xl text-teal-600 ml-3"></i>
-                                                <span class="font-semibold">بطاقة ائتمان</span>
+                                                <span class="font-semibold">{{ __('front.shipping.container_book.payment_methods.credit_card') }}</span>
                                             </div>
                                         </label>
                                         <label class="flex items-center p-4 border-2 rounded-lg cursor-pointer transition
@@ -536,7 +554,7 @@
                                             <input type="radio" wire:model="payment_method" value="cash" class="ml-3">
                                             <div class="flex items-center">
                                                 <i class="fas fa-money-bill-wave text-2xl text-teal-600 ml-3"></i>
-                                                <span class="font-semibold">نقداً</span>
+                                                <span class="font-semibold">{{ __('front.shipping.container_book.payment_methods.cash') }}</span>
                                             </div>
                                         </label>
                                     </div>
@@ -544,23 +562,23 @@
 
                                 {{-- Payment Terms --}}
                                 <div>
-                                    <label class="block text-sm font-semibold mb-3 text-gray-700">شروط الدفع *</label>
+                                    <label class="block text-sm font-semibold mb-3 text-gray-700">{{ __('front.shipping.container_book.labels.payment_terms_required') }}</label>
                                     <select wire:model="payment_terms"
                                             class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
-                                        <option value="prepaid">مدفوع مسبقاً (Prepaid)</option>
-                                        <option value="collect">الدفع عند الاستلام (Collect)</option>
-                                        <option value="third_party">طرف ثالث (Third Party)</option>
+                                        <option value="prepaid">{{ __('front.shipping.container_book.payment_terms.prepaid') }}</option>
+                                        <option value="collect">{{ __('front.shipping.container_book.payment_terms.collect') }}</option>
+                                        <option value="third_party">{{ __('front.shipping.container_book.payment_terms.third_party') }}</option>
                                     </select>
                                 </div>
 
                                 {{-- Promotional Code --}}
                                 <div>
-                                    <label class="block text-sm font-semibold mb-2 text-gray-700">كود خصم (اختياري)</label>
+                                    <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.container_book.labels.promotional_code_optional') }}</label>
                                     <div class="flex gap-2">
-                                        <input type="text" wire:model.defer="promotional_code" placeholder="أدخل كود الخصم"
+                                        <input type="text" wire:model.defer="promotional_code" placeholder="{{ __('front.shipping.container_book.placeholders.promotional_code') }}"
                                                class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
                                         <button type="button" class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">
-                                            تطبيق
+                                            {{ __('front.shipping.container_book.actions.apply') }}
                                         </button>
                                     </div>
                                 </div>
@@ -570,12 +588,12 @@
                                     {{ $agreed_to_terms ? 'border-teal-600 bg-teal-50' : 'border-gray-300' }}">
                                     <input type="checkbox" wire:model="agreed_to_terms" class="mt-1 ml-3">
                                     <div class="text-sm">
-                                        <span class="font-bold text-gray-800">أوافق على الشروط والأحكام *</span>
+                                        <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.terms.agree_required') }}</span>
                                         <p class="text-gray-600 mt-1">
-                                            قرأت ووافقت على 
-                                            <a href="#" class="text-teal-600 hover:underline">الشروط والأحكام</a>
-                                            و
-                                            <a href="#" class="text-teal-600 hover:underline">سياسة الخصوصية</a>
+                                            {{ __('front.shipping.container_book.terms.read_and_agree') }}
+                                            <a href="#" class="text-teal-600 hover:underline">{{ __('front.shipping.container_book.terms.terms_and_conditions') }}</a>
+                                            {{ __('front.shipping.container_book.terms.and') }}
+                                            <a href="#" class="text-teal-600 hover:underline">{{ __('front.shipping.container_book.terms.privacy_policy') }}</a>
                                         </p>
                                     </div>
                                 </label>
@@ -587,8 +605,8 @@
                         @if($currentStep === 6 && !$booking_confirmed)
                             <div class="text-center py-12">
                                 <i class="fas fa-spinner fa-spin text-6xl text-teal-600 mb-4"></i>
-                                <h3 class="text-2xl font-bold text-gray-800 mb-2">جاري إنشاء الحجز...</h3>
-                                <p class="text-gray-600">يرجى الانتظار قليلاً</p>
+                                <h3 class="text-2xl font-bold text-gray-800 mb-2">{{ __('front.shipping.container_book.processing.creating_booking') }}</h3>
+                                <p class="text-gray-600">{{ __('front.shipping.container_book.processing.please_wait') }}</p>
                             </div>
                         @endif
 
@@ -599,7 +617,7 @@
                                     <button type="button" wire:click="previousStep"
                                             class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-3 rounded-lg transition">
                                         <i class="fas fa-arrow-right ml-2"></i>
-                                        السابق
+                                        {{ __('front.shipping.container_book.actions.previous') }}
                                     </button>
                                 @else
                                     <div></div>
@@ -608,7 +626,7 @@
                                 @if($currentStep < 5)
                                     <button type="button" wire:click="nextStep"
                                             class="bg-gradient-to-l from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition">
-                                        التالي
+                                        {{ __('front.shipping.container_book.actions.next') }}
                                         <i class="fas fa-arrow-left mr-2"></i>
                                     </button>
                                 @elseif($currentStep === 5)
@@ -617,11 +635,11 @@
                                             class="bg-gradient-to-l from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition">
                                         <span wire:loading.remove wire:target="submitBooking">
                                             <i class="fas fa-check-circle ml-2"></i>
-                                            تأكيد الحجز
+                                            {{ __('front.shipping.container_book.actions.confirm_booking') }}
                                         </span>
                                         <span wire:loading wire:target="submitBooking">
                                             <i class="fas fa-spinner fa-spin ml-2"></i>
-                                            جاري التأكيد...
+                                            {{ __('front.shipping.container_book.actions.confirming') }}
                                         </span>
                                     </button>
                                 @endif
@@ -633,15 +651,14 @@
                             <div class="inline-block bg-green-100 rounded-full p-6 mb-6">
                                 <i class="fas fa-check-circle text-6xl text-green-600"></i>
                             </div>
-                            <h2 class="text-3xl font-bold text-gray-800 mb-3">تم تأكيد الحجز بنجاح!</h2>
-                            <p class="text-xl text-gray-600 mb-2">رقم المرجع الخاص بك:</p>
+                            <h2 class="text-3xl font-bold text-gray-800 mb-3">{{ __('front.shipping.container_book.confirmed.success_title') }}</h2>
+                            <p class="text-xl text-gray-600 mb-2">{{ __('front.shipping.container_book.confirmed.reference_label') }}</p>
                             <div class="text-4xl font-bold text-teal-600 mb-6">{{ $booking_reference }}</div>
                             
                             <div class="bg-blue-50 border-2 border-blue-300 rounded-lg p-6 mb-6 max-w-2xl mx-auto">
                                 <i class="fas fa-info-circle text-blue-600 text-2xl mb-3"></i>
                                 <p class="text-blue-800">
-                                    تم إرسال تأكيد الحجز إلى بريدك الإلكتروني ورسالة واتساب. 
-                                    سيتم التواصل معك قريباً لتأكيد التفاصيل النهائية.
+                                    {{ __('front.shipping.container_book.confirmed.notice') }}
                                 </p>
                             </div>
 
@@ -649,12 +666,12 @@
                                 <button wire:click="downloadConfirmation"
                                         class="bg-gradient-to-l from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold px-8 py-3 rounded-lg shadow-lg transition">
                                     <i class="fas fa-download ml-2"></i>
-                                    تحميل تأكيد الحجز
+                                    {{ __('front.shipping.container_book.actions.download_confirmation') }}
                                 </button>
                                 <a href="{{ route('front.home') }}"
                                    class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold px-8 py-3 rounded-lg transition inline-block">
                                     <i class="fas fa-home ml-2"></i>
-                                    العودة للرئيسية
+                                    {{ __('front.shipping.container_book.actions.back_home') }}
                                 </a>
                             </div>
                         </div>
@@ -667,54 +684,54 @@
                 <div class="bg-white rounded-xl shadow-lg p-6 sticky top-24">
                     <h3 class="text-xl font-bold text-[#0F2E5D] mb-4">
                         <i class="fas fa-file-invoice-dollar ml-2"></i>
-                        ملخص العرض
+                        {{ __('front.shipping.container_book.quote_summary.title') }}
                     </h3>
 
                     @if($selectedQuote)
                         <div class="space-y-4">
                             <div class="text-center pb-4 border-b border-gray-200">
                                 <img src="{{ $selectedQuote['logo'] ?? '' }}" alt="Company Logo" class="h-16 mx-auto mb-3">
-                                <div class="font-bold text-gray-800">{{ $selectedQuote['company'] ?? 'N/A' }}</div>
+                                <div class="font-bold text-gray-800">{{ $selectedQuote['company'] ?? __('front.shipping.container_book.common.na') }}</div>
                             </div>
 
                             <div class="space-y-3 text-sm">
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">السعر الأساسي:</span>
+                                    <span class="text-gray-600">{{ __('front.shipping.container_book.quote_summary.base_price') }}</span>
                                     <span class="font-bold">${{ number_format($selectedQuote['total_price'] ?? 0, 2) }}</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">عدد الحاويات:</span>
-                                    <span class="font-bold">× {{ $container_quantity }}</span>
+                                    <span class="text-gray-600">{{ __('front.shipping.container_book.quote_summary.container_quantity') }}</span>
+                                    <span class="font-bold">x {{ $container_quantity }}</span>
                                 </div>
                                 @if($insurance_required)
                                     <div class="flex justify-between text-teal-600">
-                                        <span>التأمين ({{ $insurance_type }}):</span>
+                                        <span>{{ __('front.shipping.container_book.quote_summary.insurance_with_type', ['type' => __('front.shipping.container_book.insurance_types.' . $insurance_type . '.name')]) }}</span>
                                         <span class="font-bold">
                                             +${{ number_format(($selectedQuote['total_price'] ?? 0) * match($insurance_type) { 'basic' => 0.02, 'comprehensive' => 0.05, 'custom' => 0.08, default => 0 }, 2) }}
                                         </span>
                                     </div>
                                 @endif
                                 <div class="flex justify-between pt-3 border-t-2 border-gray-300 text-lg">
-                                    <span class="font-bold text-gray-800">الإجمالي:</span>
+                                    <span class="font-bold text-gray-800">{{ __('front.shipping.container_book.quote_summary.total') }}</span>
                                     <span class="font-bold text-teal-600">${{ number_format($this->totalPrice, 2) }}</span>
                                 </div>
                             </div>
 
                             <div class="bg-gray-50 rounded-lg p-3 text-xs space-y-2">
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">زمن الشحن:</span>
-                                    <span class="font-semibold">{{ $selectedQuote['transit_days'] ?? 'N/A' }} يوم</span>
+                                    <span class="text-gray-600">{{ __('front.shipping.container_book.quote_summary.transit_time') }}</span>
+                                    <span class="font-semibold">{{ $selectedQuote['transit_days'] ?? __('front.shipping.container_book.common.na') }} {{ __('front.shipping.container_book.common.day') }}</span>
                                 </div>
                                 <div class="flex justify-between">
-                                    <span class="text-gray-600">موعد القطع:</span>
-                                    <span class="font-semibold">{{ $selectedQuote['cutoff_date'] ?? 'N/A' }}</span>
+                                    <span class="text-gray-600">{{ __('front.shipping.container_book.quote_summary.cutoff_date') }}</span>
+                                    <span class="font-semibold">{{ $selectedQuote['cutoff_date'] ?? __('front.shipping.container_book.common.na') }}</span>
                                 </div>
                             </div>
 
                             @if($selectedQuote['is_door_to_door'] ?? false)
                                 <div class="flex items-center justify-center bg-blue-50 text-blue-800 rounded-lg px-3 py-2 text-xs font-semibold">
                                     <i class="fas fa-truck ml-1"></i>
-                                    Door-to-Door Service
+                                    {{ __('front.shipping.container_book.quote_summary.door_to_door_service') }}
                                 </div>
                             @endif
                         </div>
@@ -723,7 +740,7 @@
                     <div class="mt-6 pt-6 border-t border-gray-200">
                         <div class="bg-orange-50 rounded-lg p-4 text-xs text-orange-800">
                             <i class="fas fa-shield-alt ml-1"></i>
-                            <strong>ضمان الأمان:</strong> جميع معلوماتك محمية ومشفرة
+                            <strong>{{ __('front.shipping.container_book.security_title') }}:</strong> {{ __('front.shipping.container_book.security_desc_short') }}
                         </div>
                     </div>
                 </div>

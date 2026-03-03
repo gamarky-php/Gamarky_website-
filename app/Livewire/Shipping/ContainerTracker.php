@@ -21,15 +21,15 @@ class ContainerTracker extends Component
         // TODO: Integrate with real tracking APIs
         $this->trackingData = [
             'tracking_number' => $this->tracking_number,
-            'status' => 'في البحر',
-            'current_location' => 'قرب ميناء جدة',
+            'status' => __('shipping.container_tracker.demo.status_at_sea'),
+            'current_location' => __('shipping.container_tracker.demo.current_location'),
             'progress_percentage' => 65,
             'estimated_arrival' => now()->addDays(7)->format('Y-m-d'),
             'events' => [
-                ['date' => '2024-01-15', 'location' => 'Shanghai Port', 'status' => 'تم التحميل', 'icon' => 'fa-anchor'],
-                ['date' => '2024-01-18', 'location' => 'في البحر', 'status' => 'في الطريق', 'icon' => 'fa-ship'],
-                ['date' => '2024-01-22', 'location' => 'عبور قناة السويس', 'status' => 'عبور قناة', 'icon' => 'fa-water'],
-                ['date' => null, 'location' => 'ميناء جدة', 'status' => 'متوقع الوصول', 'icon' => 'fa-flag-checkered'],
+                ['date' => '2024-01-15', 'location' => __('shipping.container_tracker.demo.events.shanghai_port'), 'status' => __('shipping.container_tracker.demo.events.loaded'), 'icon' => 'fa-anchor'],
+                ['date' => '2024-01-18', 'location' => __('shipping.container_tracker.demo.events.at_sea'), 'status' => __('shipping.container_tracker.demo.events.in_transit'), 'icon' => 'fa-ship'],
+                ['date' => '2024-01-22', 'location' => __('shipping.container_tracker.demo.events.suez_crossing'), 'status' => __('shipping.container_tracker.demo.events.crossing'), 'icon' => 'fa-water'],
+                ['date' => null, 'location' => __('shipping.container_tracker.demo.events.jeddah_port'), 'status' => __('shipping.container_tracker.demo.events.expected_arrival'), 'icon' => 'fa-flag-checkered'],
             ],
         ];
 

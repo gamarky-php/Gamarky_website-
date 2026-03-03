@@ -1,4 +1,5 @@
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
     @php($kpisLoading = $kpisLoading ?? false)
     @php($kpis = $kpis ?? ['in_progress'=>0,'avg_lead_time'=>0,'total_quotes'=>0,'accepted_quotes'=>0,'acceptance_rate'=>0,'total_costs'=>0])
     
@@ -7,8 +8,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex items-center justify-between">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">لوحة الاستيراد</h1>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">إدارة عمليات الاستيراد والحاويات</p>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('لوحة الاستيراد') }}</h1>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{ __('إدارة عمليات الاستيراد والحاويات') }}</p>
                 </div>
                 <div class="flex gap-3">
                     <button wire:click="navigateToCostCalculator" 
@@ -16,7 +17,7 @@
                         <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
                         </svg>
-                        حاسبة التكاليف
+                        {{ __('حاسبة التكاليف') }}
                     </button>
                 </div>
             </div>
@@ -30,7 +31,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">طلبات جارية</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('طلبات جارية') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if(($kpisLoading ?? false))
                                 <span class="animate-pulse">--</span>
@@ -51,14 +52,14 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">متوسط زمن الوصول</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('متوسط زمن الوصول') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if(($kpisLoading ?? false))
                                 <span class="animate-pulse">--</span>
                             @else
                                 {{ $kpis['avg_lead_time'] ?? 0 }}
                             @endif
-                            <span class="text-lg text-gray-500">يوم</span>
+                            <span class="text-lg text-gray-500">{{ __('يوم') }}</span>
                         </p>
                     </div>
                     <div class="p-3 bg-green-100 dark:bg-green-900/30 rounded-lg">
@@ -73,7 +74,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">نسبة قبول العروض</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('نسبة قبول العروض') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if(($kpisLoading ?? false))
                                 <span class="animate-pulse">--</span>
@@ -94,7 +95,7 @@
             <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">إجمالي التكاليف</p>
+                        <p class="text-sm font-medium text-gray-600 dark:text-gray-400">{{ __('إجمالي التكاليف') }}</p>
                         <p class="text-3xl font-bold text-gray-900 dark:text-white mt-2">
                             @if(($kpisLoading ?? false))
                                 <span class="animate-pulse">--</span>
@@ -117,37 +118,37 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 {{-- Search --}}
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">بحث</label>
+                          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('بحث') }}</label>
                     <input type="text" wire:model.live.debounce.300ms="searchTerm" 
-                           placeholder="رقم مرجعي، اسم منتج..."
+                              placeholder="{{ __('رقم مرجعي، اسم منتج...') }}"
                            class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
                 </div>
 
                 {{-- Status Filter --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الحالة</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الحالة') }}</label>
                     <select wire:model.live="statusFilter" 
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option value="all">الكل</option>
-                        <option value="pending">قيد الانتظار</option>
-                        <option value="in_transit">في الطريق</option>
-                        <option value="at_port">في الميناء</option>
-                        <option value="completed">مكتمل</option>
-                        <option value="cancelled">ملغي</option>
+                        <option value="all">{{ __('الكل') }}</option>
+                        <option value="pending">{{ __('قيد الانتظار') }}</option>
+                        <option value="in_transit">{{ __('في الطريق') }}</option>
+                        <option value="at_port">{{ __('في الميناء') }}</option>
+                        <option value="completed">{{ __('مكتمل') }}</option>
+                        <option value="cancelled">{{ __('ملغي') }}</option>
                     </select>
                 </div>
 
                 {{-- Date Range Filter --}}
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">الفترة</label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('الفترة') }}</label>
                     <select wire:model.live="dateRange" 
                             class="w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option value="today">اليوم</option>
-                        <option value="this_week">هذا الأسبوع</option>
-                        <option value="this_month">هذا الشهر</option>
-                        <option value="last_month">الشهر الماضي</option>
-                        <option value="this_year">هذا العام</option>
-                        <option value="all">الكل</option>
+                        <option value="today">{{ __('اليوم') }}</option>
+                        <option value="this_week">{{ __('هذا الأسبوع') }}</option>
+                        <option value="this_month">{{ __('هذا الشهر') }}</option>
+                        <option value="last_month">{{ __('الشهر الماضي') }}</option>
+                        <option value="this_year">{{ __('هذا العام') }}</option>
+                        <option value="all">{{ __('الكل') }}</option>
                     </select>
                 </div>
             </div>
@@ -155,7 +156,7 @@
             <div class="mt-4">
                 <button wire:click="resetFilters" 
                         class="text-sm text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300">
-                    إعادة تعيين الفلاتر
+                    {{ __('إعادة تعيين الفلاتر') }}
                 </button>
             </div>
         </div>
@@ -166,7 +167,7 @@
             <div class="lg:col-span-2">
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
                     <div class="p-6 border-b border-gray-200 dark:border-gray-700">
-                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">العمليات الأخيرة</h2>
+                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ __('العمليات الأخيرة') }}</h2>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -176,18 +177,18 @@
                                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                                 </svg>
-                                <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">لا توجد عمليات</h3>
-                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">ابدأ بإنشاء عملية استيراد جديدة</p>
+                                <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('لا توجد عمليات') }}</h3>
+                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">{{ __('ابدأ بإنشاء عملية استيراد جديدة') }}</p>
                             </div>
                         @else
                             <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                 <thead class="bg-gray-50 dark:bg-gray-900">
                                     <tr>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">الرقم المرجعي</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">المنتج</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">الحالة</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">التاريخ</th>
-                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">إجراءات</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('الرقم المرجعي') }}</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('المنتج') }}</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('الحالة') }}</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('التاريخ') }}</th>
+                                        <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">{{ __('إجراءات') }}</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -215,7 +216,7 @@
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <button wire:click="viewOperation({{ $operation->id }})" 
                                                         class="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300">
-                                                    عرض
+                                                    {{ __('عرض') }}
                                                 </button>
                                             </td>
                                         </tr>
@@ -231,40 +232,40 @@
             <div class="space-y-6">
                 {{-- Quick Links --}}
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">روابط سريعة</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('روابط سريعة') }}</h3>
                     <div class="space-y-2">
                         <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <svg class="w-5 h-5 text-gray-500 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
                             </svg>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">عملية استيراد جديدة</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('عملية استيراد جديدة') }}</span>
                         </a>
                         <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <svg class="w-5 h-5 text-gray-500 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                             </svg>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">طلب عرض سعر</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('طلب عرض سعر') }}</span>
                         </a>
                         <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <svg class="w-5 h-5 text-gray-500 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/>
                             </svg>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">حجز حاوية</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('حجز حاوية') }}</span>
                         </a>
                         <a href="#" class="flex items-center p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
                             <svg class="w-5 h-5 text-gray-500 ml-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                             </svg>
-                            <span class="text-sm text-gray-700 dark:text-gray-300">التقارير</span>
+                            <span class="text-sm text-gray-700 dark:text-gray-300">{{ __('التقارير') }}</span>
                         </a>
                     </div>
                 </div>
 
                 {{-- Recent Calculations --}}
                 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">حسابات حديثة</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">{{ __('حسابات حديثة') }}</h3>
                     @if($recentCalculations->isEmpty())
-                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">لا توجد حسابات</p>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">{{ __('لا توجد حسابات') }}</p>
                     @else
                         <div class="space-y-3">
                             @foreach($recentCalculations as $calc)
@@ -295,7 +296,7 @@
                     <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                     <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                <span class="text-gray-900 dark:text-white font-medium">جاري التحميل...</span>
+                <span class="text-gray-900 dark:text-white font-medium">{{ __('جاري التحميل...') }}</span>
             </div>
         </div>
     </div>

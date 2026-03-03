@@ -1,11 +1,11 @@
 @extends('layouts.app')
-@section('title', 'الشحنات')
+@section('title', __('الشحنات'))
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="mb-6 flex justify-between items-center">
-    <h1 class="text-3xl font-bold text-gray-900">الشحنات</h1>
-    <a href="{{ route('export.calculator') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">+ شحنة جديدة</a>
+    <h1 class="text-3xl font-bold text-gray-900">{{ __('الشحنات') }}</h1>
+    <a href="{{ route('export.calculator') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">{{ __('+ شحنة جديدة') }}</a>
   </div>
 
   @if(session('status'))
@@ -17,12 +17,12 @@
       <thead class="bg-gray-50">
         <tr>
           <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">#</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">المرجع</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">الإنكوترمز</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">العملة</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">الحالة</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">التاريخ</th>
-          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">إجراءات</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('المرجع') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('الإنكوترمز') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('العملة') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('الحالة') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('التاريخ') }}</th>
+          <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">{{ __('إجراءات') }}</th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
@@ -40,12 +40,12 @@
           </td>
           <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $ship->created_at->format('Y-m-d') }}</td>
           <td class="px-6 py-4 whitespace-nowrap text-sm">
-            <a href="{{ route('export.shipments.show', $ship->id) }}" class="text-blue-600 hover:text-blue-900">عرض</a>
+            <a href="{{ route('export.shipments.show', $ship->id) }}" class="text-blue-600 hover:text-blue-900">{{ __('عرض') }}</a>
           </td>
         </tr>
         @empty
         <tr>
-          <td colspan="7" class="px-6 py-4 text-center text-gray-500">لا توجد شحنات</td>
+          <td colspan="7" class="px-6 py-4 text-center text-gray-500">{{ __('لا توجد شحنات') }}</td>
         </tr>
         @endforelse
       </tbody>

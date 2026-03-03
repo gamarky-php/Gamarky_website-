@@ -9,7 +9,7 @@
                 <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                 </svg>
-                رجوع
+                {{ __('رجوع') }}
             </a>
         </div>
     </x-slot>
@@ -24,9 +24,9 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                             </svg>
                         </div>
-                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">عروض أسعار التصدير</h3>
+                        <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{ __('عروض أسعار التصدير') }}</h3>
                         <p class="text-sm text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-                            الصفحة تحت التجهيز — سيتم هنا عرض طلبات عروض أسعار التصدير وحالتها والمقارنة بين خطوط الشحن المختلفة.
+                            {{ __('الصفحة تحت التجهيز — سيتم هنا عرض طلبات عروض أسعار التصدير وحالتها والمقارنة بين خطوط الشحن المختلفة.') }}
                         </p>
                     </div>
                 </div>

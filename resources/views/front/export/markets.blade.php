@@ -1,47 +1,47 @@
 {{-- resources/views/front/export/markets.blade.php --}}
 @extends('layouts.front')
 
-@section('title', 'إكتشف الأسواق المستهدفة')
+@section('title', __('front.export.markets.title'))
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 py-10">
 
   {{-- HERO --}}
   <div class="rounded-3xl bg-gradient-to-l from-indigo-700 to-blue-600 text-white p-8 md:p-10 shadow mb-8">
-    <h1 class="text-2xl md:text-3xl font-bold mb-2">إكتشف الأسواق المستهدفة</h1>
-    <p class="text-white/90">أداة ذكية للمُصدِّر لاختيار أفضل الأسواق حسب البند الجمركي، مع رؤى تنافسية وخدمات استشارية احترافية.</p>
+    <h1 class="text-2xl md:text-3xl font-bold mb-2">{{ __('front.export.markets.heading') }}</h1>
+    <p class="text-white/90">{{ __('front.export.markets.subtitle') }}</p>
   </div>
 
   {{-- نموذج البحث (تجريبي الآن) --}}
   <div class="rounded-2xl bg-white shadow p-5 mb-8">
     <form class="grid md:grid-cols-3 gap-4" x-data="{ hs:'', q:'' }" @submit.prevent>
       <div>
-        <label class="block text-sm text-slate-600 mb-1">رقم/وصف البند الجمركي (HS Code)</label>
-        <input x-model="hs" type="text" placeholder="مثال: 730890 أو مواسير صلب"
+        <label class="block text-sm text-slate-600 mb-1">{{ __('front.export.markets.hs_code_label') }}</label>
+        <input x-model="hs" type="text" placeholder="{{ __('front.export.markets.hs_code_placeholder') }}"
                class="w-full rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-0 px-3 py-2">
       </div>
       <div>
-        <label class="block text-sm text-slate-600 mb-1">سوق مستهدف (اختياري)</label>
-        <input x-model="q" type="text" placeholder="مثال: السعودية، ألمانيا، كينيا…"
+        <label class="block text-sm text-slate-600 mb-1">{{ __('front.export.markets.target_market_label') }}</label>
+        <input x-model="q" type="text" placeholder="{{ __('front.export.markets.target_market_placeholder') }}"
                class="w-full rounded-xl border border-slate-200 focus:border-blue-500 focus:ring-0 px-3 py-2">
       </div>
       <div class="flex items-end">
         <button type="submit"
                 class="w-full md:w-auto px-6 py-2.5 rounded-xl bg-blue-700 text-white hover:bg-blue-800 transition">
-          ابحث
+          {{ __('front.export.markets.search') }}
         </button>
       </div>
-      <p class="md:col-span-3 text-xs text-slate-500">*سيتم ربط النموذج لاحقًا بمصادر بيانات (UN Comtrade / ITC).</p>
+      <p class="md:col-span-3 text-xs text-slate-500">{{ __('front.export.markets.data_source_note') }}</p>
     </form>
   </div>
 
   {{-- مؤشرات سريعة --}}
   @php
     $kpis = [
-      ['t'=>'أعلى 5 دول استيرادًا','v'=>'+ تحليلات حسب HS'],
-      ['t'=>'متوسط السعر العالمي','v'=>'—'],
-      ['t'=>'اتجاهات آخر 3 أعوام','v'=>'—'],
-      ['t'=>'تعريفة/إعفاءات','v'=>'—'],
+      ['t'=>__('front.export.markets.kpi_top_importers'),'v'=>__('front.export.markets.kpi_top_importers_value')],
+      ['t'=>__('front.export.markets.kpi_avg_global_price'),'v'=>'—'],
+      ['t'=>__('front.export.markets.kpi_trends_3y'),'v'=>'—'],
+      ['t'=>__('front.export.markets.kpi_tariff_exemptions'),'v'=>'—'],
     ];
   @endphp
   <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -56,24 +56,24 @@
   {{-- جدول الأسواق المقترحة (بيانات تجريبية) --}}
   @php
     $markets = [
-      ['country'=>'السعودية','demand'=>'مرتفع','tariff'=>'0–5%','note'=>'طلب مستقر على السلع الإنشائية'],
-      ['country'=>'الإمارات','demand'=>'مرتفع','tariff'=>'0%','note'=>'حرّة/عبور إقليمي نشط'],
-      ['country'=>'ألمانيا','demand'=>'متوسط','tariff'=>'2–6%','note'=>'اشتراطات جودة مرتفعة'],
-      ['country'=>'كينيا','demand'=>'متوسط','tariff'=>'5–10%','note'=>'فرص نمو بسلاسل التجزئة'],
-      ['country'=>'المغرب','demand'=>'متوسط','tariff'=>'0–5%','note'=>'اتفاقيات تفضيلية عربية/أفريقية'],
+      ['country'=>__('front.export.markets.country_saudi'),'demand'=>'high','tariff'=>'0–5%','note'=>__('front.export.markets.note_saudi')],
+      ['country'=>__('front.export.markets.country_uae'),'demand'=>'high','tariff'=>'0%','note'=>__('front.export.markets.note_uae')],
+      ['country'=>__('front.export.markets.country_germany'),'demand'=>'medium','tariff'=>'2–6%','note'=>__('front.export.markets.note_germany')],
+      ['country'=>__('front.export.markets.country_kenya'),'demand'=>'medium','tariff'=>'5–10%','note'=>__('front.export.markets.note_kenya')],
+      ['country'=>__('front.export.markets.country_morocco'),'demand'=>'medium','tariff'=>'0–5%','note'=>__('front.export.markets.note_morocco')],
     ];
   @endphp
 
   <div class="rounded-2xl bg-white shadow overflow-hidden mb-10">
-    <div class="px-4 py-3 border-b bg-slate-50 font-semibold">الأسواق المقترحة حسب البند</div>
+    <div class="px-4 py-3 border-b bg-slate-50 font-semibold">{{ __('front.export.markets.suggested_markets_by_code') }}</div>
     <div class="overflow-x-auto">
       <table class="min-w-full text-sm">
         <thead class="bg-slate-50 text-slate-600">
           <tr>
-            <th class="px-4 py-3 text-start">الدولة</th>
-            <th class="px-4 py-3 text-start">حجم الطلب</th>
-            <th class="px-4 py-3 text-start">تعريفة/تفضيلات</th>
-            <th class="px-4 py-3 text-start">ملاحظات</th>
+            <th class="px-4 py-3 text-start">{{ __('front.export.markets.country') }}</th>
+            <th class="px-4 py-3 text-start">{{ __('front.export.markets.demand') }}</th>
+            <th class="px-4 py-3 text-start">{{ __('front.export.markets.tariff_preferences') }}</th>
+            <th class="px-4 py-3 text-start">{{ __('front.export.markets.notes') }}</th>
           </tr>
         </thead>
         <tbody>
@@ -82,9 +82,9 @@
             <td class="px-4 py-3">{{ $m['country'] }}</td>
             <td class="px-4 py-3">
               <span class="px-2 py-1 rounded-full text-xs
-                {{ $m['demand']=='مرتفع'?'bg-emerald-100 text-emerald-800':
-                   ($m['demand']=='متوسط'?'bg-amber-100 text-amber-800':'bg-slate-100 text-slate-700') }}">
-                {{ $m['demand'] }}
+                {{ $m['demand']==='high'?'bg-emerald-100 text-emerald-800':
+                   ($m['demand']==='medium'?'bg-amber-100 text-amber-800':'bg-slate-100 text-slate-700') }}">
+                {{ $m['demand']==='high' ? __('front.export.markets.demand_high') : __('front.export.markets.demand_medium') }}
               </span>
             </td>
             <td class="px-4 py-3">{{ $m['tariff'] }}</td>
@@ -99,19 +99,19 @@
   {{-- خدمات مدفوعة تضيف قيمة --}}
   <div class="grid md:grid-cols-2 gap-4 mb-12">
     <div class="rounded-2xl bg-white shadow p-6">
-      <h3 class="text-lg font-semibold mb-2">المصفوفة التنافسية (خدمة مدفوعة)</h3>
-      <p class="text-slate-600 mb-4">مقارنة أسعار/جودة/قنوات منافسين بالسوق المستهدف مع توصيات تسعير وتموضع.</p>
+      <h3 class="text-lg font-semibold mb-2">{{ __('front.export.markets.competitive_matrix_title') }}</h3>
+      <p class="text-slate-600 mb-4">{{ __('front.export.markets.competitive_matrix_desc') }}</p>
       <a href="{{ route('front.export.calculator') ?? '#' }}"
          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 text-white">
-        عرض المصفوفة التنافسية
+        {{ __('front.export.markets.show_competitive_matrix') }}
       </a>
     </div>
     <div class="rounded-2xl bg-white shadow p-6">
-      <h3 class="text-lg font-semibold mb-2">استشارة خبير تصدير (مدفوعة)</h3>
-      <p class="text-slate-600 mb-4">جلسة مخصصة لتحليل HS والأسواق، الشروط الفنية، التوثيق، والنفاذ التفضيلي.</p>
+      <h3 class="text-lg font-semibold mb-2">{{ __('front.export.markets.expert_consultation_title') }}</h3>
+      <p class="text-slate-600 mb-4">{{ __('front.export.markets.expert_consultation_desc') }}</p>
       <a href="{{ route('front.export.procedures') ?? '#' }}"
          class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-700 text-white">
-        احجز استشارة الآن
+        {{ __('front.export.markets.book_consultation') }}
       </a>
     </div>
   </div>
@@ -119,15 +119,15 @@
   {{-- خطوات الاستخدام --}}
   @php
     $steps = [
-      'أدخل رقم HS أو وصف المنتج.',
-      'استعرض الدول ذات الطلب الأعلى واتجاهات السوق.',
-      'اختر سوقًا واطّلع على التعريفة/الاتفاقيات.',
-      'استخدم المصفوفة التنافسية أو اطلب استشارة.',
-      'ابدأ إجراءات التصدير بناءً على التوصيات.',
+      __('front.export.markets.step_1'),
+      __('front.export.markets.step_2'),
+      __('front.export.markets.step_3'),
+      __('front.export.markets.step_4'),
+      __('front.export.markets.step_5'),
     ];
   @endphp
   <div class="rounded-2xl bg-white shadow p-6 mb-10">
-    <h3 class="text-lg font-semibold mb-4">خطوات الاستخدام</h3>
+    <h3 class="text-lg font-semibold mb-4">{{ __('front.export.markets.usage_steps') }}</h3>
     <ol class="space-y-3">
       @foreach($steps as $i => $s)
         <li class="flex items-start gap-3">
@@ -141,9 +141,9 @@
   {{-- ملاحظات/تنبيهات --}}
   <div class="rounded-2xl bg-amber-50 text-amber-900 shadow p-5">
     <ul class="list-disc pe-5 space-y-1">
-      <li>استخدم البند الصحيح لضمان دقة النتائج.</li>
-      <li>سيتم ربط الصفحة لاحقًا بـ UN Comtrade / ITC للحصول على بيانات فعلية.</li>
-      <li>يمكن تفعيل اشتراك مدفوع للوصول إلى كل التقارير المتقدمة.</li>
+      <li>{{ __('front.export.markets.alert_1') }}</li>
+      <li>{{ __('front.export.markets.alert_2') }}</li>
+      <li>{{ __('front.export.markets.alert_3') }}</li>
     </ul>
   </div>
 

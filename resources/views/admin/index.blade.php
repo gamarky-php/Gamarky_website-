@@ -1,28 +1,28 @@
 {{-- resources/views/admin/index.blade.php --}}
 @extends('layouts.front')
 
-@section('title', 'لوحة التحكم')
+@section('title', __('dashboard.dashboard'))
 
 @section('dashboard')
 <div class="min-h-[calc(100vh-200px)] bg-gray-50">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
 
-    {{-- شريط علوي صغير لزر القائمة في الموبايل --}}
+    {{-- Mobile top bar for menu button --}}
     <div class="md:hidden mb-4 flex justify-between items-center">
-      <h1 class="text-lg font-semibold">لوحة التحكم</h1>
+      <h1 class="text-lg font-semibold">{{ __('dashboard.dashboard') }}</h1>
       <button x-data @click="$dispatch('toggle-admin-sidebar')" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white">
-        القائمة
+        {{ __('nav.menu') }}
       </button>
     </div>
 
-    {{-- تخطيط الشبكة: سايدبار + محتوى --}}
+    {{-- Grid layout: sidebar + content --}}
     <div class="grid grid-cols-1 md:grid-cols-[18rem_minmax(0,1fr)] gap-6">
 
       {{-- Sidebar --}}
       <aside x-data="{ open: true }"
              @toggle-admin-sidebar.window="open = !open"
              class="md:sticky md:top-24 md:self-start">
-        {{-- في الموبايل: سلايد أوفر --}}
+        {{-- On mobile: slide-over --}}
         <div class="md:hidden" x-show="open" x-transition>
           <div class="fixed inset-0 bg-black/30 z-40" @click="open=false"></div>
           <div class="fixed inset-y-0 end-0 w-72 bg-white z-50 shadow-xl p-4 overflow-y-auto">
@@ -30,7 +30,7 @@
           </div>
         </div>
 
-        {{-- على الشاشات المتوسطة فأكبر: صندوق ثابت --}}
+        {{-- On md and up: fixed box --}}
         <div class="hidden md:block w-72">
           <x-admin-sidebar />
         </div>
@@ -38,36 +38,36 @@
 
       {{-- Main content --}}
       <main class="min-w-0">
-        {{-- عنوان الصفحة --}}
+        {{-- Page heading --}}
         <div class="mb-6">
-          <h2 class="text-xl font-semibold text-gray-800">الأقسام الرئيسية</h2>
-          <p class="text-sm text-gray-500 mt-1">اختر قسمًا من القائمة الجانبية، أو استعرض الخدمات التالية.</p>
+          <h2 class="text-xl font-semibold text-gray-800">{{ __('dashboard.admin.main_sections') }}</h2>
+          <p class="text-sm text-gray-500 mt-1">{{ __('dashboard.admin.main_sections_desc') }}</p>
         </div>
 
-        {{-- الخدمات --}}
+        {{-- Services --}}
         <section class="mt-6">
-          <h3 class="text-lg font-semibold text-gray-800 mb-3">الخدمات</h3>
+          <h3 class="text-lg font-semibold text-gray-800 mb-3">{{ __('dashboard.admin.services') }}</h3>
           <div class="overflow-hidden rounded-2xl bg-white shadow">
             <table class="min-w-full divide-y divide-gray-200">
               <thead class="bg-gray-50">
                 <tr>
-                  <th class="px-4 py-3 text-right text-sm font-semibold text-gray-600">الخدمة</th>
-                  <th class="px-4 py-3 text-right text-sm font-semibold text-gray-600">الوصف</th>
+                  <th class="px-4 py-3 text-right text-sm font-semibold text-gray-600">{{ __('dashboard.admin.service') }}</th>
+                  <th class="px-4 py-3 text-right text-sm font-semibold text-gray-600">{{ __('dashboard.admin.description') }}</th>
                   <th class="px-4 py-3 text-left text-sm font-semibold text-gray-600">‏</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-100">
                 @php
                   $services = [
-                    ['name'=>'الموردون','desc'=>'إدارة بيانات الموردين وملفاتهم','route'=>'admin.suppliers.index'],
-                    ['name'=>'استيراد الموردين','desc'=>'استيراد بيانات الموردين من ملفات CSV/Excel','route'=>'admin.suppliers.import'],
-                    ['name'=>'التعريفة','desc'=>'جداول البنود والرسوم','route'=>'admin.tariffs.index'],
-                    ['name'=>'المستخدمون الجمركيون','desc'=>'إدارة حسابات المستخدمين الجمركيين','route'=>'admin.customs.users'],
-                    ['name'=>'سيارات المقيمين','desc'=>'طلب/استخدام/إخراج السيارات','route'=>'admin.cars.index'],
-                    ['name'=>'الحاويات','desc'=>'إدارة الحاويات وتتبعها','route'=>'admin.containers.board'],
-                    ['name'=>'المقالات','desc'=>'إدارة المقالات والمحتوى','route'=>'admin.posts.index'],
-                    ['name'=>'الإعلانات','desc'=>'إدارة الإعلانات والتنبيهات','route'=>'admin.ads.index'],
-                    ['name'=>'Console / API','desc'=>'وحدة تحكم الـ API','route'=>'admin.console.index'],
+                    ['name'=>__('nav.suppliers'),'desc'=>__('dashboard.admin.service_descriptions.suppliers'),'route'=>'admin.suppliers.index'],
+                    ['name'=>__('dashboard.admin.services_list.import_suppliers'),'desc'=>__('dashboard.admin.service_descriptions.import_suppliers'),'route'=>'admin.suppliers.import'],
+                    ['name'=>__('dashboard.admin.tariff.title'),'desc'=>__('dashboard.admin.service_descriptions.tariff'),'route'=>'admin.tariffs.index'],
+                    ['name'=>__('dashboard.admin.services_list.customs_users'),'desc'=>__('dashboard.admin.service_descriptions.customs_users'),'route'=>'admin.customs.users'],
+                    ['name'=>__('dashboard.admin.services_list.resident_cars'),'desc'=>__('dashboard.admin.service_descriptions.resident_cars'),'route'=>'admin.cars.index'],
+                    ['name'=>__('dashboard.admin.containers.title'),'desc'=>__('dashboard.admin.service_descriptions.containers'),'route'=>'admin.containers.board'],
+                    ['name'=>__('dashboard.admin.services_list.articles'),'desc'=>__('dashboard.admin.service_descriptions.articles'),'route'=>'admin.posts.index'],
+                    ['name'=>__('dashboard.admin.ads.title'),'desc'=>__('dashboard.admin.service_descriptions.ads'),'route'=>'admin.ads.index'],
+                    ['name'=>'Console / API','desc'=>__('dashboard.admin.service_descriptions.console_api'),'route'=>'admin.console.index'],
                   ];
                 @endphp
                 @foreach ($services as $s)
@@ -75,7 +75,7 @@
                     <td class="px-4 py-3 text-sm text-gray-900 font-medium">{{ $s['name'] }}</td>
                     <td class="px-4 py-3 text-sm text-gray-600">{{ $s['desc'] }}</td>
                     <td class="px-4 py-3 text-left">
-                      <a href="{{ route($s['route']) }}" class="text-blue-700 hover:underline">فتح</a>
+                      <a href="{{ route($s['route']) }}" class="text-blue-700 hover:underline">{{ __('dashboard.admin.open') }}</a>
                     </td>
                   </tr>
                 @endforeach
@@ -88,7 +88,7 @@
   </div>
 </div>
 
-{{-- مكوّن Blade صغير للسايدبار (الأقسام الرئيسية) --}}
+{{-- Small Blade component for sidebar (main sections) --}}
 @once
   @push('components')
     @verbatim
@@ -96,22 +96,22 @@
   @endpush
 @endonce
 
-{{-- تعريف المكوّن داخل نفس الملف (بدون إنشاء ملف جديد) --}}
+{{-- Define component inline in same file (without creating a new file) --}}
 @php
-  // hack بسيط لتعريف مكوّن Blade inline
+  // simple hack to define inline Blade component
 @endphp
 <?php $__env->startComponent('components.dynamic', ['slot' => 'admin-sidebar']); ?>
 <?php $__env->slot('slot'); ?>
   <div class="space-y-3">
-    <div class="text-sm text-gray-500 mb-1">الأقسام الرئيسية</div>
+    <div class="text-sm text-gray-500 mb-1">{{ __('dashboard.admin.main_sections') }}</div>
     @php
       $items = [
-        ['label'=>'الاستيراد', 'route'=>'admin.import.index'],
-        ['label'=>'التصدير', 'route'=>'admin.export.index'],
-        ['label'=>'التصنيع', 'route'=>'admin.manufacturing.index'],
-        ['label'=>'المستخلص الجمركي', 'route'=>'admin.customs.index'],
-        ['label'=>'بورصة الحاويات والنقل', 'route'=>'admin.containers.index'],
-        ['label'=>'الوكيل', 'route'=>'admin.agents.index'],
+        ['label'=>__('nav.import'), 'route'=>'admin.import.index'],
+        ['label'=>__('nav.export'), 'route'=>'admin.export.index'],
+        ['label'=>__('nav.manufacturing'), 'route'=>'admin.manufacturing.index'],
+        ['label'=>__('nav.customs_broker'), 'route'=>'admin.customs.index'],
+        ['label'=>__('nav.containers'), 'route'=>'admin.containers.index'],
+        ['label'=>__('nav.agent'), 'route'=>'admin.agents.index'],
       ];
     @endphp
     <nav class="space-y-1">

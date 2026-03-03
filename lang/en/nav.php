@@ -5,6 +5,9 @@ return [
     'tagline' => 'Business Platform',
     
     // Main Navigation
+    'home' => 'Home',
+    'invoice' => 'Invoice',
+    'notifications' => 'Notifications',
     'import' => 'Import',
     'import_calculator' => 'Import Cost Calculator',
     'import_procedures' => 'Import Procedures',
@@ -34,6 +37,7 @@ return [
     'track_truck' => 'Track Truck',
     
     'agent' => 'Agent',
+    'suppliers' => 'Suppliers',
     'shipping_agent' => 'Find Shipping Agent',
     'brand_agents' => 'Brand Agents',
     
@@ -49,4 +53,10 @@ return [
     'arabic' => 'Arabic',
     'chinese' => 'Chinese',
     'english' => 'English',
+    'arabic_short' => 'AR',
+    'open_menu' => 'Open menu',
+    'close_menu' => 'Close menu',
+    'login_register' => 'Login / Register',
+    'menu' => 'Menu',
+    'avatar_alt' => 'Avatar',
 ];

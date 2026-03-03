@@ -1,4 +1,5 @@
-<div dir="rtl" class="space-y-6" x-data="{ 
+{{-- dir inherited from layout --}}
+<div class="space-y-6" x-data="{ 
     charts: {},
     initChart(id, config) {
         const ctx = document.getElementById(id);
@@ -50,8 +51,8 @@
 }">
     {{-- Header --}}
     <div class="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg shadow-lg p-6 text-white">
-        <h2 class="text-2xl font-bold">📊 أنواع الرسوم البيانية</h2>
-        <p class="text-purple-100 mt-2">جميع أنواع الرسوم المتاحة مع Chart.js</p>
+        <h2 class="text-2xl font-bold">{{ __('📊 أنواع الرسوم البيانية') }}</h2>
+        <p class="text-purple-100 mt-2">{{ __('جميع أنواع الرسوم المتاحة مع Chart.js') }}</p>
     </div>
 
     {{-- Chart Type Selector --}}
@@ -156,10 +157,10 @@
     {{-- Code Example --}}
     <div class="bg-gray-900 rounded-lg shadow-lg p-6 text-white overflow-x-auto">
         <div class="flex items-center justify-between mb-4">
-            <h4 class="text-lg font-bold">📝 مثال الكود</h4>
+            <h4 class="text-lg font-bold">{{ __('📝 مثال الكود') }}</h4>
             <button onclick="navigator.clipboard.writeText(this.parentElement.nextElementSibling.textContent)" 
                     class="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 rounded text-sm transition">
-                نسخ
+                {{ __('نسخ') }}
             </button>
         </div>
         <pre class="text-sm text-green-400"><code>{{ $this->getCodeExample() }}</code></pre>
@@ -167,81 +168,81 @@
 
     {{-- Use Cases --}}
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
-        <h4 class="text-lg font-bold text-gray-900 mb-4">💡 حالات الاستخدام</h4>
+        <h4 class="text-lg font-bold text-gray-900 mb-4">{{ __('💡 حالات الاستخدام') }}</h4>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             @if($activeType === 'line')
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">تتبع مسار التحويل</p>
-                        <p class="text-sm text-gray-600">من البحث إلى الحجز عبر الزمن</p>
+                        <p class="font-medium text-gray-900">{{ __('تتبع مسار التحويل') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('من البحث إلى الحجز عبر الزمن') }}</p>
                     </div>
                 </div>
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">اتجاه رضا العملاء</p>
-                        <p class="text-sm text-gray-600">CSAT & NPS عبر الشهور</p>
+                        <p class="font-medium text-gray-900">{{ __('اتجاه رضا العملاء') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('CSAT & NPS عبر الشهور') }}</p>
                     </div>
                 </div>
             @elseif($activeType === 'bar')
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">مقارنة الموانئ</p>
-                        <p class="text-sm text-gray-600">متوسط زمن التخليص لكل ميناء</p>
+                        <p class="font-medium text-gray-900">{{ __('مقارنة الموانئ') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('متوسط زمن التخليص لكل ميناء') }}</p>
                     </div>
                 </div>
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">التزام المستخلصين</p>
-                        <p class="text-sm text-gray-600">نسبة الالتزام بـ SLA</p>
+                        <p class="font-medium text-gray-900">{{ __('التزام المستخلصين') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('نسبة الالتزام بـ SLA') }}</p>
                     </div>
                 </div>
             @elseif($activeType === 'doughnut' || $activeType === 'pie')
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">حصة السوق</p>
-                        <p class="text-sm text-gray-600">توزيع الخدمات حسب النوع</p>
+                        <p class="font-medium text-gray-900">{{ __('حصة السوق') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('توزيع الخدمات حسب النوع') }}</p>
                     </div>
                 </div>
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">توزيع الحالات</p>
-                        <p class="text-sm text-gray-600">مكتملة/قيد التنفيذ/معلقة</p>
+                        <p class="font-medium text-gray-900">{{ __('توزيع الحالات') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('مكتملة/قيد التنفيذ/معلقة') }}</p>
                     </div>
                 </div>
             @elseif($activeType === 'radar')
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">مقارنة المستخلصين</p>
-                        <p class="text-sm text-gray-600">متعدد الأبعاد (سرعة، دقة، سعر...)</p>
+                        <p class="font-medium text-gray-900">{{ __('مقارنة المستخلصين') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('متعدد الأبعاد (سرعة، دقة، سعر...)') }}</p>
                     </div>
                 </div>
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">تقييم الأداء</p>
-                        <p class="text-sm text-gray-600">عدة معايير في رسم واحد</p>
+                        <p class="font-medium text-gray-900">{{ __('تقييم الأداء') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('عدة معايير في رسم واحد') }}</p>
                     </div>
                 </div>
             @elseif($activeType === 'gauge' || $activeType === 'progress')
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">نسبة الإنجاز</p>
-                        <p class="text-sm text-gray-600">الهدف الشهري/السنوي</p>
+                        <p class="font-medium text-gray-900">{{ __('نسبة الإنجاز') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('الهدف الشهري/السنوي') }}</p>
                     </div>
                 </div>
                 <div class="flex items-start space-x-3 space-x-reverse">
                     <span class="text-2xl">✓</span>
                     <div>
-                        <p class="font-medium text-gray-900">مقياس SLA</p>
-                        <p class="text-sm text-gray-600">نسبة الالتزام بمستوى الخدمة</p>
+                        <p class="font-medium text-gray-900">{{ __('مقياس SLA') }}</p>
+                        <p class="text-sm text-gray-600">{{ __('نسبة الالتزام بمستوى الخدمة') }}</p>
                     </div>
                 </div>
             @endif

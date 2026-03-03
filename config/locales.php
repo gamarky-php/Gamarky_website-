@@ -49,4 +49,21 @@ return [
 
     'fallback' => 'ar',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Locale Fonts
+    |--------------------------------------------------------------------------
+    |
+    | Define appropriate font families for each locale
+    | Used in PDFs, exports, and dynamic styling
+    |
+    */
+
+    'fonts' => [
+        'ar' => "'DejaVu Sans', 'Arial', sans-serif",
+        'zh' => "'SimSun', 'Microsoft YaHei', 'PingFang SC', sans-serif",
+        'en' => "'Arial', 'Helvetica', sans-serif",
+        'default' => "'DejaVu Sans', 'Arial', sans-serif",
+    ],
+
 ];

@@ -1,8 +1,9 @@
 @extends('layouts.app')
-@section('title','التصدير')
+@section('title', __('التصدير'))
 @section('content')
-<div class="container mx-auto py-8" dir="rtl">
-  <h1 class="text-2xl font-bold mb-4">التصدير</h1>
-  <p class="text-gray-600">صفحة القسم — جاهزة لإضافة المحتوى لاحقًا.</p>
+{{-- dir inherited from layout --}}
+<div class="container mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-4">{{ __('التصدير') }}</h1>
+  <p class="text-gray-600">{{ __('صفحة القسم — جاهزة لإضافة المحتوى لاحقًا.') }}</p>
 </div>
 @endsection

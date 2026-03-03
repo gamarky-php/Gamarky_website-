@@ -108,7 +108,7 @@ class ContainerBookingWizard extends Component
         $this->validateCurrentStep();
 
         // TODO: Save booking to database, send notifications
-        session()->flash('success', 'تم حجز الشحنة بنجاح! سيتم التواصل معك خلال 24 ساعة.');
+        session()->flash('success', __('shipping.booking.success_container'));
 
         return redirect()->route('front.shipping.track-container');
     }

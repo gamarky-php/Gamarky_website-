@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'حجز حاوية - جماركي')
+@section('title', __('front.shipping.container_book.title'))
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -10,10 +10,10 @@
         <div class="container mx-auto max-w-7xl">
             <h1 class="text-4xl md:text-5xl font-bold mb-3">
                 <i class="fas fa-clipboard-check ml-3"></i>
-                حجز حاوية
+                {{ __('front.shipping.container_book.heading') }}
             </h1>
             <p class="text-lg text-blue-100">
-                أكمل بيانات الحجز في 6 خطوات بسيطة
+                {{ __('front.shipping.container_book.subtitle') }}
             </p>
         </div>
     </div>
@@ -29,10 +29,9 @@
             <div class="flex items-start">
                 <i class="fas fa-lock text-green-600 text-2xl ml-3 mt-1"></i>
                 <div>
-                    <h4 class="font-bold text-green-800 mb-2">معلوماتك آمنة</h4>
+                    <h4 class="font-bold text-green-800 mb-2">{{ __('front.shipping.container_book.security_title') }}</h4>
                     <p class="text-green-700 text-sm leading-relaxed">
-                        جميع بياناتك محمية بتشفير SSL. نحن لا نشارك معلوماتك مع أي جهة خارجية دون إذنك.
-                        السعر النهائي شامل جميع الرسوم الظاهرة وقد تُضاف رسوم محلية حسب الميناء.
+                        {{ __('front.shipping.container_book.security_desc') }}
                     </p>
                 </div>
             </div>

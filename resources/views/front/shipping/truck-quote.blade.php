@@ -1,6 +1,6 @@
 @extends('layouts.front')
 
-@section('title', 'عرض سعر شاحنة - جماركي')
+@section('title', __('front.shipping.truck_quote.title'))
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
@@ -10,10 +10,10 @@
         <div class="container mx-auto max-w-7xl">
             <h1 class="text-4xl md:text-5xl font-bold mb-4">
                 <i class="fas fa-truck ml-3"></i>
-                عرض سعر شاحنة نقل
+                {{ __('front.shipping.truck_quote.heading') }}
             </h1>
             <p class="text-xl text-blue-100 max-w-3xl">
-                احصل على عروض نقل بري داخلي وإقليمي من أفضل شركات النقل. خدمة سريعة ومضمونة.
+                {{ __('front.shipping.truck_quote.subtitle') }}
             </p>
         </div>
     </div>
@@ -31,10 +31,10 @@
                     <div class="bg-teal-100 rounded-full p-3 ml-4">
                         <i class="fas fa-shipping-fast text-2xl text-teal-600"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800">نقل سريع</h3>
+                    <h3 class="text-lg font-bold text-gray-800">{{ __('front.shipping.truck_quote.fast_transport') }}</h3>
                 </div>
                 <p class="text-gray-600 text-sm">
-                    خدمة توصيل سريعة للشحنات العاجلة خلال 24-48 ساعة
+                    {{ __('front.shipping.truck_quote.fast_transport_desc') }}
                 </p>
             </div>
 
@@ -43,10 +43,10 @@
                     <div class="bg-blue-100 rounded-full p-3 ml-4">
                         <i class="fas fa-truck-loading text-2xl text-blue-600"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800">شحن FTL/LTL</h3>
+                    <h3 class="text-lg font-bold text-gray-800">{{ __('front.shipping.truck_quote.ftl_ltl') }}</h3>
                 </div>
                 <p class="text-gray-600 text-sm">
-                    شاحنة كاملة أو شحنة جزئية حسب حجم بضاعتك
+                    {{ __('front.shipping.truck_quote.ftl_ltl_desc') }}
                 </p>
             </div>
 
@@ -55,10 +55,10 @@
                     <div class="bg-purple-100 rounded-full p-3 ml-4">
                         <i class="fas fa-temperature-low text-2xl text-purple-600"></i>
                     </div>
-                    <h3 class="text-lg font-bold text-gray-800">نقل مبرد</h3>
+                    <h3 class="text-lg font-bold text-gray-800">{{ __('front.shipping.truck_quote.refrigerated_transport') }}</h3>
                 </div>
                 <p class="text-gray-600 text-sm">
-                    شاحنات مبردة للمواد الغذائية والأدوية
+                    {{ __('front.shipping.truck_quote.refrigerated_transport_desc') }}
                 </p>
             </div>
         </div>
@@ -67,28 +67,28 @@
         <div class="bg-blue-50 rounded-xl p-8 mt-12">
             <h3 class="text-2xl font-bold text-[#0F2E5D] mb-6 text-center">
                 <i class="fas fa-globe ml-2"></i>
-                مناطق التغطية
+                {{ __('front.shipping.truck_quote.coverage_areas') }}
             </h3>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
                 <div class="bg-white rounded-lg p-4 shadow">
                     <i class="fas fa-map-marker-alt text-3xl text-teal-600 mb-2"></i>
-                    <h4 class="font-bold text-gray-800">داخل المملكة</h4>
-                    <p class="text-sm text-gray-600">جميع المدن</p>
+                    <h4 class="font-bold text-gray-800">{{ __('front.shipping.truck_quote.inside_kingdom') }}</h4>
+                    <p class="text-sm text-gray-600">{{ __('front.shipping.truck_quote.inside_kingdom_desc') }}</p>
                 </div>
                 <div class="bg-white rounded-lg p-4 shadow">
                     <i class="fas fa-map-marker-alt text-3xl text-blue-600 mb-2"></i>
-                    <h4 class="font-bold text-gray-800">دول الخليج</h4>
+                    <h4 class="font-bold text-gray-800">{{ __('front.shipping.truck_quote.gcc_countries') }}</h4>
                     <p class="text-sm text-gray-600">GCC</p>
                 </div>
                 <div class="bg-white rounded-lg p-4 shadow">
                     <i class="fas fa-map-marker-alt text-3xl text-purple-600 mb-2"></i>
-                    <h4 class="font-bold text-gray-800">الشرق الأوسط</h4>
+                    <h4 class="font-bold text-gray-800">{{ __('front.shipping.truck_quote.middle_east') }}</h4>
                     <p class="text-sm text-gray-600">MENA</p>
                 </div>
                 <div class="bg-white rounded-lg p-4 shadow">
                     <i class="fas fa-map-marker-alt text-3xl text-orange-600 mb-2"></i>
-                    <h4 class="font-bold text-gray-800">دولي</h4>
-                    <p class="text-sm text-gray-600">أوروبا وآسيا</p>
+                    <h4 class="font-bold text-gray-800">{{ __('front.shipping.truck_quote.international') }}</h4>
+                    <p class="text-sm text-gray-600">{{ __('front.shipping.truck_quote.international_desc') }}</p>
                 </div>
             </div>
         </div>
@@ -98,9 +98,9 @@
             <div class="flex items-start">
                 <i class="fas fa-info-circle text-orange-600 text-2xl ml-3 mt-1"></i>
                 <div>
-                    <h4 class="font-bold text-orange-800 mb-2">ملاحظة هامة</h4>
+                    <h4 class="font-bold text-orange-800 mb-2">{{ __('front.shipping.truck_quote.important_note') }}</h4>
                     <p class="text-orange-700 text-sm leading-relaxed">
-                        الأسعار شاملة الوقود والسائق. قد تُضاف رسوم إضافية للمناطق النائية أو التحميل/التفريغ الخاص.
+                        {{ __('front.shipping.truck_quote.important_note_desc') }}
                     </p>
                 </div>
             </div>

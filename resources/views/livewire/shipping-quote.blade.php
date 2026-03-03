@@ -4,8 +4,8 @@
     <div class="bg-gradient-to-l from-[#0F2E5D] to-[#1a4d8f] text-white py-12 px-4">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-8">
-                <h1 class="text-4xl font-bold mb-3">عرض سعر حاوية</h1>
-                <p class="text-xl text-blue-100">احصل على عروض فورية من أفضل شركات الشحن العالمية</p>
+                <h1 class="text-4xl font-bold mb-3">{{ __('front.shipping.shipping_quote.heading') }}</h1>
+                <p class="text-xl text-blue-100">{{ __('front.shipping.shipping_quote.subtitle') }}</p>
             </div>
 
             {{-- Search Panel --}}
@@ -17,12 +17,12 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-ship ml-1"></i>
-                                ميناء الشحن
+                                {{ __('front.shipping.shipping_quote.labels.origin_port') }}
                             </label>
                             <input 
                                 type="text" 
                                 wire:model.defer="origin_port"
-                                placeholder="اكتب الرمز أو اسم الميناء"
+                                placeholder="{{ __('front.shipping.shipping_quote.placeholders.port') }}"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition"
                                 id="origin-port-input"
                             >
@@ -35,12 +35,12 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-anchor ml-1"></i>
-                                ميناء الوصول
+                                {{ __('front.shipping.shipping_quote.labels.destination_port') }}
                             </label>
                             <input 
                                 type="text" 
                                 wire:model.defer="destination_port"
-                                placeholder="اكتب الرمز أو اسم الميناء"
+                                placeholder="{{ __('front.shipping.shipping_quote.placeholders.port') }}"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition"
                                 id="destination-port-input"
                             >
@@ -53,7 +53,7 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-calendar ml-1"></i>
-                                تاريخ التحميل
+                                {{ __('front.shipping.shipping_quote.labels.loading_date') }}
                             </label>
                             <input 
                                 type="date" 
@@ -69,12 +69,12 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-weight ml-1"></i>
-                                الوزن (كجم)
+                                {{ __('front.shipping.shipping_quote.labels.weight_kg') }}
                             </label>
                             <input 
                                 type="number" 
                                 wire:model.defer="weight_kg"
-                                placeholder="مثال: 15000"
+                                placeholder="{{ __('front.shipping.shipping_quote.placeholders.weight') }}"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition"
                             >
                             @error('weight_kg')
@@ -86,13 +86,13 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-cube ml-1"></i>
-                                الحجم (CBM)
+                                {{ __('front.shipping.shipping_quote.labels.volume_cbm') }}
                             </label>
                             <input 
                                 type="number" 
                                 step="0.01"
                                 wire:model.defer="cbm"
-                                placeholder="مثال: 25.5"
+                                placeholder="{{ __('front.shipping.shipping_quote.placeholders.cbm') }}"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition"
                             >
                             @error('cbm')
@@ -104,14 +104,14 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-box ml-1"></i>
-                                نوع البضاعة
+                                {{ __('front.shipping.shipping_quote.labels.cargo_type') }}
                             </label>
                             <select 
                                 wire:model.defer="cargo_type"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition"
                             >
-                                <option value="normal">عادية</option>
-                                <option value="dangerous">خطرة</option>
+                                <option value="normal">{{ __('front.shipping.shipping_quote.options.cargo_normal') }}</option>
+                                <option value="dangerous">{{ __('front.shipping.shipping_quote.options.cargo_dangerous') }}</option>
                             </select>
                         </div>
 
@@ -119,14 +119,14 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-truck-loading ml-1"></i>
-                                نوع الخدمة
+                                {{ __('front.shipping.shipping_quote.labels.service_type') }}
                             </label>
                             <select 
                                 wire:model.defer="service_type"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition"
                             >
-                                <option value="FCL">FCL - حاوية كاملة</option>
-                                <option value="LCL">LCL - شحنة جزئية</option>
+                                <option value="FCL">{{ __('front.shipping.shipping_quote.options.service_fcl') }}</option>
+                                <option value="LCL">{{ __('front.shipping.shipping_quote.options.service_lcl') }}</option>
                             </select>
                         </div>
 
@@ -134,16 +134,16 @@
                         <div>
                             <label class="block text-sm font-semibold mb-2 text-[#0F2E5D]">
                                 <i class="fas fa-container-storage ml-1"></i>
-                                نوع الحاوية
+                                {{ __('front.shipping.shipping_quote.labels.container_type') }}
                             </label>
                             <select 
                                 wire:model.defer="container_type"
                                 class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-teal-500 focus:ring-2 focus:ring-teal-200 transition"
                             >
-                                <option value="20GP">20GP - قياسية</option>
-                                <option value="40GP">40GP - قياسية</option>
-                                <option value="40HQ">40HQ - عالية</option>
-                                <option value="Reefer">Reefer - مبردة</option>
+                                <option value="20GP">{{ __('front.shipping.shipping_quote.options.container_20gp') }}</option>
+                                <option value="40GP">{{ __('front.shipping.shipping_quote.options.container_40gp') }}</option>
+                                <option value="40HQ">{{ __('front.shipping.shipping_quote.options.container_40hq') }}</option>
+                                <option value="Reefer">{{ __('front.shipping.shipping_quote.options.container_reefer') }}</option>
                             </select>
                         </div>
 
@@ -156,11 +156,11 @@
                             >
                                 <span wire:loading.remove wire:target="searchQuotes">
                                     <i class="fas fa-search ml-2"></i>
-                                    عرض العروض
+                                    {{ __('front.shipping.shipping_quote.actions.show_offers') }}
                                 </span>
                                 <span wire:loading wire:target="searchQuotes">
                                     <i class="fas fa-spinner fa-spin ml-2"></i>
-                                    جاري البحث...
+                                    {{ __('front.shipping.shipping_quote.actions.searching') }}
                                 </span>
                             </button>
                         </div>
@@ -175,7 +175,7 @@
                             @click="open = !open"
                         >
                             <i class="fas fa-ruler-combined ml-1"></i>
-                            الأبعاد (اختياري)
+                            {{ __('front.shipping.shipping_quote.labels.dimensions_optional') }}
                             <i class="fas fa-chevron-down mr-2 text-xs" x-show="!open"></i>
                             <i class="fas fa-chevron-up mr-2 text-xs" x-show="open" style="display: none;"></i>
                         </button>
@@ -183,18 +183,18 @@
                         <div x-show="open" x-collapse style="display: none;">
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                                 <div>
-                                    <label class="block text-sm font-semibold mb-2 text-gray-700">الطول (سم)</label>
-                                    <input type="number" wire:model.defer="length" placeholder="مثال: 580" 
+                                     <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.shipping_quote.labels.length_cm') }}</label>
+                                     <input type="number" wire:model.defer="length" placeholder="{{ __('front.shipping.shipping_quote.placeholders.length') }}" 
                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold mb-2 text-gray-700">العرض (سم)</label>
-                                    <input type="number" wire:model.defer="width" placeholder="مثال: 230" 
+                                     <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.shipping_quote.labels.width_cm') }}</label>
+                                     <input type="number" wire:model.defer="width" placeholder="{{ __('front.shipping.shipping_quote.placeholders.width') }}" 
                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-semibold mb-2 text-gray-700">الارتفاع (سم)</label>
-                                    <input type="number" wire:model.defer="height" placeholder="مثال: 259" 
+                                     <label class="block text-sm font-semibold mb-2 text-gray-700">{{ __('front.shipping.shipping_quote.labels.height_cm') }}</label>
+                                     <input type="number" wire:model.defer="height" placeholder="{{ __('front.shipping.shipping_quote.placeholders.height') }}" 
                                            class="w-full px-4 py-2 border border-gray-300 rounded-lg">
                                 </div>
                             </div>
@@ -203,7 +203,7 @@
                                 wire:click="calculateCBM"
                                 class="mt-3 text-sm text-teal-600 font-semibold hover:text-teal-700"
                             >
-                                احسب CBM تلقائياً
+                                {{ __('front.shipping.shipping_quote.actions.auto_calculate_cbm') }}
                             </button>
                         </div>
                     </div>
@@ -234,8 +234,8 @@
         {{-- Results Header --}}
         <div class="flex justify-between items-center mb-8">
             <div>
-                <h2 class="text-3xl font-bold text-[#0F2E5D]">العروض المتاحة</h2>
-                <p class="text-gray-600 mt-2">وجدنا <span class="font-bold text-teal-600">{{ count($quotes) }}</span> عرض مناسب</p>
+                <h2 class="text-3xl font-bold text-[#0F2E5D]">{{ __('front.shipping.shipping_quote.results_title') }}</h2>
+                <p class="text-gray-600 mt-2">{!! __('front.shipping.shipping_quote.results_found', ['count' => count($quotes)]) !!}</p>
             </div>
 
             {{-- Sort Options --}}
@@ -245,21 +245,21 @@
                     class="px-4 py-2 rounded-lg font-semibold transition {{ $sortBy === 'best_value' ? 'bg-[#0F2E5D] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}"
                 >
                     <i class="fas fa-star ml-1"></i>
-                    الأفضل قيمة
+                    {{ __('front.shipping.shipping_quote.sort.best_value') }}
                 </button>
                 <button 
                     wire:click="updateSort('price')"
                     class="px-4 py-2 rounded-lg font-semibold transition {{ $sortBy === 'price' ? 'bg-[#0F2E5D] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}"
                 >
                     <i class="fas fa-dollar-sign ml-1"></i>
-                    الأقل سعراً
+                    {{ __('front.shipping.shipping_quote.sort.lowest_price') }}
                 </button>
                 <button 
                     wire:click="updateSort('transit_time')"
                     class="px-4 py-2 rounded-lg font-semibold transition {{ $sortBy === 'transit_time' ? 'bg-[#0F2E5D] text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300' }}"
                 >
                     <i class="fas fa-clock ml-1"></i>
-                    الأسرع
+                    {{ __('front.shipping.shipping_quote.sort.fastest') }}
                 </button>
             </div>
         </div>
@@ -271,7 +271,7 @@
                 <div>
                     <span class="font-bold text-teal-800">
                         <i class="fas fa-balance-scale ml-2"></i>
-                        تم اختيار {{ count($selectedForComparison) }} من 3 للمقارنة
+                        {{ __('front.shipping.shipping_quote.comparison.selected_count', ['count' => count($selectedForComparison)]) }}
                     </span>
                 </div>
                 <button 
@@ -280,7 +280,7 @@
                     @click="$dispatch('open-comparison-modal')"
                 >
                     <i class="fas fa-eye ml-2"></i>
-                    عرض المقارنة
+                    {{ __('front.shipping.shipping_quote.comparison.show') }}
                 </button>
             </div>
         </div>
@@ -311,12 +311,12 @@
                         <div class="flex flex-col gap-2">
                             @if($quote['is_door_to_door'])
                                 <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full">
-                                    Door-to-Door
+                                    {{ __('front.shipping.shipping_quote.cards.badge_door_to_door') }}
                                 </span>
                             @endif
                             @if($quote['has_cargox'])
                                 <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full">
-                                    CargoX
+                                    {{ __('front.shipping.shipping_quote.cards.badge_cargox') }}
                                 </span>
                             @endif
                         </div>
@@ -332,47 +332,47 @@
                                 ${{ number_format($quote['total_price'], 2) }}
                                 <span class="text-lg text-gray-500">{{ $quote['currency'] }}</span>
                             </div>
-                            <div class="text-sm text-gray-600 mt-1">السعر الإجمالي</div>
+                            <div class="text-sm text-gray-600 mt-1">{{ __('front.shipping.shipping_quote.cards.total_price') }}</div>
                         </div>
                         <div class="text-left">
                             <div class="text-2xl font-bold text-teal-600">
-                                {{ $quote['transit_days'] }} يوم
+                                {{ $quote['transit_days'] }} {{ __('front.shipping.shipping_quote.units.day') }}
                             </div>
-                            <div class="text-sm text-gray-600 mt-1">زمن الشحن</div>
+                            <div class="text-sm text-gray-600 mt-1">{{ __('front.shipping.shipping_quote.cards.transit_time') }}</div>
                         </div>
                     </div>
 
                     {{-- Validity Badge --}}
                     <div class="bg-orange-50 border border-orange-300 rounded-lg p-3 mb-4 flex items-center justify-center">
                         <i class="fas fa-clock text-orange-600 ml-2"></i>
-                        <span class="text-orange-800 font-semibold">صلاحيـة: {{ $quote['validity_hours'] }} ساعة</span>
+                        <span class="text-orange-800 font-semibold">{{ __('front.shipping.shipping_quote.cards.validity', ['hours' => $quote['validity_hours']]) }}</span>
                     </div>
 
                     {{-- Breakdown --}}
                     <div class="bg-gray-50 rounded-lg p-4 mb-6">
                         <h4 class="font-bold text-[#0F2E5D] mb-3 flex items-center">
                             <i class="fas fa-receipt ml-2"></i>
-                            تفاصيل التكلفة
+                            {{ __('front.shipping.shipping_quote.cards.cost_breakdown') }}
                         </h4>
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between">
-                                <span class="text-gray-600">الشحن البحري</span>
+                                <span class="text-gray-600">{{ __('front.shipping.shipping_quote.breakdown.shipping') }}</span>
                                 <span class="font-semibold">${{ number_format($quote['breakdown']['shipping'], 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">رسوم الموانئ</span>
+                                <span class="text-gray-600">{{ __('front.shipping.shipping_quote.breakdown.port_fees') }}</span>
                                 <span class="font-semibold">${{ number_format($quote['breakdown']['port_fees'], 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">المستندات</span>
+                                <span class="text-gray-600">{{ __('front.shipping.shipping_quote.breakdown.documentation') }}</span>
                                 <span class="font-semibold">${{ number_format($quote['breakdown']['documentation'], 2) }}</span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-gray-600">التأمين</span>
+                                <span class="text-gray-600">{{ __('front.shipping.shipping_quote.breakdown.insurance') }}</span>
                                 <span class="font-semibold">${{ number_format($quote['breakdown']['insurance'], 2) }}</span>
                             </div>
                             <div class="border-t border-gray-300 pt-2 flex justify-between font-bold">
-                                <span>الإجمالي</span>
+                                <span>{{ __('front.shipping.shipping_quote.breakdown.total') }}</span>
                                 <span class="text-[#0F2E5D]">${{ number_format($quote['total_price'], 2) }}</span>
                             </div>
                         </div>
@@ -385,13 +385,13 @@
                             class="flex-1 bg-gradient-to-l from-teal-500 to-teal-600 hover:from-teal-600 hover:to-teal-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-200"
                         >
                             <i class="fas fa-check-circle ml-2"></i>
-                            اختر هذا العرض
+                            {{ __('front.shipping.shipping_quote.actions.select_offer') }}
                         </button>
                         
                         <button 
                             wire:click="toggleComparison('{{ $quote['id'] }}')"
                             class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition {{ in_array($quote['id'], $selectedForComparison) ? 'bg-teal-100 text-teal-800 border-2 border-teal-500' : '' }}"
-                            title="إضافة للمقارنة"
+                            title="{{ __('front.shipping.shipping_quote.actions.add_to_comparison') }}"
                         >
                             <i class="fas fa-balance-scale"></i>
                         </button>
@@ -399,7 +399,7 @@
                         <button 
                             wire:click="saveQuote('{{ $quote['id'] }}')"
                             class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 px-4 rounded-lg transition {{ in_array($quote['id'], $savedQuotes) ? 'bg-blue-100 text-blue-800' : '' }}"
-                            title="حفظ العرض"
+                            title="{{ __('front.shipping.shipping_quote.actions.save_offer') }}"
                         >
                             <i class="fas fa-bookmark"></i>
                         </button>
@@ -433,7 +433,7 @@
                 
                 <h2 class="text-3xl font-bold text-[#0F2E5D] mb-6 text-center">
                     <i class="fas fa-balance-scale ml-2"></i>
-                    مقارنة العروض
+                    {{ __('front.shipping.shipping_quote.comparison.title') }}
                 </h2>
 
                 @if(count($this->selectedQuotes) > 0)
@@ -441,7 +441,7 @@
                     <table class="w-full">
                         <thead>
                             <tr class="border-b-2 border-gray-300">
-                                <th class="text-right py-4 px-4 font-bold text-[#0F2E5D]">البند</th>
+                                <th class="text-right py-4 px-4 font-bold text-[#0F2E5D]">{{ __('front.shipping.shipping_quote.comparison.item') }}</th>
                                 @foreach($this->selectedQuotes as $quote)
                                 <th class="text-center py-4 px-4">
                                     <div class="font-bold text-gray-800">{{ $quote['company'] }}</div>
@@ -451,7 +451,7 @@
                         </thead>
                         <tbody class="text-sm">
                             <tr class="border-b">
-                                <td class="py-3 px-4 font-semibold">السعر الإجمالي</td>
+                                <td class="py-3 px-4 font-semibold">{{ __('front.shipping.shipping_quote.cards.total_price') }}</td>
                                 @foreach($this->selectedQuotes as $quote)
                                 <td class="text-center py-3 px-4 font-bold text-[#0F2E5D]">
                                     ${{ number_format($quote['total_price'], 2) }}
@@ -459,19 +459,19 @@
                                 @endforeach
                             </tr>
                             <tr class="border-b bg-gray-50">
-                                <td class="py-3 px-4 font-semibold">زمن الشحن</td>
+                                <td class="py-3 px-4 font-semibold">{{ __('front.shipping.shipping_quote.cards.transit_time') }}</td>
                                 @foreach($this->selectedQuotes as $quote)
-                                <td class="text-center py-3 px-4">{{ $quote['transit_days'] }} يوم</td>
+                                <td class="text-center py-3 px-4">{{ $quote['transit_days'] }} {{ __('front.shipping.shipping_quote.units.day') }}</td>
                                 @endforeach
                             </tr>
                             <tr class="border-b">
-                                <td class="py-3 px-4 font-semibold">صلاحية العرض</td>
+                                <td class="py-3 px-4 font-semibold">{{ __('front.shipping.shipping_quote.comparison.offer_validity') }}</td>
                                 @foreach($this->selectedQuotes as $quote)
-                                <td class="text-center py-3 px-4">{{ $quote['validity_hours'] }} ساعة</td>
+                                <td class="text-center py-3 px-4">{{ $quote['validity_hours'] }} {{ __('front.shipping.shipping_quote.units.hour') }}</td>
                                 @endforeach
                             </tr>
                             <tr class="border-b bg-gray-50">
-                                <td class="py-3 px-4 font-semibold">التقييم</td>
+                                <td class="py-3 px-4 font-semibold">{{ __('front.shipping.shipping_quote.comparison.rating') }}</td>
                                 @foreach($this->selectedQuotes as $quote)
                                 <td class="text-center py-3 px-4">
                                     <div class="flex justify-center items-center gap-1">
@@ -484,7 +484,7 @@
                                 @endforeach
                             </tr>
                             <tr class="border-b">
-                                <td class="py-3 px-4 font-semibold">Door-to-Door</td>
+                                <td class="py-3 px-4 font-semibold">{{ __('front.shipping.shipping_quote.comparison.door_to_door') }}</td>
                                 @foreach($this->selectedQuotes as $quote)
                                 <td class="text-center py-3 px-4">
                                     @if($quote['is_door_to_door'])
@@ -496,7 +496,7 @@
                                 @endforeach
                             </tr>
                             <tr class="border-b bg-gray-50">
-                                <td class="py-3 px-4 font-semibold">CargoX</td>
+                                <td class="py-3 px-4 font-semibold">{{ __('front.shipping.shipping_quote.comparison.cargox') }}</td>
                                 @foreach($this->selectedQuotes as $quote)
                                 <td class="text-center py-3 px-4">
                                     @if($quote['has_cargox'])
@@ -528,21 +528,7 @@
 <script>
 document.addEventListener('alpine:init', () => {
     // Autocomplete for ports
-    const ports = [
-        { code: 'AEJEA', name: 'جبل علي', country: 'الإمارات' },
-        { code: 'SAJED', name: 'جدة', country: 'السعودية' },
-        { code: 'EGPSD', name: 'بورسعيد', country: 'مصر' },
-        { code: 'EGSUZ', name: 'السويس', country: 'مصر' },
-        { code: 'EGALY', name: 'الإسكندرية', country: 'مصر' },
-        { code: 'KWKWI', name: 'الكويت', country: 'الكويت' },
-        { code: 'QADOH', name: 'الدوحة', country: 'قطر' },
-        { code: 'OMSLM', name: 'صلالة', country: 'عمان' },
-        { code: 'JOAQJ', name: 'العقبة', country: 'الأردن' },
-        { code: 'CNSHA', name: 'شنغهاي', country: 'الصين' },
-        { code: 'SGSIN', name: 'سنغافورة', country: 'سنغافورة' },
-        { code: 'NLRTM', name: 'روتردام', country: 'هولندا' },
-        { code: 'USNYC', name: 'نيويورك', country: 'أمريكا' },
-    ];
+    const ports = @json(trans('front.shipping.shipping_quote.ports'));
 
     function setupAutocomplete(inputId) {
         const input = document.getElementById(inputId);

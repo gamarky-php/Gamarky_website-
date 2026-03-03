@@ -24,13 +24,13 @@ class SocialLogonController extends Controller
         // Check if user cancelled or error occurred
         if (request()->has('error')) {
             \Log::warning('Google OAuth cancelled or error: ' . request('error'));
-            return redirect()->route('register')->with('error', 'تم إلغاء تسجيل الدخول عبر Google.');
+            return redirect()->route('register')->with('error', __('messages.google_login_cancelled'));
         }
         
         // Check if code parameter exists
         if (!request()->has('code')) {
             \Log::error('Google OAuth callback missing code parameter');
-            return redirect()->route('register')->with('error', 'خطأ في تسجيل الدخول عبر Google. يرجى المحاولة مرة أخرى.');
+            return redirect()->route('register')->with('error', __('messages.google_login_error'));
         }
 
         try {
@@ -50,7 +50,7 @@ class SocialLogonController extends Controller
             return redirect()->intended('/'); // عدّل الوجهة إذا لزم
         } catch (\Exception $e) {
             \Log::error('Google OAuth error: ' . $e->getMessage());
-            return redirect()->route('register')->with('error', 'حدث خطأ أثناء تسجيل الدخول عبر Google.');
+            return redirect()->route('register')->with('error', __('messages.google_login_error_general'));
         }
     }
 

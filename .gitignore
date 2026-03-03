@@ -20,3 +20,21 @@
 *.log
 .DS_Store
 Thumbs.db
+
+# Local / sensitive / generated
+.env
+.env.*
+public/build/
+storage/framework/views/
+hotfix-verification-*/
+docs/
+tools/
+temp_fix_dir.ps1
+test_register.bat
+test_register_api.ps1
+test_register_simple.ps1
+REGISTER_API_GUIDE.md
+SIGNUP_COMPLETE.txt
+routes/api_backup_*.php
+lang/en/\
+

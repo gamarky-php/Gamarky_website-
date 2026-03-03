@@ -17,35 +17,36 @@ Migration columns needed:
 
 @extends('layouts.app')
 
-@section('title', 'تسجيل حساب - جماركي')
+@section('title', __('ui.auth.register.title'))
 
 @section('content')
-<div class="bg-gradient-to-br from-slate-50 to-white py-6 px-4" dir="rtl">
+{{-- dir inherited from layout --}}
+<div class="bg-gradient-to-br from-slate-50 to-white py-6 px-4">
   <div class="max-w-6xl mx-auto">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
 
       {{-- Left Side - Welcome Card (Hidden on small screens) --}}
       <div class="hidden lg:block">
         <div class="bg-white rounded-xl shadow-sm p-4 md:p-5 max-w-[520px] mx-auto max-h-[420px] overflow-auto">
-          <h1 class="text-xl md:text-2xl font-semibold text-gray-900 mb-2">ابدأ رحلتك مع جمـاركي</h1>
-          <p class="text-gray-600 mb-3 text-sm leading-tight">منصة شاملة لجميع احتياجاتك الجمركية والتجارية</p>
+          <h1 class="text-xl md:text-2xl font-semibold text-gray-900 mb-2">{{ __('ui.auth.register.welcome_title') }}</h1>
+          <p class="text-gray-600 mb-3 text-sm leading-tight">{{ __('ui.auth.register.welcome_subtitle') }}</p>
 
           <ul class="space-y-2">
             <li class="flex items-center">
               <div class="w-2 h-2 bg-amber-400 rounded-full ml-2 flex-shrink-0"></div>
-              <span class="text-gray-700 text-sm leading-tight">إدارة العمليات الجمركية بسهولة</span>
+              <span class="text-gray-700 text-sm leading-tight">{{ __('ui.auth.register.feature_1') }}</span>
             </li>
             <li class="flex items-center">
               <div class="w-2 h-2 bg-amber-400 rounded-full ml-2 flex-shrink-0"></div>
-              <span class="text-gray-700 text-sm leading-tight">متابعة الشحنات والحاويات</span>
+              <span class="text-gray-700 text-sm leading-tight">{{ __('ui.auth.register.feature_2') }}</span>
             </li>
             <li class="flex items-center">
               <div class="w-2 h-2 bg-amber-400 rounded-full ml-2 flex-shrink-0"></div>
-              <span class="text-gray-700 text-sm leading-tight">شبكة واسعة من الوكلاء المعتمدين</span>
+              <span class="text-gray-700 text-sm leading-tight">{{ __('ui.auth.register.feature_3') }}</span>
             </li>
             <li class="flex items-center">
               <div class="w-2 h-2 bg-amber-400 rounded-full ml-2 flex-shrink-0"></div>
-              <span class="text-gray-700 text-sm leading-tight">تقارير مفصلة وتحليلات دقيقة</span>
+              <span class="text-gray-700 text-sm leading-tight">{{ __('ui.auth.register.feature_4') }}</span>
             </li>
           </ul>
         </div>
@@ -55,7 +56,7 @@ Migration columns needed:
       <div class="w-full">
         <div class="bg-white rounded-xl shadow-sm p-4 md:p-5 max-w-[520px] mx-auto">
 
-          <h2 class="text-lg font-semibold text-gray-900 mb-3">تسجيل حساب جديد</h2>
+          <h2 class="text-lg font-semibold text-gray-900 mb-3">{{ __('ui.auth.register.heading') }}</h2>
 
           {{-- Validation Errors --}}
           @if ($errors->any())
@@ -101,7 +102,7 @@ Migration columns needed:
               <div class="w-full border-t border-gray-300"></div>
             </div>
             <div class="relative flex justify-center text-xs">
-              <span class="px-2 bg-white text-gray-500">أو باستخدام البريد الإلكتروني</span>
+              <span class="px-2 bg-white text-gray-500">{{ __('ui.auth.register.or_email') }}</span>
             </div>
           </div>
 
@@ -111,7 +112,7 @@ Migration columns needed:
 
             {{-- Name Field --}}
             <div>
-              <label for="name" class="block text-xs font-medium text-gray-700 mb-1">الاسم الكامل <span class="text-red-500">*</span></label>
+              <label for="name" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.register.full_name') }} <span class="text-red-500">*</span></label>
               <input type="text"
                      id="name"
                      name="name"
@@ -121,7 +122,7 @@ Migration columns needed:
                      autocomplete="name"
                      aria-invalid="{{ $errors->has('name') ? 'true' : 'false' }}"
                      class="w-full h-9 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-right text-sm leading-tight @error('name') border-red-500 @enderror"
-                     placeholder="أدخل اسمك الكامل">
+                     placeholder="{{ __('ui.auth.register.full_name_placeholder') }}">
               @error('name')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
               @enderror
@@ -129,7 +130,7 @@ Migration columns needed:
 
             {{-- Email Field --}}
             <div>
-              <label for="email" class="block text-xs font-medium text-gray-700 mb-1">البريد الإلكتروني <span class="text-red-500">*</span></label>
+              <label for="email" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.common.email') }} <span class="text-red-500">*</span></label>
               <input type="email"
                      id="email"
                      name="email"
@@ -146,7 +147,7 @@ Migration columns needed:
 
             {{-- Password Field --}}
             <div>
-              <label for="password" class="block text-xs font-medium text-gray-700 mb-1">كلمة المرور <span class="text-red-500">*</span></label>
+              <label for="password" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.common.password') }} <span class="text-red-500">*</span></label>
               <input type="password"
                      id="password"
                      name="password"
@@ -154,7 +155,7 @@ Migration columns needed:
                      autocomplete="new-password"
                      aria-invalid="{{ $errors->has('password') ? 'true' : 'false' }}"
                      class="w-full h-9 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-right text-sm leading-tight @error('password') border-red-500 @enderror"
-                     placeholder="8 أحرف على الأقل">
+                     placeholder="{{ __('ui.auth.register.password_placeholder') }}">
               @error('password')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
               @enderror
@@ -162,48 +163,48 @@ Migration columns needed:
 
             {{-- Password Confirmation Field --}}
             <div>
-              <label for="password_confirmation" class="block text-xs font-medium text-gray-700 mb-1">تأكيد كلمة المرور <span class="text-red-500">*</span></label>
+              <label for="password_confirmation" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.register.password_confirmation') }} <span class="text-red-500">*</span></label>
               <input type="password"
                      id="password_confirmation"
                      name="password_confirmation"
                      required
                      autocomplete="new-password"
                      class="w-full h-9 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-right text-sm leading-tight"
-                     placeholder="أعد إدخال كلمة المرور">
+                     placeholder="{{ __('ui.auth.register.password_confirmation_placeholder') }}">
             </div>
 
             {{-- Country Field --}}
             <div>
-              <label for="country" class="block text-xs font-medium text-gray-700 mb-1">الدولة <span class="text-red-500">*</span></label>
+              <label for="country" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.register.country') }} <span class="text-red-500">*</span></label>
               <select id="country"
                       name="country"
                       required
                       aria-invalid="{{ $errors->has('country') ? 'true' : 'false' }}"
                       class="w-full h-9 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-right text-sm leading-tight @error('country') border-red-500 @enderror">
-                <option value="">-- اختر الدولة --</option>
-                <option value="EG" {{ old('country') == 'EG' ? 'selected' : '' }}>مصر</option>
-                <option value="SA" {{ old('country') == 'SA' ? 'selected' : '' }}>السعودية</option>
-                <option value="AE" {{ old('country') == 'AE' ? 'selected' : '' }}>الإمارات</option>
-                <option value="KW" {{ old('country') == 'KW' ? 'selected' : '' }}>الكويت</option>
-                <option value="QA" {{ old('country') == 'QA' ? 'selected' : '' }}>قطر</option>
-                <option value="BH" {{ old('country') == 'BH' ? 'selected' : '' }}>البحرين</option>
-                <option value="OM" {{ old('country') == 'OM' ? 'selected' : '' }}>عمان</option>
-                <option value="JO" {{ old('country') == 'JO' ? 'selected' : '' }}>الأردن</option>
-                <option value="LB" {{ old('country') == 'LB' ? 'selected' : '' }}>لبنان</option>
-                <option value="PS" {{ old('country') == 'PS' ? 'selected' : '' }}>فلسطين</option>
-                <option value="IQ" {{ old('country') == 'IQ' ? 'selected' : '' }}>العراق</option>
-                <option value="SY" {{ old('country') == 'SY' ? 'selected' : '' }}>سوريا</option>
-                <option value="YE" {{ old('country') == 'YE' ? 'selected' : '' }}>اليمن</option>
-                <option value="MA" {{ old('country') == 'MA' ? 'selected' : '' }}>المغرب</option>
-                <option value="DZ" {{ old('country') == 'DZ' ? 'selected' : '' }}>الجزائر</option>
-                <option value="TN" {{ old('country') == 'TN' ? 'selected' : '' }}>تونس</option>
-                <option value="LY" {{ old('country') == 'LY' ? 'selected' : '' }}>ليبيا</option>
-                <option value="SD" {{ old('country') == 'SD' ? 'selected' : '' }}>السودان</option>
-                <option value="MR" {{ old('country') == 'MR' ? 'selected' : '' }}>موريتانيا</option>
-                <option value="DJ" {{ old('country') == 'DJ' ? 'selected' : '' }}>جيبوتي</option>
-                <option value="SO" {{ old('country') == 'SO' ? 'selected' : '' }}>الصومال</option>
-                <option value="KM" {{ old('country') == 'KM' ? 'selected' : '' }}>جزر القمر</option>
-                <option value="XX" {{ old('country') == 'XX' ? 'selected' : '' }}>دولة أخرى</option>
+                <option value="">{{ __('ui.auth.register.select_country') }}</option>
+                <option value="EG" {{ old('country') == 'EG' ? 'selected' : '' }}>{{ __('ui.countries.EG') }}</option>
+                <option value="SA" {{ old('country') == 'SA' ? 'selected' : '' }}>{{ __('ui.countries.SA') }}</option>
+                <option value="AE" {{ old('country') == 'AE' ? 'selected' : '' }}>{{ __('ui.countries.AE') }}</option>
+                <option value="KW" {{ old('country') == 'KW' ? 'selected' : '' }}>{{ __('ui.countries.KW') }}</option>
+                <option value="QA" {{ old('country') == 'QA' ? 'selected' : '' }}>{{ __('ui.countries.QA') }}</option>
+                <option value="BH" {{ old('country') == 'BH' ? 'selected' : '' }}>{{ __('ui.countries.BH') }}</option>
+                <option value="OM" {{ old('country') == 'OM' ? 'selected' : '' }}>{{ __('ui.countries.OM') }}</option>
+                <option value="JO" {{ old('country') == 'JO' ? 'selected' : '' }}>{{ __('ui.countries.JO') }}</option>
+                <option value="LB" {{ old('country') == 'LB' ? 'selected' : '' }}>{{ __('ui.countries.LB') }}</option>
+                <option value="PS" {{ old('country') == 'PS' ? 'selected' : '' }}>{{ __('ui.countries.PS') }}</option>
+                <option value="IQ" {{ old('country') == 'IQ' ? 'selected' : '' }}>{{ __('ui.countries.IQ') }}</option>
+                <option value="SY" {{ old('country') == 'SY' ? 'selected' : '' }}>{{ __('ui.countries.SY') }}</option>
+                <option value="YE" {{ old('country') == 'YE' ? 'selected' : '' }}>{{ __('ui.countries.YE') }}</option>
+                <option value="MA" {{ old('country') == 'MA' ? 'selected' : '' }}>{{ __('ui.countries.MA') }}</option>
+                <option value="DZ" {{ old('country') == 'DZ' ? 'selected' : '' }}>{{ __('ui.countries.DZ') }}</option>
+                <option value="TN" {{ old('country') == 'TN' ? 'selected' : '' }}>{{ __('ui.countries.TN') }}</option>
+                <option value="LY" {{ old('country') == 'LY' ? 'selected' : '' }}>{{ __('ui.countries.LY') }}</option>
+                <option value="SD" {{ old('country') == 'SD' ? 'selected' : '' }}>{{ __('ui.countries.SD') }}</option>
+                <option value="MR" {{ old('country') == 'MR' ? 'selected' : '' }}>{{ __('ui.countries.MR') }}</option>
+                <option value="DJ" {{ old('country') == 'DJ' ? 'selected' : '' }}>{{ __('ui.countries.DJ') }}</option>
+                <option value="SO" {{ old('country') == 'SO' ? 'selected' : '' }}>{{ __('ui.countries.SO') }}</option>
+                <option value="KM" {{ old('country') == 'KM' ? 'selected' : '' }}>{{ __('ui.countries.KM') }}</option>
+                <option value="XX" {{ old('country') == 'XX' ? 'selected' : '' }}>{{ __('ui.countries.XX') }}</option>
               </select>
               @error('country')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -212,7 +213,7 @@ Migration columns needed:
 
             {{-- Phone Field --}}
             <div>
-              <label for="phone" class="block text-xs font-medium text-gray-700 mb-1">رقم الهاتف <span class="text-red-500">*</span></label>
+              <label for="phone" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.register.phone') }} <span class="text-red-500">*</span></label>
               <input type="tel"
                      id="phone"
                      name="phone"
@@ -224,7 +225,7 @@ Migration columns needed:
                      class="w-full h-9 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-right text-sm leading-tight @error('phone') border-red-500 @enderror"
                      placeholder="+201234567890">
               <p class="mt-1 text-xs text-amber-600">
-                سيتم إرسال رسالة تأكيد لاحقاً
+                {{ __('ui.auth.register.phone_hint') }}
               </p>
               @error('phone')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -234,17 +235,17 @@ Migration columns needed:
             {{-- Activity Type Selection (Radio Buttons) --}}
             {{-- نوع النشاط --}}
 <div class="mb-3">
-  <label for="activity_type" class="block text-xs font-medium text-gray-700 mb-1">نوع النشاط *</label>
+  <label for="activity_type" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.register.activity_type') }} *</label>
 
   <select id="activity_type" name="activity_type" required
           class="w-full h-10 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-amber-500 focus:border-amber-500 text-right">
-    <option value="" disabled {{ old('activity_type') ? '' : 'selected' }}>-- اختر نوع النشاط --</option>
-    <option value="import"        {{ old('activity_type')=='import' ? 'selected' : '' }}>الاستيراد</option>
-    <option value="export"        {{ old('activity_type')=='export' ? 'selected' : '' }}>التصدير</option>
-    <option value="manufacturing" {{ old('activity_type')=='manufacturing' ? 'selected' : '' }}>التصنيع</option>
-    <option value="broker"        {{ old('activity_type')=='broker' ? 'selected' : '' }}>المستخلص الجمركي</option>
-    <option value="containers"    {{ old('activity_type')=='containers' ? 'selected' : '' }}>بورصة الحاويات والنقل</option>
-    <option value="agent"         {{ old('activity_type')=='agent' ? 'selected' : '' }}>الوكيل</option>
+    <option value="" disabled {{ old('activity_type') ? '' : 'selected' }}>{{ __('ui.auth.register.select_activity_type') }}</option>
+    <option value="import"        {{ old('activity_type')=='import' ? 'selected' : '' }}>{{ __('ui.auth.register.activity_import') }}</option>
+    <option value="export"        {{ old('activity_type')=='export' ? 'selected' : '' }}>{{ __('ui.auth.register.activity_export') }}</option>
+    <option value="manufacturing" {{ old('activity_type')=='manufacturing' ? 'selected' : '' }}>{{ __('ui.auth.register.activity_manufacturing') }}</option>
+    <option value="broker"        {{ old('activity_type')=='broker' ? 'selected' : '' }}>{{ __('ui.auth.register.activity_broker') }}</option>
+    <option value="containers"    {{ old('activity_type')=='containers' ? 'selected' : '' }}>{{ __('ui.auth.register.activity_containers') }}</option>
+    <option value="agent"         {{ old('activity_type')=='agent' ? 'selected' : '' }}>{{ __('ui.auth.register.activity_agent') }}</option>
   </select>
 
   @error('activity_type')
@@ -255,25 +256,25 @@ Migration columns needed:
 
             {{-- Business Sector Field --}}
             <div>
-              <label for="business_sector" class="block text-xs font-medium text-gray-700 mb-1">مجال النشاط</label>
+              <label for="business_sector" class="block text-xs font-medium text-gray-700 mb-1">{{ __('ui.auth.register.business_sector') }}</label>
               <select id="business_sector" name="business_sector" aria-invalid="{{ $errors->has('business_sector') ? 'true' : 'false' }}" class="w-full h-9 px-3 py-1.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-right text-sm leading-tight @error('business_sector') border-red-500 @enderror">
-                <option value="">-- اختر مجال النشاط --</option>
-                <option value="الديكور" {{ old('business_sector') == 'الديكور' ? 'selected' : '' }}>الديكور</option>
-                <option value="الملابس" {{ old('business_sector') == 'الملابس' ? 'selected' : '' }}>الملابس</option>
-                <option value="قطع غيار السيارات" {{ old('business_sector') == 'قطع غيار السيارات' ? 'selected' : '' }}>قطع غيار السيارات</option>
-                <option value="الإلكترونيات" {{ old('business_sector') == 'الإلكترونيات' ? 'selected' : '' }}>الإلكترونيات</option>
-                <option value="المواد الغذائية" {{ old('business_sector') == 'المواد الغذائية' ? 'selected' : '' }}>المواد الغذائية</option>
-                <option value="الأثاث" {{ old('business_sector') == 'الأثاث' ? 'selected' : '' }}>الأثاث</option>
-                <option value="الخدمات اللوجستية" {{ old('business_sector') == 'الخدمات اللوجستية' ? 'selected' : '' }}>الخدمات اللوجستية</option>
-                <option value="مواد البناء" {{ old('business_sector') == 'مواد البناء' ? 'selected' : '' }}>مواد البناء</option>
-                <option value="الآلات والمعدات" {{ old('business_sector') == 'الآلات والمعدات' ? 'selected' : '' }}>الآلات والمعدات</option>
-                <option value="المنتجات الطبية" {{ old('business_sector') == 'المنتجات الطبية' ? 'selected' : '' }}>المنتجات الطبية</option>
-                <option value="المواد الكيماوية" {{ old('business_sector') == 'المواد الكيماوية' ? 'selected' : '' }}>المواد الكيماوية</option>
-                <option value="المنسوجات" {{ old('business_sector') == 'المنسوجات' ? 'selected' : '' }}>المنسوجات</option>
-                <option value="الورق والطباعة" {{ old('business_sector') == 'الورق والطباعة' ? 'selected' : '' }}>الورق والطباعة</option>
-                <option value="المجوهرات والإكسسوارات" {{ old('business_sector') == 'المجوهرات والإكسسوارات' ? 'selected' : '' }}>المجوهرات والإكسسوارات</option>
-                <option value="الألعاب" {{ old('business_sector') == 'الألعاب' ? 'selected' : '' }}>الألعاب</option>
-                <option value="أخرى" {{ old('business_sector') == 'أخرى' ? 'selected' : '' }}>أخرى</option>
+                <option value="">{{ __('ui.auth.register.select_business_sector') }}</option>
+                <option value="الديكور" {{ old('business_sector') == 'الديكور' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_decor') }}</option>
+                <option value="الملابس" {{ old('business_sector') == 'الملابس' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_clothing') }}</option>
+                <option value="قطع غيار السيارات" {{ old('business_sector') == 'قطع غيار السيارات' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_auto_parts') }}</option>
+                <option value="الإلكترونيات" {{ old('business_sector') == 'الإلكترونيات' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_electronics') }}</option>
+                <option value="المواد الغذائية" {{ old('business_sector') == 'المواد الغذائية' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_food') }}</option>
+                <option value="الأثاث" {{ old('business_sector') == 'الأثاث' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_furniture') }}</option>
+                <option value="الخدمات اللوجستية" {{ old('business_sector') == 'الخدمات اللوجستية' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_logistics') }}</option>
+                <option value="مواد البناء" {{ old('business_sector') == 'مواد البناء' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_building_materials') }}</option>
+                <option value="الآلات والمعدات" {{ old('business_sector') == 'الآلات والمعدات' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_machinery') }}</option>
+                <option value="المنتجات الطبية" {{ old('business_sector') == 'المنتجات الطبية' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_medical') }}</option>
+                <option value="المواد الكيماوية" {{ old('business_sector') == 'المواد الكيماوية' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_chemicals') }}</option>
+                <option value="المنسوجات" {{ old('business_sector') == 'المنسوجات' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_textiles') }}</option>
+                <option value="الورق والطباعة" {{ old('business_sector') == 'الورق والطباعة' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_paper_printing') }}</option>
+                <option value="المجوهرات والإكسسوارات" {{ old('business_sector') == 'المجوهرات والإكسسوارات' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_jewelry') }}</option>
+                <option value="الألعاب" {{ old('business_sector') == 'الألعاب' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_toys') }}</option>
+                <option value="أخرى" {{ old('business_sector') == 'أخرى' ? 'selected' : '' }}>{{ __('ui.auth.register.sector_other') }}</option>
               </select>
               @error('business_sector')
                 <p class="mt-1 text-xs text-red-600">{{ $message }}</p>
@@ -283,18 +284,18 @@ Migration columns needed:
             {{-- Newsletter Subscription --}}
             <div class="flex items-center pt-1">
               <input type="checkbox" id="newsletter" name="newsletter" value="1" {{ old('newsletter') ? 'checked' : '' }} class="ml-2 text-amber-500 focus:ring-amber-500 rounded">
-              <label for="newsletter" class="text-xs text-gray-700 leading-tight">أرغب في تلقي رسائل الأخبار والتحديثات</label>
+              <label for="newsletter" class="text-xs text-gray-700 leading-tight">{{ __('ui.auth.register.newsletter') }}</label>
             </div>
 
             {{-- Submit Button --}}
             <button type="submit" class="w-full h-10 bg-amber-400 hover:bg-amber-500 text-white font-semibold rounded-lg transition-colors duration-200 text-sm mt-3">
-              تسجيل الحساب
+              {{ __('ui.auth.register.submit') }}
             </button>
 
             {{-- Login Link --}}
             <p class="text-center text-xs text-gray-600 pt-2">
-              لديك حساب؟
-              <a href="{{ route('login') }}" class="text-amber-600 hover:text-amber-500 font-medium transition-colors">تسجيل الدخول</a>
+              {{ __('ui.auth.register.have_account') }}
+              <a href="{{ route('login') }}" class="text-amber-600 hover:text-amber-500 font-medium transition-colors">{{ __('ui.auth.login.heading') }}</a>
             </p>
 
           </form>
