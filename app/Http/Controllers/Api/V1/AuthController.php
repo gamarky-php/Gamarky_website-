@@ -305,59 +305,82 @@ class AuthController extends Controller
 
     /**
      * تحديث بيانات المستخدم
+     * PATCH /api/v1/profile
+     *
+     * يقبل تحديثًا جزئيًا - فقط الحقول المرسلة يتم تحديثها
      */
     public function updateProfile(Request $request)
     {
         $user = $request->user();
 
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            'country_id' => 'nullable|exists:countries,id',
-            'current_password' => 'nullable|string|min:6',
-            'password' => 'nullable|string|min:8|confirmed',
+            'name'             => 'sometimes|nullable|string|max:255',
+            'email'            => 'sometimes|nullable|string|email|max:255|unique:users,email,' . $user->id,
+            'phone'            => 'sometimes|nullable|string|max:20',
+            'country'          => 'sometimes|nullable|string|max:100',
+            'city'             => 'sometimes|nullable|string|max:100',
+            'preferred_port'   => 'sometimes|nullable|string|max:100',
+            'company_name'     => 'sometimes|nullable|string|max:255',
+            'business_license' => 'sometimes|nullable|string|max:255',
+            'business_type'    => 'sometimes|nullable|string|max:255',
+            'current_password' => 'sometimes|nullable|string|min:6',
+            'password'         => 'sometimes|nullable|string|min:8|confirmed',
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
                 'message' => 'بيانات غير صحيحة',
-                'errors' => $validator->errors()
+                'errors'  => $validator->errors(),
             ], 422);
         }
 
         // التحقق من كلمة المرور الحالية إذا أراد تغييرها
         if ($request->filled('password')) {
-            if (!$request->filled('current_password') || 
+            if (!$request->filled('current_password') ||
                 !Hash::check($request->current_password, $user->password)) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'كلمة المرور الحالية غير صحيحة'
+                    'message' => 'كلمة المرور الحالية غير صحيحة',
                 ], 400);
             }
         }
 
-        // تحديث البيانات
-        $updateData = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'country_id' => $request->country_id,
+        // بناء مصفوفة التحديث بالحقول الموجودة فقط
+        $updateData = [];
+
+        $mappedFields = [
+            'name'    => 'name',
+            'email'   => 'email',
+            'phone'   => 'phone',
+            'country' => 'country',
         ];
+
+        foreach ($mappedFields as $inputKey => $dbColumn) {
+            if ($request->has($inputKey)) {
+                $updateData[$dbColumn] = $request->input($inputKey);
+            }
+        }
 
         if ($request->filled('password')) {
             $updateData['password'] = Hash::make($request->password);
         }
 
-        $user->update($updateData);
+        if (!empty($updateData)) {
+            $user->update($updateData);
+        }
+
+        Log::info('[Auth][UpdateProfile] Profile updated', [
+            'user_id' => $user->id,
+            'fields'  => array_keys($updateData),
+        ]);
 
         return response()->json([
             'success' => true,
             'message' => 'تم تحديث البيانات بنجاح',
-            'data' => [
-                'user' => new UserResource($user->fresh())
-            ]
+            'data'    => [
+                'user' => new UserResource($user->fresh()),
+            ],
         ]);
     }
 

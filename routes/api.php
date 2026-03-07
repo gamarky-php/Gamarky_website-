@@ -49,6 +49,7 @@ Route::prefix('v1')->group(function () {
     // محمي بالـtoken
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile', [AuthController::class, 'profile']);
+        Route::patch('/profile', [AuthController::class, 'updateProfile']);
         Route::post('/auth/logout', [AuthController::class, 'logout']);
 
         // === Journey / Pay-per-Journey API ===
