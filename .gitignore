@@ -21,11 +21,11 @@
 .DS_Store
 Thumbs.db
 
-# Local / sensitive / generated
-.env
-.env.*
+# Tests (not needed in production repo)
+tests/
+
+# Local / generated / temporary
 public/build/
-storage/framework/views/
 hotfix-verification-*/
 docs/
 tools/

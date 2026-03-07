@@ -31,17 +31,48 @@ class LocaleServiceProvider extends ServiceProvider
         $this->registerHelperMacros();
     }
 
+    /** RTL locale codes */
+    private const RTL_LOCALES = ['ar', 'fa', 'ur', 'he'];
+
     /**
-     * Share global locale data with all views
+     * Resolve text direction for a given locale without relying on helpers.
+     */
+    private function resolveDir(string $locale): string
+    {
+        $fromConfig = config("locales.available.{$locale}.dir");
+        if ($fromConfig === 'rtl' || $fromConfig === 'ltr') {
+            return $fromConfig;
+        }
+        return in_array($locale, self::RTL_LOCALES, true) ? 'rtl' : 'ltr';
+    }
+
+    /**
+     * Share global locale data with all views.
+     * Uses only config() — zero dependency on global helper functions.
+     * Skipped in console/artisan context (no views rendered there).
      */
     protected function shareGlobalLocaleData(): void
     {
+        if ($this->app->runningInConsole()) {
+            return;
+        }
+
+        $locale  = (string) app()->getLocale();
+        $locales = config('locales.available', []);
+
+        // Guarantee $locales is a usable associative array
+        if (! is_array($locales)) {
+            $locales = [];
+        }
+
         View::share([
-            'currentLocale' => app()->getLocale(),
-            'currentDir' => locale_dir(),
-            'availableLocales' => available_locales(),
-            'localeNames' => collect(config('locales.available', []))
-                ->mapWithKeys(fn($data, $code) => [$code => $data['native']])
+            'currentLocale'    => $locale,
+            'currentDir'       => $this->resolveDir($locale),
+            'availableLocales' => array_keys($locales),
+            'localeNames'      => collect($locales)
+                ->mapWithKeys(fn ($data, $code) => [
+                    $code => (is_array($data) && isset($data['native'])) ? $data['native'] : $code,
+                ])
                 ->all(),
         ]);
     }

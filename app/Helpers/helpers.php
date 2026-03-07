@@ -18,7 +18,9 @@ if (! function_exists('locale_dir')) {
     function locale_dir(?string $locale = null): string
     {
         $locale = $locale ?? app()->getLocale();
-        return config("locales.available.{$locale}.dir", 'ltr');
+        $rtlLocales = ['ar', 'fa', 'ur', 'he'];
+        $default = in_array($locale, $rtlLocales) ? 'rtl' : 'ltr';
+        return config("locales.available.{$locale}.dir", $default);
     }
 }
 
@@ -98,6 +100,6 @@ if (! function_exists('available_locales')) {
      */
     function available_locales(): array
     {
-        return array_keys(config('locales.available', []));
+        return config('locales.available', []);
     }
 }
