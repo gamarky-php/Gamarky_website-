@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Laravel\Sanctum\PersonalAccessToken;
@@ -62,48 +63,137 @@ class AuthController extends Controller
 
     /**
      * تسجيل مستخدم جديد
+     * POST /api/v1/auth/register
      */
     public function register(Request $request)
     {
+        Log::info('[Auth][Register] Request received', [
+            'ip'          => $request->ip(),
+            'email'       => $request->email,
+            'has_phone'   => !empty($request->phone),
+            'has_country' => !empty($request->country),
+            'device_name' => $request->device_name,
+        ]);
+
+        // ─── Validation ────────────────────────────────────────────────────────────
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'phone' => 'nullable|string|max:20',
-            'country_id' => 'nullable|exists:countries,id',
-            'device_name' => 'string|nullable'
+            'name'                  => 'required|string|max:255',
+            'email'                 => 'required|string|email|max:255',
+            'password'              => 'required|string|min:8',
+            'password_confirmation' => 'required|string|same:password',
+            'phone'                 => 'nullable|string|max:20',
+            'country'               => 'nullable|string|max:100',
+            'device_name'           => 'nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
+            Log::warning('[Auth][Register] Validation failed', [
+                'email'  => $request->email,
+                'errors' => $validator->errors()->toArray(),
+            ]);
+
             return response()->json([
                 'success' => false,
                 'message' => 'بيانات غير صحيحة',
-                'errors' => $validator->errors()
+                'errors'  => $validator->errors(),
             ], 422);
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'phone' => $request->phone,
-            'country_id' => $request->country_id,
-            'email_verified_at' => now(), // يمكن تغييرها حسب احتياجات التحقق
-        ]);
+        // ─── Duplicate checks (explicit 409 before DB insert) ──────────────────────
+        if (User::where('email', $request->email)->exists()) {
+            Log::warning('[Auth][Register] Duplicate email attempt', ['email' => $request->email]);
 
-        // إنشاء token للمستخدم الجديد مع صلاحية 60 يوم
-        $deviceName = $request->device_name ?? 'mobile-app';
-        $token = $user->createToken($deviceName, ['*'], now()->addDays(60))->plainTextToken;
+            return response()->json([
+                'success' => false,
+                'message' => 'البريد الإلكتروني مستخدم بالفعل',
+                'errors'  => ['email' => ['البريد الإلكتروني مستخدم بالفعل']],
+            ], 409);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'تم إنشاء الحساب بنجاح',
-            'data' => [
-                'user' => new UserResource($user),
-                'token' => $token,
-                'token_type' => 'Bearer'
-            ]
-        ], 201);
+        if ($request->filled('phone') && User::where('phone', $request->phone)->exists()) {
+            Log::warning('[Auth][Register] Duplicate phone attempt', ['phone' => $request->phone]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'رقم الهاتف مستخدم بالفعل',
+                'errors'  => ['phone' => ['رقم الهاتف مستخدم بالفعل']],
+            ], 409);
+        }
+
+        // ─── Create user ───────────────────────────────────────────────────────────
+        try {
+            $user = User::create([
+                'name'              => $request->name,
+                'email'             => $request->email,
+                'password'          => Hash::make($request->password),
+                'phone'             => $request->phone ?? null,
+                'country'           => $request->country ?? null,
+                'email_verified_at' => now(),
+            ]);
+
+            Log::info('[Auth][Register] User created successfully', [
+                'user_id' => $user->id,
+                'email'   => $user->email,
+                'name'    => $user->name,
+            ]);
+
+            // ─── Issue Sanctum token ────────────────────────────────────────────────
+            $deviceName = $request->device_name ?? 'mobile-app';
+            $token      = $user->createToken($deviceName, ['*'], now()->addDays(60))->plainTextToken;
+
+            Log::info('[Auth][Register] Token issued', [
+                'user_id'     => $user->id,
+                'device_name' => $deviceName,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'تم إنشاء الحساب بنجاح',
+                'data'    => [
+                    'user'       => new UserResource($user),
+                    'token'      => $token,
+                    'token_type' => 'Bearer',
+                ],
+            ], 201);
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Race-condition duplicate (MySQL error 1062)
+            if (($e->errorInfo[1] ?? null) === 1062) {
+                Log::warning('[Auth][Register] DB duplicate entry (race condition)', [
+                    'email' => $request->email,
+                    'error' => $e->getMessage(),
+                ]);
+
+                return response()->json([
+                    'success' => false,
+                    'message' => 'البريد الإلكتروني أو رقم الهاتف مستخدم بالفعل',
+                    'errors'  => ['email' => ['البريد الإلكتروني مستخدم بالفعل']],
+                ], 409);
+            }
+
+            Log::error('[Auth][Register] Database error', [
+                'email'    => $request->email,
+                'sql_code' => $e->errorInfo[1] ?? null,
+                'error'    => $e->getMessage(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ في قاعدة البيانات، يرجى المحاولة مجدداً',
+            ], 500);
+
+        } catch (\Throwable $e) {
+            Log::error('[Auth][Register] Unexpected error', [
+                'email' => $request->email,
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'حدث خطأ غير متوقع، يرجى المحاولة لاحقًا',
+            ], 500);
+        }
     }
 
     /**

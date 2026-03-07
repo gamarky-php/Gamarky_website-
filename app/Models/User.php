@@ -82,12 +82,13 @@ class User extends Authenticatable implements MustVerifyEmail
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'phone_verified_at' => 'datetime',
+            'email_verified_at'    => 'datetime',
+            'phone_verified_at'    => 'datetime',
             'phone_otp_expires_at' => 'datetime',
-            'password' => 'hashed',
+            // NOTE: 'password' => 'hashed' removed intentionally.
+            // AuthController uses Hash::make() explicitly to avoid double-hashing.
             'newsletter' => 'boolean',
-            'is_admin' => 'boolean',
+            'is_admin'   => 'boolean',
         ];
     }
 
